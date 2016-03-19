@@ -35,7 +35,27 @@ php5enmod xdebug
 #composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# .htaccess
+cat << EOF >> /var/www/html/.htaccess
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine On
+
+    RewriteCond %{SCRIPT_FILENAME} !-d
+    RewriteCond %{SCRIPT_FILENAME} !-f
+
+    RewriteRule ^.*$ ./index.php
+</IfModule>
+EOF
+
+touch /var/www/html/index.php
+
+a2enmod rewrite
 service apache2 restart
+cat << EOF >> /etc/apache2/sites-availible/000-default.conf
+<Directory "/var/www/html">
+    AllowOverride All
+</Directory>
 
 exit
 
