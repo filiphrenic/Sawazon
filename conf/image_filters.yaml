@@ -1,0 +1,18 @@
+negative:
+  type: negate
+  title: Negative
+
+grayscale:
+  type: grayscale
+
+edges:
+  type: edgedetect
+
+emboss:
+  type: emboss
+
+blur:
+  type: selective_blur
+
+sketchy:
+  type: mean_removal

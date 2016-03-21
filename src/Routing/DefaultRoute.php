@@ -3,7 +3,6 @@
 namespace Routing;
 
 use Symfony\Component\Yaml\Yaml;
-use Util\Config;
 
 class DefaultRoute extends Route
 {
@@ -71,8 +70,7 @@ class DefaultRoute extends Route
             return "(?P" . $match[0] . $reg . ")";
         };
 
-        $basepath = Config::get()['basepath'];
-        $this->regex = $basepath . $url;
+        $this->regex = '/' . $url;
         $this->match_regex = "@^" . preg_replace_callback(self::$PATTERN, $f, $this->regex) . "$@uD";
 
         $this->controller = $controller;
