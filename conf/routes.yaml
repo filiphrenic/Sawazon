@@ -1,0 +1,6 @@
+index:
+  url:
+  controller: index
+  action: display
+  regexs:
+    id: \\d+
