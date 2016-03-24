@@ -4,3 +4,8 @@ index:
   action: display
   regexs:
     id: \\d+
+
+captcha:
+  url: generate/captcha
+  controller: generate/captcha
+  action: display

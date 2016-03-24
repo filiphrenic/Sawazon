@@ -2,18 +2,20 @@
 
 namespace Controller;
 
-use Generation\Captcha\Captcha;
-use Processing\Text\DefaultTextFilter;
+use Model\Test;
+use Sawazon\Controller;
 
-class Index
+class Index extends Controller
 {
-    public function display()
+    public
+    function display()
     {
 //        echo 'bok iz controllera<br>';
 //        echo DefaultTextFilter::getInstance()->apply(" **Filip :)** bla bla **foo bar **");
 
-        $c = new Captcha();
-        $c->display();
+        //echo 'index';
+        $t = new Test();
+        $t->get(1);
 
     }
 }

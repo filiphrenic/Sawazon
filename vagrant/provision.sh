@@ -48,8 +48,6 @@ cat << EOF >> /var/www/html/.htaccess
 </IfModule>
 EOF
 
-touch /var/www/html/index.php
-
 a2enmod rewrite
 service apache2 restart
 cat << EOF >> /etc/apache2/sites-availible/000-default.conf
@@ -59,4 +57,12 @@ cat << EOF >> /etc/apache2/sites-availible/000-default.conf
 
 exit
 
-# sudo apt-get install mysql-server-5.6
+sudo apt-get install -y debconf-utils
+export DEBIAN_FRONTEND="noninteractive"
+
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password root"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password root"
+
+sudo apt-get install -y mysql-server-5.6
+
+mysql_secure_installation

@@ -26,16 +26,13 @@ class DefaultDispatcher extends Dispatcher
         if ($route == null) throw new RoutingException("Route not found");
 
         $ctl = $route->getController();
-        $ctlCls = "\\Controller\\" . ucfirst($ctl);
-
+        $ctlCls = "\\Controller\\" . implode('\\', array_map('ucfirst', explode('/', $ctl)));
         if (!class_exists($ctlCls)) throw new RoutingException("Controller $ctl not found");
 
-        //$controller = new $ctlCls;
         $action = $route->getAction();
-
         if (!is_callable([$ctlCls, $action]))
             throw new RoutingException("Action $action not found in controller $ctl");
-        
+
         call_user_func([$ctlCls, $action]);
     }
 }

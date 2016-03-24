@@ -1,10 +1,9 @@
 <?php
 
-namespace Generation\Captcha;
+namespace Generate;
 
-class Captcha
+class CaptchaMaker
 {
-
     /** @var string */
     private static $LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" . "abcdefghijklmnopqrstuvwxyz" . "0123456789";
 
@@ -43,9 +42,8 @@ class Captcha
 
         // draw text
         $len = strlen(self::$LETTERS);
-        $x0 = ($width - 2*20) / ($letters-1);
+        $x0 = ($width - 2 * 20) / ($letters - 1);
         $y0 = ($height - 10) / 2;
-
 
 
         $text_color = imagecolorallocate($this->image, 0, 0, 255);
@@ -56,13 +54,20 @@ class Captcha
         }
     }
 
-    public function display()
+    /**
+     * @return resource
+     */
+    public function getImage()
     {
-        $_SESSION['captcha'] = $this->text;
-        header("Content-Type: image/png");
-        imagepng($this->image);
-        imagedestroy($this->image);
+        return $this->image;
     }
 
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
 
 }
