@@ -23,12 +23,10 @@ abstract class DBModel extends Model
 
     public function __construct()
     {
-        $classname = get_class($this);
-        if ($pos = strrpos($classname, '\\'))
-            $classname = substr($classname, $pos + 1);
+        $class_name = short_name($this);
 
-        $this->tableName = $classname;
-        $this->primaryKeyColumn = strtolower($classname) . '_id';
+        $this->tableName = $class_name;
+        $this->primaryKeyColumn = strtolower($class_name) . '_id';
     }
 
     public function load($primary_key)

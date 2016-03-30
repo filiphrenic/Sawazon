@@ -2,5 +2,5 @@ composer
 /.idea/
 /vendor/
 /.vagrant/
-
+.DS_Store
 /phpmyadmin/

@@ -3,8 +3,9 @@
 namespace Controller\Generate;
 
 use Generate\CaptchaMaker;
+use Sawazon\Controller;
 
-class Captcha
+class Captcha extends Controller
 {
 
     public function display()

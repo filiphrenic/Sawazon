@@ -30,6 +30,16 @@ abstract class Route
     public abstract function getParam($key, $default = "");
 
     /**
+     * @return string
+     */
+    public abstract function getController();
+
+    /**
+     * @return string
+     */
+    public abstract function getAction();
+
+    /**
      * @param string $name
      * @param Route $route
      */

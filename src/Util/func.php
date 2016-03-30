@@ -31,3 +31,38 @@ function elements($needles, $haystack, $default = null)
     }
     return $elms;
 }
+
+/**
+ * @param mixed $obj
+ * @return string short class name (without namespace)
+ */
+function short_name($obj)
+{
+    $class_name = get_class($obj);
+    if ($pos = strrpos($class_name, '\\'))
+        $class_name = substr($class_name, $pos + 1);
+    return $class_name;
+}
+
+/**
+ * Redirects to given url
+ * @param string $url
+ */
+function redirect($url = "/")
+{
+    header("Location: $url");
+    die();
+}
+
+/**
+ * Function is called when something strange happens,
+ * but I don't want to throw an exception.
+ * Redirects to index page.
+ *
+ * @param string $error
+ */
+function strange_behaviour($error = "")
+{
+    redirect(\Routing\Route::get("index")->generate());
+}
+

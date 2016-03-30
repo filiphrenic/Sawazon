@@ -2,10 +2,16 @@ index:
   url:
   controller: index
   action: display
-  regexs:
-    id: \\d+
 
 captcha:
   url: generate/captcha
   controller: generate/captcha
   action: display
+
+image:
+  url: image/<content>/<id>
+  controller: generate/image
+  action: display
+  regexs:
+    content: "[[:alpha:]]+"
+    id: "\\d+"
