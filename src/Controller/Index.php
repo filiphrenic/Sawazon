@@ -2,20 +2,23 @@
 
 namespace Controller;
 
-use Model\Test;
+use Model\Address;
+use Model\Country;
+use Model\User;
 use Sawazon\Controller;
 
 class Index extends Controller
 {
-    public
-    function display()
+    public function display()
     {
-//        echo 'bok iz controllera<br>';
-//        echo DefaultTextFilter::getInstance()->apply(" **Filip :)** bla bla **foo bar **");
+        $user = (new User())->load(1);
+        $address = (new Address())->load(1);
+        $country = (new Country())->load($address->country_id);
 
-        //echo 'index';
-        $t = new Test();
-        $t->get(1);
+        var_dump($user);
+        var_dump($address);
+        var_dump($country);
+
 
     }
 }

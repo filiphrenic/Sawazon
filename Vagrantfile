@@ -20,8 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.hostname = 'sawazon.hr'
-  config.vm.network "forwarded_port", guest: 22, host: 22
-
+  
   config.vm.provider :virtualbox do |v|
     v.customize ["modifyvm", :id, "--memory", 1024]
     v.customize ["modifyvm", :id, "--cpus", 2]

@@ -11,14 +11,21 @@ abstract class Model implements \Serializable
      * @param number $primary_key
      * @return Model
      */
-    public abstract function get($primary_key);
-    
-    public abstract function getAll();
+    public abstract function load($primary_key);
+
+    /**
+     * @return array
+     */
+    public abstract function loadAll();
 
     public abstract function save();
 
     public abstract function delete();
 
+    /**
+     * @param Model $model
+     * @return bool
+     */
     public function equals(Model $model)
     {
         if (get_class($this) != get_class($model)) return false;

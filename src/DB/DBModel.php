@@ -6,16 +6,50 @@ use Sawazon\Model;
 
 abstract class DBModel extends Model
 {
-    public abstract function getTableName();
 
-    public abstract function getPrimaryKeyColumn();
+    /** @var  string */
+    private $tableName;
 
-    public abstract function getColumnNames();
+    /** @var  string */
+    private $primaryKeyColumn;
 
     /** @var mixed Table row */
     private $model;
 
-    public function get($primary_key)
+    public function __construct()
+    {
+        $classname = get_class($this);
+        if ($pos = strrpos($classname, '\\'))
+            $classname = substr($classname, $pos + 1);
+
+        $this->tableName = $classname;
+        $this->primaryKeyColumn = strtolower($classname) . '_id';
+    }
+
+    /**
+     * @return array
+     */
+    public abstract function getColumnNames();
+
+    /**
+     * Default implementation
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+
+    /**
+     * Default implementation
+     * @return string
+     */
+    public function getPrimaryKeyColumn()
+    {
+        return $this->primaryKeyColumn;
+    }
+
+    public function load($primary_key)
     {
         $sql = "SELECT * FROM " . $this->getTableName() . " WHERE " .
             $this->getPrimaryKeyColumn() . " = ?";
@@ -24,15 +58,15 @@ abstract class DBModel extends Model
         $statement->execute([$primary_key]);
 
         if (1 !== $statement->rowCount()) {
-            throw new NotFoundException();
+            return null;
         }
 
         $this->model = $statement->fetch();
-        $pkCol = $this->getPrimaryKeyColumn();
-        $this->primary_key = $this->model->$pkCol;
+        $this->primary_key = $primary_key;
+        return $this;
     }
 
-    public function getAll($where = "")
+    public function loadAll($where = "")
     {
         $sql = "SELECT * FROM " . $this->getTableName() . " " . $where;
 
@@ -40,11 +74,10 @@ abstract class DBModel extends Model
         $statement->execute();
 
         if (1 > $statement->rowCount()) {
-            return null;
+            return [];
         }
 
         $resources = $statement->fetchAll();
-
         $collection = [];
 
         $className = get_class($this);
@@ -127,7 +160,8 @@ abstract class DBModel extends Model
 
     public function __set($name, $value)
     {
-        return $this->model->$name = $value;
+        $this->model->$name = $value;
     }
+
 
 }

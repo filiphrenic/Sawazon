@@ -4,12 +4,13 @@ namespace Model;
 
 use DB\DBModel;
 
-class Test extends DBModel
+class Country extends DBModel
 {
 
     public function getColumnNames()
     {
-        return ['test_id', 'name', 'lol'];
+        return ['country_id', 'name', 'code'];
     }
-    
+
+
 }
