@@ -3,10 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 30, 2016 at 05:50 PM
+-- Generation Time: Mar 30, 2016 at 10:37 PM
 -- Server version: 5.6.28-0ubuntu0.14.04.1
 -- PHP Version: 5.6.19-1+deb.sury.org~trusty+1
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -16,65 +17,59 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: "Sawazon"
+-- Database: `Sawazon`
 --
-CREATE DATABASE IF NOT EXISTS "Sawazon" DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE Sawazon;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "Address"
+-- Table structure for table `Address`
 --
 
-CREATE TABLE "Address" (
-  "address_id" int(11) NOT NULL,
-  "user_id" int(11) NOT NULL,
-  "street" varchar(100) NOT NULL,
-  "city" varchar(100) NOT NULL,
-  "country_id" int(11) NOT NULL
-) ;
+CREATE TABLE `Address` (
+  `address_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `country_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table "Address"
+-- Dumping data for table `Address`
 --
 
-SET IDENTITY_INSERT "Address" ON ;
-INSERT INTO "Address" ("address_id", "user_id", "street", "city", "country_id") VALUES
+INSERT INTO `Address` (`address_id`, `user_id`, `street`, `city`, `country_id`) VALUES
 (1, 1, 'Folnegovićeva 6f', 'Zagreb', 1);
 
-SET IDENTITY_INSERT "Address" OFF;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Category`
+--
+
+CREATE TABLE `Category` (
+  `category_id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` varchar(512) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "Category"
+-- Table structure for table `Country`
 --
 
-CREATE TABLE "Category" (
-  "category_id" int(11) NOT NULL,
-  "name" varchar(30) NOT NULL,
-  "description" varchar(512) DEFAULT NULL
-) ;
-
--- --------------------------------------------------------
+CREATE TABLE `Country` (
+  `country_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `code` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table "Country"
+-- Dumping data for table `Country`
 --
 
-CREATE TABLE "Country" (
-  "country_id" int(11) NOT NULL,
-  "name" varchar(50) NOT NULL,
-  "code" varchar(5) NOT NULL
-) ;
-
---
--- Dumping data for table "Country"
---
-
-SET IDENTITY_INSERT "Country" ON ;
-INSERT INTO "Country" ("country_id", "name", "code") VALUES
+INSERT INTO `Country` (`country_id`, `name`, `code`) VALUES
 (1, 'Afghanistan', 'AF'),
 (2, 'Albania', 'AL'),
 (3, 'Algeria', 'DZ'),
@@ -340,218 +335,275 @@ INSERT INTO "Country" ("country_id", "name", "code") VALUES
 (263, 'Zimbabwe', 'ZW'),
 (264, 'Åland Islands', 'AX');
 
-SET IDENTITY_INSERT "Country" OFF;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Follower`
+--
+
+CREATE TABLE `Follower` (
+  `follower` int(11) NOT NULL,
+  `followee` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "Post"
+-- Table structure for table `Post`
 --
 
-CREATE TABLE "Post" (
-  "post_id" int(11) NOT NULL,
-  "user_id" int(11) NOT NULL,
-  "heading" varchar(100) NOT NULL,
-  "content" varchar(512) NOT NULL,
-  "created_on" date NOT NULL
-) ;
+CREATE TABLE `Post` (
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `heading` varchar(100) NOT NULL,
+  `content` varchar(512) NOT NULL,
+  `published_on` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "Product"
+-- Table structure for table `Product`
 --
 
-CREATE TABLE "Product" (
-  "product_id" int(11) NOT NULL,
-  "user_id" int(11) NOT NULL,
-  "category_id" int(11) NOT NULL,
-  "name" varchar(100) NOT NULL,
-  "description" varchar(2048) NOT NULL,
-  "allow_review" tinyint(1) NOT NULL DEFAULT '1',
-  "published_on" date NOT NULL,
-  "view_count" int(11) NOT NULL DEFAULT '0'
-) ;
+CREATE TABLE `Product` (
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(2048) NOT NULL,
+  `allow_review` tinyint(1) NOT NULL DEFAULT '1',
+  `published_on` date NOT NULL,
+  `view_count` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "ProductPrice"
+-- Table structure for table `ProductPrice`
 --
 
-CREATE TABLE "ProductPrice" (
-  "product_id" int(11) NOT NULL,
-  "date_changed" date NOT NULL,
-  "price" decimal(7,2) NOT NULL
-) ;
+CREATE TABLE `ProductPrice` (
+  `product_id` int(11) NOT NULL,
+  `date_changed` date NOT NULL,
+  `price` decimal(7,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "Review"
+-- Table structure for table `Review`
 --
 
-CREATE TABLE "Review" (
-  "review_id" int(11) NOT NULL,
-  "product_id" int(11) NOT NULL,
-  "user_id" int(11) DEFAULT NULL COMMENT 'reviewer',
-  "content" varchar(256) NOT NULL,
-  "rating" enum('1','2','3','4','5') NOT NULL DEFAULT '5',
-  "date_reviewed" date NOT NULL
-) ;
+CREATE TABLE `Review` (
+  `review_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL COMMENT 'reviewer',
+  `content` varchar(256) NOT NULL,
+  `rating` enum('1','2','3','4','5') NOT NULL DEFAULT '5',
+  `date_reviewed` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "Tag"
+-- Table structure for table `Tag`
 --
 
-CREATE TABLE "Tag" (
-  "tag_id" int(11) NOT NULL,
-  "content_type" enum('PRODUCT','POST') NOT NULL,
-  "content_id" int(11) DEFAULT NULL COMMENT 'references either product or post',
-  "tag" varchar(32) NOT NULL
-) ;
+CREATE TABLE `Tag` (
+  `content_id` int(11) NOT NULL,
+  `content_type` enum('PRODUCT','POST') NOT NULL,
+  `tag` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table "User"
+-- Table structure for table `User`
 --
 
-CREATE TABLE "User" (
-  "user_id" int(11) NOT NULL,
-  "username" varchar(20) NOT NULL,
-  "password" varchar(65) NOT NULL,
-  "first_name" varchar(50) NOT NULL,
-  "last_name" varchar(50) NOT NULL,
-  "email" varchar(100) NOT NULL,
-  "telephone" varchar(50) DEFAULT NULL,
-  "date_of_birth" date NOT NULL,
-  "user_role" int(11) NOT NULL DEFAULT '0',
-  "background_color" varchar(10) DEFAULT '#FFFFFF'
-) ;
+CREATE TABLE `User` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(65) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `telephone` varchar(50) DEFAULT NULL,
+  `date_of_birth` date NOT NULL,
+  `user_role` int(11) NOT NULL DEFAULT '0',
+  `background_color` varchar(10) DEFAULT '#FFFFFF'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table "User"
+-- Dumping data for table `User`
 --
 
-SET IDENTITY_INSERT "User" ON ;
-INSERT INTO "User" ("user_id", "username", "password", "first_name", "last_name", "email", "telephone", "date_of_birth", "user_role", "background_color") VALUES
-(1, 'nichre', 'aaaaa', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 0, '#FFFFFF');
-
-SET IDENTITY_INSERT "User" OFF;
+INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `background_color`) VALUES
+(1, 'nichre', 'fićo', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 0, '#FFFFFF');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table "Address"
+-- Indexes for table `Address`
 --
-ALTER TABLE "Address"
-  ADD PRIMARY KEY ("address_id","user_id"),
-  ADD KEY "Address__user_index" ("user_id"),
-  ADD KEY "Address_Country_country_id_fk" ("country_id");
+ALTER TABLE `Address`
+  ADD PRIMARY KEY (`address_id`,`user_id`),
+  ADD KEY `Address__user_index` (`user_id`),
+  ADD KEY `Address_Country_country_id_fk` (`country_id`);
 
 --
--- Indexes for table "Category"
+-- Indexes for table `Category`
 --
-ALTER TABLE "Category"
-  ADD PRIMARY KEY ("category_id"),
-  ADD UNIQUE KEY "Category_category_id_uindex" ("category_id"),
-  ADD KEY "category_id" ("category_id");
+ALTER TABLE `Category`
+  ADD PRIMARY KEY (`category_id`),
+  ADD UNIQUE KEY `Category_category_id_uindex` (`category_id`),
+  ADD KEY `category_id` (`category_id`);
 
 --
--- Indexes for table "Country"
+-- Indexes for table `Country`
 --
-ALTER TABLE "Country"
-  ADD PRIMARY KEY ("country_id"),
-  ADD UNIQUE KEY "Country_country_id_uindex" ("country_id");
+ALTER TABLE `Country`
+  ADD PRIMARY KEY (`country_id`),
+  ADD UNIQUE KEY `Country_country_id_uindex` (`country_id`);
 
 --
--- Indexes for table "Post"
+-- Indexes for table `Follower`
 --
-ALTER TABLE "Post"
-  ADD PRIMARY KEY ("post_id"),
-  ADD UNIQUE KEY "Post_post_id_uindex" ("post_id"),
-  ADD KEY "Post_User_user_id_fk" ("user_id");
+ALTER TABLE `Follower`
+  ADD PRIMARY KEY (`follower`,`followee`),
+  ADD KEY `Follower_User_user_id_fk2` (`followee`);
 
 --
--- Indexes for table "Product"
+-- Indexes for table `Post`
 --
-ALTER TABLE "Product"
-  ADD PRIMARY KEY ("product_id"),
-  ADD UNIQUE KEY "Article_article_id_uindex" ("product_id"),
-  ADD KEY "Product_Category_category_id_fk" ("category_id"),
-  ADD KEY "Product_User_user_id_fk" ("user_id");
+ALTER TABLE `Post`
+  ADD PRIMARY KEY (`post_id`),
+  ADD UNIQUE KEY `Post_post_id_uindex` (`post_id`),
+  ADD KEY `Post_User_user_id_fk` (`user_id`);
 
 --
--- Indexes for table "ProductPrice"
+-- Indexes for table `Product`
 --
-ALTER TABLE "ProductPrice"
-  ADD PRIMARY KEY ("product_id","date_changed");
+ALTER TABLE `Product`
+  ADD PRIMARY KEY (`product_id`),
+  ADD UNIQUE KEY `Article_article_id_uindex` (`product_id`),
+  ADD KEY `Product_Category_category_id_fk` (`category_id`),
+  ADD KEY `Product_User_user_id_fk` (`user_id`);
 
 --
--- Indexes for table "Review"
+-- Indexes for table `ProductPrice`
 --
-ALTER TABLE "Review"
-  ADD PRIMARY KEY ("review_id"),
-  ADD UNIQUE KEY "Review_review_id_uindex" ("review_id"),
-  ADD KEY "Review_Product_product_id_fk" ("product_id"),
-  ADD KEY "Review_User_user_id_fk" ("user_id");
+ALTER TABLE `ProductPrice`
+  ADD PRIMARY KEY (`product_id`,`date_changed`);
 
 --
--- Indexes for table "Tag"
+-- Indexes for table `Review`
 --
-ALTER TABLE "Tag"
-  ADD PRIMARY KEY ("tag_id"),
-  ADD UNIQUE KEY "Tag_tag_id_uindex" ("tag_id");
+ALTER TABLE `Review`
+  ADD PRIMARY KEY (`review_id`),
+  ADD UNIQUE KEY `Review_review_id_uindex` (`review_id`),
+  ADD KEY `Review_Product_product_id_fk` (`product_id`),
+  ADD KEY `Review_User_user_id_fk` (`user_id`);
 
 --
--- Indexes for table "User"
+-- Indexes for table `Tag`
 --
-ALTER TABLE "User"
-  ADD PRIMARY KEY ("user_id"),
-  ADD UNIQUE KEY "User_user_id_uindex" ("user_id"),
-  ADD UNIQUE KEY "User_username_uindex" ("username");
+ALTER TABLE `Tag`
+  ADD PRIMARY KEY (`content_id`,`content_type`);
 
+--
+-- Indexes for table `User`
+--
+ALTER TABLE `User`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `User_user_id_uindex` (`user_id`),
+  ADD UNIQUE KEY `User_username_uindex` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Address`
+--
+ALTER TABLE `Address`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `Category`
+--
+ALTER TABLE `Category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Country`
+--
+ALTER TABLE `Country`
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+--
+-- AUTO_INCREMENT for table `Post`
+--
+ALTER TABLE `Post`
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Product`
+--
+ALTER TABLE `Product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Review`
+--
+ALTER TABLE `Review`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `User`
+--
+ALTER TABLE `User`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table "Address"
+-- Constraints for table `Address`
 --
-ALTER TABLE "Address"
-  ADD CONSTRAINT "Address_Country_country_id_fk" FOREIGN KEY ("country_id") REFERENCES "Country" ("country_id") ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT "Address_User_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "User" ("user_id") ON UPDATE CASCADE;
+ALTER TABLE `Address`
+  ADD CONSTRAINT `Address_Country_country_id_fk` FOREIGN KEY (`country_id`) REFERENCES `Country` (`country_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Address_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table "Post"
+-- Constraints for table `Follower`
 --
-ALTER TABLE "Post"
-  ADD CONSTRAINT "Post_User_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "User" ("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Follower`
+  ADD CONSTRAINT `Follower_User_user_id_fk` FOREIGN KEY (`follower`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Follower_User_user_id_fk2` FOREIGN KEY (`followee`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table "Product"
+-- Constraints for table `Post`
 --
-ALTER TABLE "Product"
-  ADD CONSTRAINT "Product_Category_category_id_fk" FOREIGN KEY ("category_id") REFERENCES "Category" ("category_id") ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT "Product_User_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "User" ("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Post`
+  ADD CONSTRAINT `Post_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table "ProductPrice"
+-- Constraints for table `Product`
 --
-ALTER TABLE "ProductPrice"
-  ADD CONSTRAINT "ProductPrice_Product_product_id_fk" FOREIGN KEY ("product_id") REFERENCES "Product" ("product_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Product`
+  ADD CONSTRAINT `Product_Category_category_id_fk` FOREIGN KEY (`category_id`) REFERENCES `Category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Product_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table "Review"
+-- Constraints for table `ProductPrice`
 --
-ALTER TABLE "Review"
-  ADD CONSTRAINT "Review_Product_product_id_fk" FOREIGN KEY ("product_id") REFERENCES "Product" ("product_id") ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT "Review_User_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "User" ("user_id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `ProductPrice`
+  ADD CONSTRAINT `ProductPrice_Product_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `Product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `Review`
+--
+ALTER TABLE `Review`
+  ADD CONSTRAINT `Review_Product_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `Product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Review_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
