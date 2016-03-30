@@ -16,6 +16,11 @@ abstract class DBModel extends Model
     /** @var mixed Table row */
     private $model;
 
+    /**
+     * @return array
+     */
+    public abstract function getColumnNames();
+
     public function __construct()
     {
         $classname = get_class($this);
@@ -26,33 +31,10 @@ abstract class DBModel extends Model
         $this->primaryKeyColumn = strtolower($classname) . '_id';
     }
 
-    /**
-     * @return array
-     */
-    public abstract function getColumnNames();
-
-    /**
-     * Default implementation
-     * @return string
-     */
-    public function getTableName()
-    {
-        return $this->tableName;
-    }
-
-    /**
-     * Default implementation
-     * @return string
-     */
-    public function getPrimaryKeyColumn()
-    {
-        return $this->primaryKeyColumn;
-    }
-
     public function load($primary_key)
     {
-        $sql = "SELECT * FROM " . $this->getTableName() . " WHERE " .
-            $this->getPrimaryKeyColumn() . " = ?";
+        $sql = "SELECT * FROM " . $this->tableName . " WHERE " .
+            $this->primaryKeyColumn . " = ?";
 
         $statement = DB::getPDO()->prepare($sql);
         $statement->execute([$primary_key]);
@@ -68,7 +50,7 @@ abstract class DBModel extends Model
 
     public function loadAll($where = "")
     {
-        $sql = "SELECT * FROM " . $this->getTableName() . " " . $where;
+        $sql = "SELECT * FROM " . $this->tableName . " " . $where;
 
         $statement = DB::getPDO()->prepare($sql);
         $statement->execute();
@@ -83,7 +65,7 @@ abstract class DBModel extends Model
         $className = get_class($this);
         foreach ($resources as $singleRow) {
             $model = new $className();
-            $model->primary_key = $singleRow->{$this->getPrimaryKeyColumn()};
+            $model->primary_key = $singleRow->{$this->primaryKeyColumn};
             $model->model = $singleRow;
 
             $collection[] = $model;
@@ -98,8 +80,8 @@ abstract class DBModel extends Model
             return;
         }
         DB::getPDO()->prepare(
-            "DELETE FROM " . $this->getTableName() . " WHERE " .
-            $this->getPrimaryKeyColumn() . " = ?"
+            "DELETE FROM " . $this->tableName . " WHERE " .
+            $this->primaryKeyColumn . " = ?"
         )->execute([$this->primary_key]);
         $this->primary_key = null;
     }
@@ -108,7 +90,7 @@ abstract class DBModel extends Model
     {
         $columns = $this->getColumnNames();
 
-        if (null === $this->primary_key) {
+        if (null === $this->primary_key) { // insert
 
             $values = array();
             $placeHolders = array();
@@ -118,13 +100,13 @@ abstract class DBModel extends Model
                 $placeHolders[] = "?";
             }
 
-            $sql = "INSERT INTO " . $this->getTableName() . " (" . implode(", ", $columns)
+            $sql = "INSERT INTO " . $this->tableName . " (" . implode(", ", $columns)
                 . ") VALUES (" . implode(", ", $placeHolders) . ")";
 
             DB::getPDO()->prepare($sql)->execute($values);
             $this->primary_key = DB::getPDO()->lastInsertId();
 
-        } else {
+        } else { // update
 
             $values = array();
             $placeHolders = array();
@@ -136,8 +118,8 @@ abstract class DBModel extends Model
 
             $values[] = $this->primary_key;
 
-            $sql = "UPDATE " . $this->getTableName() . " SET " . implode(", ", $placeHolders)
-                . " WHERE " . $this->getPrimaryKeyColumn() . " = ?";
+            $sql = "UPDATE " . $this->tableName . " SET " . implode(", ", $placeHolders)
+                . " WHERE " . $this->primaryKeyColumn . " = ?";
 
             DB::getPDO()->prepare($sql)->execute($values);
         }

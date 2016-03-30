@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>b92f7ddc-c7bb-497b-8b91-9f668b3ff096</OriginalElement>
+  <nodes>
+    <node x="769.75" y="77.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Country</node>
+    <node x="232.99999999999997" y="556.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Review</node>
+    <node x="440.0" y="333.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Post</node>
+    <node x="327.75" y="0.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.User</node>
+    <node x="0.0" y="77.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Category</node>
+    <node x="0.0" y="763.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Tag</node>
+    <node x="3.0" y="589.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.ProductPrice</node>
+    <node x="30.5" y="300.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Product</node>
+    <node x="686.0" y="333.0">b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Address</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Review" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.User">
+      <point x="65.5" y="-81.0" />
+      <point x="429.5" y="275.0" />
+      <point x="450.375" y="275.0" />
+      <point x="-40.875" y="125.0" />
+    </edge>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.ProductPrice" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Product">
+      <point x="0.0" y="-48.0" />
+      <point x="-77.5" y="103.0" />
+    </edge>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Address" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Country">
+      <point x="62.75" y="-70.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Product" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Category">
+      <point x="-77.5" y="-103.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Product" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.User">
+      <point x="77.5" y="-103.0" />
+      <point x="263.0" y="275.0" />
+      <point x="368.625" y="275.0" />
+      <point x="-122.625" y="125.0" />
+    </edge>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Review" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Product">
+      <point x="-65.5" y="-81.0" />
+      <point x="298.5" y="531.0" />
+      <point x="263.0" y="531.0" />
+      <point x="77.5" y="103.0" />
+    </edge>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Post" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.User">
+      <point x="0.0" y="-70.0" />
+      <point x="553.0" y="275.0" />
+      <point x="532.125" y="275.0" />
+      <point x="40.875" y="125.0" />
+    </edge>
+    <edge source="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Address" target="b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.User">
+      <point x="-62.75" y="-70.0" />
+      <point x="748.75" y="275.0" />
+      <point x="613.875" y="275.0" />
+      <point x="122.625" y="125.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4094094094094094" x="489.5" y="440.5" />
+  <SelectedNodes>
+    <node>b92f7ddc-c7bb-497b-8b91-9f668b3ff096.TABLE:Sawazon.Address</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+

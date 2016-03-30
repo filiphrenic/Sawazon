@@ -14,9 +14,10 @@ abstract class Model implements \Serializable
     public abstract function load($primary_key);
 
     /**
+     * @param string $where SQL where clause
      * @return array
      */
-    public abstract function loadAll();
+    public abstract function loadAll($where = "");
 
     public abstract function save();
 
