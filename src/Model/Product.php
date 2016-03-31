@@ -26,6 +26,14 @@ class Product extends DBModel implements RSSable
         $rss .= "<author>$author->first_name $author->last_name</author>";
         $rss .= "<category>$category->name</category>";
 
+        $rss .= "<channel>";
+        $rss .= "<title>Product reviews</title>";
+        /** @var Review $review */
+        foreach ($this->review_all as $review) {
+            $rss .= "<item>" . $review->getRSS() . "</item>";
+        }
+        $rss .= "</channel>";
+
         return $rss;
     }
 

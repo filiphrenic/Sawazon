@@ -26,6 +26,23 @@ class User extends DBModel implements RSSable
         $rss .= "<author>$this->first_name $this->last_name</author>";
         $rss .= "<category>" . self::roleToString($this->user_role) . "</category>";
 
+
+        $rss .= "<channel>";
+        $rss .= "<title>$this->username's products</title>";
+        /** @var Product $product */
+        foreach ($this->product_all as $product) {
+            $rss .= "<item>" . $product->getRSS() . "</item>";
+        }
+        $rss .= "</channel>";
+
+        $rss .= "<channel>";
+        $rss .= "<title>$this->username's posts</title>";
+        /** @var Post $post */
+        foreach ($this->post_all as $post) {
+            $rss .= "<item>" . $post->getRSS() . "</item>";
+        }
+        $rss .= "</channel>";
+
         return $rss;
     }
 

@@ -16,21 +16,20 @@ class Category extends DBModel implements RSSable
 
     public function getRSS()
     {
-        $products = $this->getProducts();
-
         $rss = "<title>$this->name</title>";
         $rss .= "<description>$this->description</description>";
         $rss .= "<category>$this->name</category>";
 
-        // TODO loop through products
+        $rss .= "<channel>";
+        $rss .= "<title>Products in category $this->name</title>";
+        /** @var Product $product */
+        foreach ($this->product_all as $product) {
+            $rss .= "<item>" . $product->getRSS() . "</item>";
+        }
+        $rss .= "</channel>";
 
         return $rss;
 
-    }
-
-    public function getProducts()
-    {
-        return (new Product())->loadAll("WHERE category_id = ?", [$this->category_id]);
     }
 
 }

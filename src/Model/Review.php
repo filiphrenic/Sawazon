@@ -9,7 +9,7 @@ class Review extends DBModel implements RSSable
 {
     public function getColumnNames()
     {
-        return ['review_id', 'product_id', 'user_id', 'content', 'rating', 'date_reviewed'];
+        return ['review_id', 'product_id', 'user_id', 'content', 'rating', 'published_on'];
     }
 
     public function getRSS()
@@ -20,7 +20,7 @@ class Review extends DBModel implements RSSable
         $rss = "<title>Review no.$this->review_id / rating: $this->rating</title>";
         $rss .= "<description>$this->content</description>";
         $rss .= "<author>$author->first_name $author->last_name</author>";
-        $rss .= "<pubDate>$this->date_reviewed</pubDate>";
+        $rss .= "<pubDate>$this->published_on</pubDate>";
 
         return $rss;
     }
