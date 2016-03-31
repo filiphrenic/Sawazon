@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 30, 2016 at 10:37 PM
+-- Generation Time: Mar 31, 2016 at 08:03 PM
 -- Server version: 5.6.28-0ubuntu0.14.04.1
 -- PHP Version: 5.6.19-1+deb.sury.org~trusty+1
 
@@ -52,6 +52,13 @@ CREATE TABLE `Category` (
   `name` varchar(30) NOT NULL,
   `description` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Category`
+--
+
+INSERT INTO `Category` (`category_id`, `name`, `description`) VALUES
+(1, 'Auti', 'Luti automobili');
 
 -- --------------------------------------------------------
 
@@ -357,8 +364,15 @@ CREATE TABLE `Post` (
   `user_id` int(11) NOT NULL,
   `heading` varchar(100) NOT NULL,
   `content` varchar(512) NOT NULL,
-  `published_on` date NOT NULL
+  `published_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Post`
+--
+
+INSERT INTO `Post` (`post_id`, `user_id`, `heading`, `content`, `published_on`) VALUES
+(1, 1, 'Pozz ljudi', 'Ovo je moj prvi post', '2016-03-31 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -373,9 +387,16 @@ CREATE TABLE `Product` (
   `name` varchar(100) NOT NULL,
   `description` varchar(2048) NOT NULL,
   `allow_review` tinyint(1) NOT NULL DEFAULT '1',
-  `published_on` date NOT NULL,
+  `published_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `view_count` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Product`
+--
+
+INSERT INTO `Product` (`product_id`, `user_id`, `category_id`, `name`, `description`, `allow_review`, `published_on`, `view_count`) VALUES
+(1, 1, 1, 'Porše', 'Brm Brm Brm 1000km/s', 1, '2016-03-31 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -385,9 +406,16 @@ CREATE TABLE `Product` (
 
 CREATE TABLE `ProductPrice` (
   `product_id` int(11) NOT NULL,
-  `date_changed` date NOT NULL,
-  `price` decimal(7,2) NOT NULL
+  `date_changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ProductPrice`
+--
+
+INSERT INTO `ProductPrice` (`product_id`, `date_changed`, `price`) VALUES
+(1, '2016-03-31 15:54:31', 1000000.00);
 
 -- --------------------------------------------------------
 
@@ -401,8 +429,15 @@ CREATE TABLE `Review` (
   `user_id` int(11) DEFAULT NULL COMMENT 'reviewer',
   `content` varchar(256) NOT NULL,
   `rating` enum('1','2','3','4','5') NOT NULL DEFAULT '5',
-  `date_reviewed` date NOT NULL
+  `published_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Review`
+--
+
+INSERT INTO `Review` (`review_id`, `product_id`, `user_id`, `content`, `rating`, `published_on`) VALUES
+(1, 1, 1, 'Predobar auto, kupujem cim dignem hipoteku', '5', '2016-03-31 16:00:04');
 
 -- --------------------------------------------------------
 
@@ -415,6 +450,13 @@ CREATE TABLE `Tag` (
   `content_type` enum('PRODUCT','POST') NOT NULL,
   `tag` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Tag`
+--
+
+INSERT INTO `Tag` (`content_id`, `content_type`, `tag`) VALUES
+(1, 'PRODUCT', 'makina');
 
 -- --------------------------------------------------------
 
@@ -432,15 +474,16 @@ CREATE TABLE `User` (
   `telephone` varchar(50) DEFAULT NULL,
   `date_of_birth` date NOT NULL,
   `user_role` int(11) NOT NULL DEFAULT '0',
-  `background_color` varchar(10) DEFAULT '#FFFFFF'
+  `background_color` varchar(10) DEFAULT '#FFFFFF',
+  `currency` varchar(3) DEFAULT 'HRK'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `background_color`) VALUES
-(1, 'nichre', 'fićo', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 0, '#FFFFFF');
+INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `background_color`, `currency`) VALUES
+(1, 'nichre', 'fićo', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 0, '#FFFFFF', 'HRK');
 
 --
 -- Indexes for dumped tables
@@ -535,7 +578,7 @@ ALTER TABLE `Address`
 -- AUTO_INCREMENT for table `Category`
 --
 ALTER TABLE `Category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `Country`
 --
@@ -545,17 +588,17 @@ ALTER TABLE `Country`
 -- AUTO_INCREMENT for table `Post`
 --
 ALTER TABLE `Post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `Product`
 --
 ALTER TABLE `Product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `Review`
 --
 ALTER TABLE `Review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `User`
 --
