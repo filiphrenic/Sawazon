@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Address;
+use Model\Category;
 use Model\User;
 use Routing\Route;
 use Sawazon\Controller;
@@ -31,8 +32,9 @@ class Index implements Controller
 //        </html>
 //        ";
 
-        $u = (new User())->loadAll("WHERE user_id = ?", [1]);
-        var_dump($u);
+        $u = (new User())->load(1);
+        var_dump($u->address_all);
+
 
     }
 }
