@@ -13,7 +13,7 @@ abstract class DBModel extends Model
     /** @var  string */
     private $primaryKeyColumn;
 
-    /** @var mixed Table row */
+    /** @var array Table row */
     private $model;
 
     /**
@@ -24,7 +24,6 @@ abstract class DBModel extends Model
     public function __construct()
     {
         $class_name = short_name($this);
-
         $this->tableName = $class_name;
         $this->primaryKeyColumn = strtolower($class_name) . '_id';
     }
@@ -46,12 +45,12 @@ abstract class DBModel extends Model
         return $this;
     }
 
-    public function loadAll($where = "")
+    public function loadAll($where = "", $params = [])
     {
         $sql = "SELECT * FROM " . $this->tableName . " " . $where;
 
         $statement = DB::getPDO()->prepare($sql);
-        $statement->execute();
+        $statement->execute($params);
 
         if (1 > $statement->rowCount()) {
             return [];
@@ -135,12 +134,21 @@ abstract class DBModel extends Model
 
     public function __get($name)
     {
-        return $this->model->$name;
+        $ret = element($name, $this->model, null);
+        if (null != $ret) return $ret;
+        $ret = element($name . '_id', $this->model, null);
+        if (null != $ret) {
+            $class = "\\Model\\" . ucfirst($name);
+            if (!class_exists($class)) return null;
+            $this->model[$name] = (new $class)->load($ret);
+            $ret = $this->model[$name];
+        }
+        return $ret;
     }
 
     public function __set($name, $value)
     {
-        $this->model->$name = $value;
+        return $this->model[$name] = $value;
     }
 
 

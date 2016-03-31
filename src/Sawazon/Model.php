@@ -8,16 +8,17 @@ abstract class Model implements \Serializable
     protected $primary_key;
 
     /**
-     * @param number $primary_key
+     * @param string $primary_key
      * @return Model
      */
     public abstract function load($primary_key);
 
     /**
      * @param string $where SQL where clause
+     * @param array $params
      * @return array
      */
-    public abstract function loadAll($where = "");
+    public abstract function loadAll($where = "", $params = []);
 
     public abstract function save();
 

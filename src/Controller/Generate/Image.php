@@ -5,7 +5,7 @@ namespace Controller\Generate;
 use Dispatch\Dispatcher;
 use Sawazon\Controller;
 
-class Image extends Controller
+class Image implements Controller
 {
 
     private static $ROOT_DIR = __DIR__ . "/../../../images";

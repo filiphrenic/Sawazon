@@ -5,7 +5,7 @@ namespace Controller\Generate;
 use Generate\CaptchaMaker;
 use Sawazon\Controller;
 
-class Captcha extends Controller
+class Captcha implements Controller
 {
 
     public function display()

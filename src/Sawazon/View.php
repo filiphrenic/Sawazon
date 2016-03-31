@@ -2,7 +2,7 @@
 
 namespace Sawazon;
 
-class View
+abstract class View
 {
-    // TODO
+    
 }

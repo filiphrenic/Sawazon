@@ -2,7 +2,6 @@
 
 namespace Sawazon;
 
-class Controller
+interface Controller
 {
-
 }

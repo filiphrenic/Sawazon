@@ -2,6 +2,7 @@
 
 require_once "src/Util/init.php";
 
+
 try {
     \Dispatch\Dispatcher::getInstance()->dispatch();
 } catch (Exception $e) {

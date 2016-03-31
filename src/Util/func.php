@@ -45,6 +45,14 @@ function short_name($obj)
 }
 
 /**
+ * @return string url base for this server
+ */
+function url_base()
+{
+    return $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"];
+}
+
+/**
  * Redirects to given url
  * @param string $url
  */
@@ -57,7 +65,7 @@ function redirect($url = "/")
 /**
  * Function is called when something strange happens,
  * but I don't want to throw an exception.
- * Redirects to index page.
+ * Maybe log the error somewhere and redirect to index page.
  *
  * @param string $error
  */
