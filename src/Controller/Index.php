@@ -2,10 +2,7 @@
 
 namespace Controller;
 
-use Model\Address;
-use Model\Category;
-use Model\User;
-use Routing\Route;
+use Processing\Currency\CurrencyConverterProvider;
 use Sawazon\Controller;
 
 class Index implements Controller
@@ -13,7 +10,7 @@ class Index implements Controller
     public function display()
     {
 
-        $img = Route::get("image")->generate(['content' => 'user', 'id' => '1']);
+        //$img = Route::get("image")->generate(['content' => 'user', 'id' => '1']);
 
 //        echo "
 //        <!doctype html>
@@ -32,9 +29,12 @@ class Index implements Controller
 //        </html>
 //        ";
 
-        $u = (new User())->load(1);
-        var_dump($u->address_all);
+//        $u = (new User())->load(1);
+//        var_dump($u->address_all);
 
+        $cc = CurrencyConverterProvider::get();
+
+        echo $cc->convert(15, 'GBP', 'USD');
 
     }
 }

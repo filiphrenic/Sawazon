@@ -1,0 +1,22 @@
+Sawazon
+├── conf # project configuration
+├── images # stored images from users
+├── phpmyadmin # phpmyadmin folder
+├── src # source code
+│   ├── Controller # controllers
+│   ├── DB # database specific classes
+│   ├── Dispatch # dispatcher
+│   ├── Generate # class that generate something
+│   ├── Model # project model
+│   ├── Processing # classes that do some processing
+│   ├── Routing # routing
+│   ├── Sawazon # interfaces for this project
+│   ├── Util # utility classes and functions
+│   └── View # views for rendering html
+├── vagrant # vagrant folder
+├── vendor # folder with
+├── web # web content
+|   ├── css # css
+|   ├── img # layout images (buttons...)
+|   └── js # javascript
+└── index.php # default page that does routing
