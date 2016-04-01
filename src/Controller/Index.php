@@ -2,13 +2,16 @@
 
 namespace Controller;
 
-use Processing\Image\ImageUpload;
 use Sawazon\Controller;
+use View\Templater;
 
 class Index implements Controller
 {
     public function display()
     {
+
+        $t = new Templater('Proba');
+        $t->render();
 
         //$img = Route::get("image")->generate(['content' => 'user', 'id' => '1']);
 
@@ -21,6 +24,9 @@ class Index implements Controller
 //            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
 //            <meta name=\"description\" content=\"Sawazon\">
 //            <meta name=\"author\" content=\"Filip Hrenić, filip.hrenic@fer.hr\">
+//        <link rel="alternate"
+//type="application/rss+xml" title="NASLOV"
+//href="ADRESA">
 //            <script src=\"/web/js/test.js\"></script>
 //            </head>
 //            <body>
@@ -29,15 +35,15 @@ class Index implements Controller
 //        </html>
 //        ";
 
-        $im = element('image', $_FILES, null);
-        if ($im !== null) {
-            var_dump(ImageUpload::upload($im, 'user/4'));
-        }
-
-        echo "<form action=\"/\" method=\"post\" enctype=\"multipart/form-data\">
-    <input type='file' name='image'>
-  <input type=\"submit\" value=\"Submit\">
-</form>";
+//        $im = element('image', $_FILES, null);
+//        if ($im !== null) {
+//            var_dump(ImageUpload::upload($im, 'user/4'));
+//        }
+//
+//        echo "<form action=\"/\" method=\"post\" enctype=\"multipart/form-data\">
+//    <input type='file' name='image'>
+//  <input type=\"submit\" value=\"Submit\">
+//</form>";
 
 
     }
