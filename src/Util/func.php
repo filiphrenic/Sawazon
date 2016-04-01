@@ -74,3 +74,47 @@ function strange_behaviour($error = "")
     redirect(\Routing\Route::get("index")->generate());
 }
 
+/**
+ * will transform this:
+ *
+ * array(1) {
+ *      ["upload"]=>array(2) {
+ *          ["name"]=>array(2) {
+ *              [0]=>string(9)"file0.txt"
+ *              [1]=>string(9)"file1.txt"
+ *              }
+ *          ["type"]=>array(2) {
+ *              [0]=>string(10)"text/plain"
+ *              [1]=>string(10)"text/html"
+ *              }
+ *          }
+ *      }
+ *
+ * into:
+ *
+ * array(1) {
+ *      ["upload"]=>array(2) {
+ *          [0]=>array(2) {
+ *              ["name"]=>string(9)"file0.txt"
+ *              ["type"]=>string(10)"text/plain"
+ *              },
+ *          [1]=>array(2) {
+ *              ["name"]=>string(9)"file1.txt"
+ *              ["type"]=>string(10)"text/html"
+ *              }
+ *          }
+ *      }
+ * @param $arr
+ * @return array rearranged
+ */
+function rearrange_array($arr)
+{
+    $result = [];
+    foreach ($arr as $k1 => $v1) {
+        foreach ($v1 as $k2 => $v2) {
+            $result[$k2][$k1] = $v2;
+        }
+    }
+    return $result;
+}
+

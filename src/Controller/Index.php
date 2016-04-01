@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-use Processing\Currency\CurrencyConverterProvider;
+use Processing\Image\ImageUpload;
 use Sawazon\Controller;
 
 class Index implements Controller
@@ -29,12 +29,16 @@ class Index implements Controller
 //        </html>
 //        ";
 
-//        $u = (new User())->load(1);
-//        var_dump($u->address_all);
+        $im = element('image', $_FILES, null);
+        if ($im !== null) {
+            var_dump(ImageUpload::upload($im, 'user/4'));
+        }
 
-        $cc = CurrencyConverterProvider::get();
+        echo "<form action=\"/\" method=\"post\" enctype=\"multipart/form-data\">
+    <input type='file' name='image'>
+  <input type=\"submit\" value=\"Submit\">
+</form>";
 
-        echo $cc->convert(15, 'GBP', 'USD');
 
     }
 }
