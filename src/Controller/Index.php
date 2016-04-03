@@ -4,6 +4,7 @@ namespace Controller;
 
 use Sawazon\Controller;
 use View\Templater;
+use View\TestClass;
 
 class Index implements Controller
 {
@@ -11,6 +12,7 @@ class Index implements Controller
     {
 
         $t = new Templater('Proba');
+        $t->addParam('test',new TestClass(42));
         $t->render();
 
         //$img = Route::get("image")->generate(['content' => 'user', 'id' => '1']);

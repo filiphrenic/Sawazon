@@ -5,16 +5,16 @@ namespace View;
 class TestClass
 {
 
-    public $property = "mamica";
+    public $property;
 
-    public function __toString()
+    public function __construct($x)
     {
-        return 'to string funkcija';
+        $this->property = $x;
     }
 
-    public function testFunkcija()
+    public function x()
     {
-        return 'iz funkcije';
+        return $this->property;
     }
 
 }

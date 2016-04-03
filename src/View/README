@@ -1,8 +1,0 @@
-DOESN'T WORK
-
-I probably won't use it, because there's to much to implement.
-If I understand correctly, I need to manually parse php and than execute logic in the templater
-  because now it only works when inserting strings. foreach wouldn't work because array would be
-  turned into 'Array'...
-
-Now i'll have to write html inside php classes .................... F*ck
