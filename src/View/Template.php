@@ -16,9 +16,10 @@ namespace View;
  *
  * @package View
  */
-class Templater
+class Template
 {
 
+    private static $PAR_PAT = "\\(\\(([\\w-]+)\\)\\)";
     private static $VAR_PAT = "\\{(\\w+)([:>-]{1,2})(\\w+)\\}";
     private static $FOR_PAT = "\\[(\\w+)([:>-]{1,2})(\\w+)\\]";
     private static $IF_PAT = '\\?\\?' . '(?P<test>[^?]+)' . '::' . '(?P<then>[^!]+)'
@@ -30,12 +31,12 @@ class Templater
     /** @var array */
     private $params;
 
-    public function __construct($template_name, $params = [])
+    public function __construct($template_name)
     {
         $path = __DIR__ . "/Templates/" . $template_name . ".phtml";
         if (!file_exists($path)) $this->content = "<h1>No template for $template_name</h1>";
         else $this->content = file_get_contents($path);
-        $this->params = $params;
+        $this->params = [];
     }
 
     /**
@@ -85,14 +86,17 @@ class Templater
         };
 
         $if_replace = function ($matches) {
-            $then = trim($matches['then']);
-            $else = trim($matches['else']);
-            if (($test = element(trim($matches['test']), $this->params)) == null)
-                return $else;
-            return $test ? $then : $else;
+            $if = array_map('trim', elements(['test', 'then', 'else'], $matches, ''));
+            $if['test'] = element($if['test'], $this->params, false);
+            return $if['test'] ? $if['then'] : $if['else'];
         };
 
-        $tmp = preg_replace_callback('@' . self::$IF_PAT . '@', $if_replace, $this->content);
+        $par_replace = function ($matches) {
+            return element($matches[1], $this->params, '');
+        };
+
+        $tmp = preg_replace_callback('@' . self::$PAR_PAT . '@', $par_replace, $this->content);
+        $tmp = preg_replace_callback('@' . self::$IF_PAT . '@', $if_replace, $tmp);
         $tmp = preg_replace_callback('@' . self::$VAR_PAT . '@', $var_replace, $tmp);
         return preg_replace_callback('@' . self::$FOR_PAT . '@', $for_replace, $tmp);
     }
