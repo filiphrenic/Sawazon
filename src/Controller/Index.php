@@ -11,7 +11,7 @@ class Index implements Controller
     public function display()
     {
 
-        $t = new Templater('Proba');
+        $t = new Templater('proba');
         $t->addParam('test',new TestClass(42));
         $t->render();
 

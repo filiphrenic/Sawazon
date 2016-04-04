@@ -15,7 +15,7 @@ class NamedImageFilter implements ImageFilter
 
     public function apply($image)
     {
-        imagefilter(image, $this->filterType);
+        imagefilter($image, $this->filterType);
     }
 
 }

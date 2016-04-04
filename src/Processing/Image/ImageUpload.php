@@ -25,8 +25,6 @@ class ImageUpload
         $current_path = $uploaded_file['tmp_name'];
         $destination = self::$ROOT_DIR . '/' . $destination . '.png';
 
-        var_dump($destination);
-
         // error checking
         if ($uploaded_file['error'] != UPLOAD_ERR_OK)
             return "Error occurred while uploading image to server";

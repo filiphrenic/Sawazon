@@ -6,10 +6,12 @@ namespace View;
  * Class Templater
  * Used for creating html pages out of templates
  * Supports:
- *      {object:property}       =>      $object->property
- *      {object->function}      =>      $object->function()
- *      [array:property]        =>      foreach($object as $o) $o->property
- *      [array->function]       =>      foreach($object as $o) $o->function()
+ *      {object:property}           =>      $object->property
+ *      {object->function}          =>      $object->function()
+ *      [array:property]            =>      foreach($object as $o) $o->property
+ *      [array->function]           =>      foreach($object as $o) $o->function()
+ *      ??test :: then || else??    =>      if (test) { then; } else { else; }
+ *
  * All of these need to return a string.
  *
  * @package View
@@ -17,8 +19,10 @@ namespace View;
 class Templater
 {
 
-    private static $VAR_PAT = "\\{(\\w+)([:\\->]{1,2})(\\w+)\\}";
-    private static $FOR_PAT = "\\[(\\w+)([:\\->]{1,2})(\\w+)\\]";
+    private static $VAR_PAT = "\\{(\\w+)([:>-]{1,2})(\\w+)\\}";
+    private static $FOR_PAT = "\\[(\\w+)([:>-]{1,2})(\\w+)\\]";
+    private static $IF_PAT = '\\?\\?' . '(?P<test>[^?]+)' . '::' . '(?P<then>[^!]+)'
+    . '\\|\\|' . '(?P<else>[^?]*)' . '\\?\\?';
 
     /** @var  string */
     private $content;
@@ -39,10 +43,10 @@ class Templater
      */
     public function render()
     {
-        echo $this->__toString();
+        echo $this->toHtml();
     }
 
-    public function __toString()
+    public function toHtml()
     {
         $eval_func = function ($var, $type, $func_or_prop) {
             $error = "ERROR FIXME"; // TODO remove when production
@@ -80,7 +84,16 @@ class Templater
             return $ret;
         };
 
-        $tmp = preg_replace_callback('@' . self::$VAR_PAT . '@', $var_replace, $this->content);
+        $if_replace = function ($matches) {
+            $then = trim($matches['then']);
+            $else = trim($matches['else']);
+            if (($test = element(trim($matches['test']), $this->params)) == null)
+                return $else;
+            return $test ? $then : $else;
+        };
+
+        $tmp = preg_replace_callback('@' . self::$IF_PAT . '@', $if_replace, $this->content);
+        $tmp = preg_replace_callback('@' . self::$VAR_PAT . '@', $var_replace, $tmp);
         return preg_replace_callback('@' . self::$FOR_PAT . '@', $for_replace, $tmp);
     }
 
