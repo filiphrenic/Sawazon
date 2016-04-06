@@ -31,3 +31,13 @@ rss:
   regexs:
     content: "[[:alpha:]]+"
     id: "\\d+"
+
+user_login:
+  url: user/login
+  controller: userControll
+  action: login
+
+user_register:
+  url: user/register
+  controller: userControll
+  action: register

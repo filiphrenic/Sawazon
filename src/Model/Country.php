@@ -12,5 +12,10 @@ class Country extends DBModel
         return ['country_id', 'name', 'code'];
     }
 
+    public function toOption()
+    {
+        return "<option value=\"$this->country_id\">$this->name</option>";
+    }
+
 
 }

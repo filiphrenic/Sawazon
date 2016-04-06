@@ -118,3 +118,31 @@ function rearrange_array($arr)
     return $result;
 }
 
+/**
+ * @param string $default default user_id
+ * @return string user_id
+ */
+function user_id($default = null)
+{
+    return element('user_id', $_SESSION, $default);
+}
+
+/**
+ * @return null | \Sawazon\Model
+ */
+function user()
+{
+    $user_id = user_id(null);
+    if ($user_id == null) return null;
+    return (new \Model\User())->load($user_id);
+}
+
+function cleanHTML($text = "")
+{
+    return htmlentities($text, ENT_QUOTES, "utf-8");
+}
+
+function cleanAll($keys = [], $arr = [])
+{
+    return array_map('cleanHTML', elements($keys, $arr, ''));
+}

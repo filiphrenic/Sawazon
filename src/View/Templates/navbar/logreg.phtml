@@ -1,0 +1,163 @@
+<!-- BEGIN # MODAL LOGIN -->
+<div class="modal fade" id="login-modal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+                <img class="img-circle" id="img_logo" src="/web/img/sawazon-logo.png">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <!-- Begin # DIV Form -->
+            <div id="div-forms">
+
+                <!-- Begin # Login Form -->
+                <form id="login-form" action="((log-link))" method="POST">
+                    <div class="modal-body">
+                        <div id="div-login-msg">
+                            <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+                            <span id="text-login-msg">Enter username and password</span>
+                        </div>
+
+                        <div id="first-input" class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <input name="username" id="l_username" class="form-control" type="text"
+                                   placeholder="Username" required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            <input name="password" id="l_password" class="form-control" type="password"
+                                   placeholder="Password" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+                        </div>
+                        <div>
+                            <button id="login_register_btn" type="button" class="btn btn-link">Register</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- End # Login Form -->
+
+                <!-- Begin | Register Form -->
+                <form id="register-form" class="logreg-form" action="((reg-link))" method="POST">
+                    <div class="modal-body">
+                        <div id="div-register-msg">
+                            <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
+                            <span id="text-register-msg">Create a new account</span>
+                        </div>
+
+                        <div id="first-input" class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <input name="username" id="r_username" class="form-control" type="text"
+                                   placeholder="Username" required>
+                        </div>
+
+                        <div class="form-group has-feedback ">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            <input name="password" id="r_password" class="form-control" type="password"
+                                   placeholder="Password" required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <input name="password2" id="r_password2" class="form-control" type="password"
+                                   placeholder="Repeat password" required>
+                        </div>
+
+                        <label for="r_firstname">Basic info</label>
+                        <div class="form-group has-feedback">
+                            <input name="firstname" id="r_firstname" class="form-control" type="text"
+                                   placeholder="First name" required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <input name="lastname" id="r_lastname" class="form-control" type="text"
+                                   placeholder="Last name" required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                            <input name="date_of_birth" id="r_date_of_birth" class="form-control" type="date"
+                                   required>
+                            <script>
+                                $(function () { // today's date
+                                    $('#r_date_of_birth').val(new Date().toISOString().substr(0, 10));
+                                });
+                            </script>
+                        </div>
+
+
+                        <label for="r_email">Contact info</label>
+                        <div class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            <input name="email" id="r_email" class="form-control" type="email" placeholder="Email"
+                                   required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+                            <input name="telephone" id="r_telephone" class="form-control" type="tel"
+                                   placeholder="Telephone" required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-home form-control-feedback"></span>
+                            <input name="street" id="r_street" class="form-control" type="text"
+                                   placeholder="Street address" required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
+                            <input name="city" id="r_city" class="form-control" type="text" placeholder="City"
+                                   required>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <select name="country_id" id="r_country" class="selectpicker show-tick form-control"
+                                    data-live-search="true"
+                                    title="Country" required>
+                                [countries->toOption]
+                            </select>
+                        </div>
+
+                        <label for="r_profile_picture">Profile picture</label>
+                        <input name="profile_picture" id="r_profile_picture" type="file" accept="image/*" class="file"
+                               multiple
+                               data-show-upload="false"
+                               data-allowed-file-extensions='["png", "jpg", "jpeg"]'
+                               data-show-caption="true">
+
+
+                        <label for="r_captcha">Prove that you're not a robot</label>
+                        <div id="captcha_containter" class="form-group has-feedback">
+                            <img id="r_captcha" src="((captcha-link))" alt="captcha"
+                                 class="img-responsive img-fluid img-thumbnail">
+                            <input name="captcha" id="r_captcha_input" type="text" class="form-control" required
+                                   placeholder="Enter captcha">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Register</button>
+                        </div>
+                        <div>
+                            <button id="register_login_btn" type="button" class="btn btn-link">Log In</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- End | Register Form -->
+
+            </div>
+            <!-- End # DIV Form -->
+
+        </div>
+    </div>
+</div>
+<!-- END # MODAL LOGIN -->

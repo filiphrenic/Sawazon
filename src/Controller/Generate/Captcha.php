@@ -8,6 +8,7 @@ use Sawazon\Controller;
 class Captcha implements Controller
 {
 
+
     public function display()
     {
         $captcha = new CaptchaMaker();
@@ -16,5 +17,5 @@ class Captcha implements Controller
         imagepng($captcha->getImage());
         imagedestroy($captcha->getImage());
     }
-    
+
 }

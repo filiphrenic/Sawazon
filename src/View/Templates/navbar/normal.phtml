@@ -1,0 +1,47 @@
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand"><img src="web/img/sawazon-logo.png" width="24" height="24"/></span>
+            <a class="navbar-brand" href="">Sawazon</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <form class="nav navbar-left navbar-form" role="search">
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    <input type="text" class="form-control" placeholder="Enter #tag" size="35">
+                </div>
+                <button type="submit" class="btn btn-danger">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" data-toggle="modal" data-target="#login-modal" onclick="logregShowHide(true)"><span
+                            class="glyphicon glyphicon-user"></span> Login</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#login-modal" onclick="logregShowHide(false)"><span
+                            class="glyphicon glyphicon-share"></span> Register</a></li>
+                <script>
+                    function logregShowHide($isLogin) {
+                        var $login = $('#login-form');
+                        var $register = $('#register-form');
+                        var $active, $disabled;
+
+                        if ($isLogin) {
+                            $active = $login;
+                            $disabled = $register;
+                        } else {
+                            $active = $register;
+                            $disabled = $login;
+                        }
+
+                        $active.css("display", "block");
+                        $disabled.css("display", "none");
+                    }
+                </script>
+                {logreg->toHtml}
+            </ul>
+        </div>
+    </div>
+</nav>

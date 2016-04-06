@@ -26,16 +26,15 @@ class Template
     . '\\|\\|' . '(?P<else>[^?]*)' . '\\?\\?';
 
     /** @var  string */
-    private $content;
+    private $template;
 
     /** @var array */
     private $params;
 
     public function __construct($template_name)
     {
-        $path = __DIR__ . "/Templates/" . $template_name . ".phtml";
-        if (!file_exists($path)) $this->content = "<h1>No template for $template_name</h1>";
-        else $this->content = file_get_contents($path);
+        $this->template = __DIR__ . "/Templates/" . $template_name . ".phtml";
+        if (!file_exists($this->template)) throw  new \Exception('No file ' . $template_name);
         $this->params = [];
     }
 
@@ -95,7 +94,8 @@ class Template
             return element($matches[1], $this->params, '');
         };
 
-        $tmp = preg_replace_callback('@' . self::$PAR_PAT . '@', $par_replace, $this->content);
+        $tmp = file_get_contents($this->template);
+        $tmp = preg_replace_callback('@' . self::$PAR_PAT . '@', $par_replace, $tmp);
         $tmp = preg_replace_callback('@' . self::$IF_PAT . '@', $if_replace, $tmp);
         $tmp = preg_replace_callback('@' . self::$VAR_PAT . '@', $var_replace, $tmp);
         return preg_replace_callback('@' . self::$FOR_PAT . '@', $for_replace, $tmp);
