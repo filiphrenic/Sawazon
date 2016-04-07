@@ -5,6 +5,7 @@ namespace View;
 
 use Model\Country;
 use Routing\Route;
+use Util\Session;
 
 class NavbarTemplate extends Template
 {
@@ -13,10 +14,11 @@ class NavbarTemplate extends Template
     {
         parent::__construct('main');
 
-        if (null == user_id(null)) $navbar = $this->getNormalNavbar();
+        if (null == Session::get(Session::$USER_ID))
+            $navbar = $this->getNormalNavbar();
         else $navbar = $this->getLoggedInNavbar();
 
-        $bg_color = element('bg_color', $_SESSION, "#FFFFFF");
+        $bg_color = Session::get(Session::$BG_COLOR, '#ffffff');
 
         $this->addParam('bg_color', $bg_color);
         $this->addParam('navbar', $navbar);

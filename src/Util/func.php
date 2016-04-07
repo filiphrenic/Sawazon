@@ -119,20 +119,11 @@ function rearrange_array($arr)
 }
 
 /**
- * @param string $default default user_id
- * @return string user_id
- */
-function user_id($default = null)
-{
-    return element('user_id', $_SESSION, $default);
-}
-
-/**
  * @return null | \Sawazon\Model
  */
 function user()
 {
-    $user_id = user_id(null);
+    $user_id = \Util\Session::get(\Util\Session::$USER_ID);
     if ($user_id == null) return null;
     return (new \Model\User())->load($user_id);
 }
@@ -145,4 +136,10 @@ function cleanHTML($text = "")
 function cleanAll($keys = [], $arr = [])
 {
     return array_map('cleanHTML', elements($keys, $arr, ''));
+}
+
+function shorten($text, $len)
+{
+    if (mb_strlen($text) <= $len) return $text;
+    else return mb_substr($text, 0, $len) . "...";
 }

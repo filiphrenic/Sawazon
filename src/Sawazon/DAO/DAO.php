@@ -10,4 +10,11 @@ interface DAO
      * @return array
      */
     public function getMostViewedProducts($n = 5);
+
+    /**
+     * @param int $product_id
+     * @param int $numOfPrices
+     * @return array [ (price, date) ]
+     */
+    public function getPricesFor($product_id, $numOfPrices);
 }

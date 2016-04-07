@@ -4,6 +4,7 @@ namespace Dispatch;
 
 use Routing\Route;
 use Routing\RoutingException;
+use Util\Session;
 
 class DefaultDispatcher extends Dispatcher
 {
@@ -26,7 +27,8 @@ class DefaultDispatcher extends Dispatcher
 
         if ($this->route == null) throw new RoutingException("Route for $uri not found");
 
-        if ($this->route->getRemember()) $_SESSION['last_request'] = $uri; // redirect after signup or ...
+        if ($this->route->getRemember())
+            Session::set(Session::$LAST_URL, $uri); // redirect after signup or ...
 
         $ctl = $this->route->getController();
         $ctlCls = "\\Controller\\" . implode('\\', array_map('ucfirst', explode('/', $ctl)));

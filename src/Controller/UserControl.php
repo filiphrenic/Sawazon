@@ -4,6 +4,7 @@ namespace Controller;
 
 use Model\User;
 use Sawazon\Controller;
+use Util\Session;
 
 class UserControl implements Controller
 {
@@ -16,9 +17,9 @@ class UserControl implements Controller
         else {
             /** @var User $user */
             $user = $users[0];
-            $_SESSION['user_id'] = $user->user_id;
-            $_SESSION['bg_color'] = $user->background_color;
-            $_SESSION['currency'] = $user->currency;
+            Session::set(Session::$USER_ID, $user->user_id);
+            Session::set(Session::$BG_COLOR, $user->background_color);
+            Session::set(Session::$CURRENCY, $user->currency);
             echo 1;
         }
     }
