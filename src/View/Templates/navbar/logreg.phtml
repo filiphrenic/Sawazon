@@ -1,3 +1,4 @@
+
 <!-- BEGIN # MODAL LOGIN -->
 <div class="modal fade" id="login-modal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
      style="display: none;">
@@ -15,7 +16,7 @@
 
                 <!-- Begin # Login Form -->
                 <form id="login-form" action="#" method="POST">
-                    <input id="login_link" type="hidden" value="((log-link))"/>
+                    <input id="login_link" type="hidden" value="((log_link))"/>
                     <div class="modal-body">
                         <div id="div-login-msg">
                             <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -47,7 +48,11 @@
                 <!-- End # Login Form -->
 
                 <!-- Begin | Register Form -->
-                <form id="register-form" class="logreg-form" action="((reg-link))" method="POST">
+                <form id="register-form" class="logreg-form" action="#" method="POST">
+                    <input id="register_link" type="hidden" value="((reg_link))"/>
+                    <input id="username_check_link" type="hidden" value="((username_check_link))"/>
+                    <input id="email_check_link" type="hidden" value="((email_check_link))"/>
+
                     <div class="modal-body">
                         <div id="div-register-msg">
                             <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -137,7 +142,7 @@
 
                         <label for="r_captcha">Prove that you're not a robot</label>
                         <div id="captcha_containter" class="form-group has-feedback">
-                            <img id="r_captcha" src="((captcha-link))" alt="captcha"
+                            <img id="r_captcha" src="((captcha_link))" alt="captcha"
                                  class="img-responsive img-fluid img-thumbnail">
                             <input name="captcha" id="r_captcha_input" type="text" class="form-control" required
                                    placeholder="Enter captcha">

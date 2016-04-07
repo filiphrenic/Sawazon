@@ -24,7 +24,9 @@ class DefaultDispatcher extends Dispatcher
             }
         }
 
-        if ($this->route == null) throw new RoutingException("Route not found");
+        if ($this->route == null) throw new RoutingException("Route for $uri not found");
+
+        if ($this->route->getRemember()) $_SESSION['last_request'] = $uri; // redirect after signup or ...
 
         $ctl = $this->route->getController();
         $ctlCls = "\\Controller\\" . implode('\\', array_map('ucfirst', explode('/', $ctl)));

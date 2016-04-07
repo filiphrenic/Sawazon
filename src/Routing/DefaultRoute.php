@@ -27,6 +27,9 @@ class DefaultRoute extends Route
     /** @var  array */
     private $params;
 
+    /** @var  bool */
+    private $remember;
+
     /**
      * @param array $route
      * @return DefaultRoute
@@ -37,6 +40,7 @@ class DefaultRoute extends Route
             element('url', $route, ''),
             element('controller', $route, ''),
             element('action', $route, ''),
+            element('remember', $route, false),
             element('defaults', $route, []),
             element('regexs', $route, [])
         );
@@ -59,10 +63,11 @@ class DefaultRoute extends Route
      * @param string $url
      * @param string $controller
      * @param string $action
+     * @param bool remember
      * @param array $defaults
      * @param array $regexs
      */
-    private function __construct($url, $controller, $action, $defaults = [], $regexs = [])
+    private function __construct($url, $controller, $action, $remember, $defaults = [], $regexs = [])
     {
         $f = function ($match) use ($regexs) {
             $name = substr($match[0], 1, -1); // take the name
@@ -72,6 +77,8 @@ class DefaultRoute extends Route
 
         $this->regex = '/' . $url;
         $this->match_regex = "@^" . preg_replace_callback(self::$PATTERN, $f, $this->regex) . "$@uD";
+
+        $this->remember = $remember;
 
         $this->controller = $controller;
         $this->action = $action;
@@ -111,6 +118,11 @@ class DefaultRoute extends Route
     public function getAction()
     {
         return $this->action;
+    }
+
+    public function getRemember()
+    {
+        return $this->remember;
     }
 
 }

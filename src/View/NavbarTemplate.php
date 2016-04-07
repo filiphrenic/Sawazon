@@ -6,17 +6,19 @@ namespace View;
 use Model\Country;
 use Routing\Route;
 
-class DefaultTemplate extends Template
+class NavbarTemplate extends Template
 {
 
     public function __construct()
     {
         parent::__construct('main');
 
-
         if (null == user_id(null)) $navbar = $this->getNormalNavbar();
         else $navbar = $this->getLoggedInNavbar();
 
+        $bg_color = element('bg_color', $_SESSION, "#FFFFFF");
+
+        $this->addParam('bg_color', $bg_color);
         $this->addParam('navbar', $navbar);
     }
 
@@ -28,9 +30,11 @@ class DefaultTemplate extends Template
         $navbar = new Template('navbar/normal');
 
         $logreg = new Template('navbar/logreg');
-        $logreg->addParam('log-link', Route::get('user_login')->generate());
-        $logreg->addParam('reg-link', Route::get('user_register')->generate());
-        $logreg->addParam('captcha-link', Route::get('captcha')->generate());
+        $logreg->addParam('log_link', Route::get('user_login')->generate());
+        $logreg->addParam('reg_link', Route::get('user_register')->generate());
+        $logreg->addParam('captcha_link', Route::get('captcha')->generate());
+        $logreg->addParam('username_check_link', Route::get('username_check')->generate());
+        $logreg->addParam('email_check_link', Route::get('email_check')->generate());
 
         $logreg->addParam('countries', (new Country())->loadAll());
 

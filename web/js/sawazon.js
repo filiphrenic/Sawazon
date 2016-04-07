@@ -9,9 +9,9 @@ $(function () {
 
     $("form").submit(function () {
 
+        var $error = "";
 
         if (this.id == 'login-form') {
-            var $error = "";
 
             var $l_username = $("#l_username").val();
             var $l_password = $('#l_password').val();
@@ -46,7 +46,6 @@ $(function () {
             else return true;
 
         } else if (this.id == 'register-form') {
-            var $error = "";
 
             var $r_username = $("#r_username").val();
             var $r_password = $("#r_password").val();
@@ -75,15 +74,107 @@ $(function () {
             else if (!$r_city) $error = "City is empty";
             else if (!$r_country) $error = "Country is empty";
 
+            else if ($r_username.length < 4) $error = "Username must contain 4 or more characters";
             else if ($r_password.length < 6) $error = "Password must contain 6 or more characters";
             else if ($r_password != $r_password2) $error = "Passwords don't match";
 
+            if ($error) {
+                msgShow($error, false, true);
+                return false;
+            }
 
-            if (!$error) return true;
-            msgShow($error, false, false);
-            return false;
+
+            // var $register_link = $('#login_link').val();
+            // var $login_response = 0;
+            //
+            // $.ajax({
+            //     type: "POST",
+            //     url: $login_link,
+            //     async: false,
+            //     data: {
+            //         username: $l_username,
+            //         password: $l_password
+            //     },
+            //     success: function ($data) {
+            //         $login_response = $data;
+            //     }
+            // });
+            //
+            // if ($login_response == 0) {
+            //     msgShow("User doesn't exist", false, true);
+            //     return false;
+            // }
+            // else return true;
         }
     });
+
+    $("#r_username").blur(function () {
+
+        var $username = this.value;
+        var $username_check_link = $("#username_check_link").val();
+
+        $.ajax({
+            type: "POST",
+            url: $username_check_link,
+            data: {
+                username: $username
+            },
+            success: function ($data) {
+                if ($data == 1) msgShow("Username " + $username + " is availible", true, false);
+                else msgShow("Username " + $username + " is already taken", false, false);
+            }
+        });
+    });
+
+    $("#r_password2").blur(function () {
+        if ($("#r_password").val() != this.value) msgShow("Passwords don't match", false, false);
+    });
+
+    $("#r_email").blur(function () {
+
+        var $email = this.value;
+        var $email_check_link = $("#email_check_link").val();
+
+        $.ajax({
+            type: "POST",
+            url: $email_check_link,
+            data: {
+                email: $email
+            },
+            success: function ($data) {
+                if ($data == 0) msgShow("Email " + $email + " is already taken", false, false)
+                ;
+            }
+        });
+    });
+
+    $("#r_date_of_birth").blur(function () {
+        var $dob = new Date(this.value);
+        $dob.setFullYear($dob.getFullYear() + 18);
+
+        if ($dob.getTime() > new Date().getTime())
+            msgShow("Must be 18 or older to register", false, false);
+    });
+
+    /**
+     *
+     * @param $date1
+     * @param $date2
+     * @returns {number} 0 same, 1 first is bigger, -1 first is smaller
+     */
+    function compareDates($date1, $date2) {
+
+        if ($date1.getYear() < $date2.getYear()) return -1;
+        if ($date1.getYear() > $date2.getYear()) return 1;
+
+        if ($date1.getMonth() < $date2.getMonth()) return -1;
+        if ($date1.getMonth() > $date2.getMonth()) return 1;
+
+        if ($date1.getDay() < $date2.getDay()) return -1;
+        if ($date1.getDay() > $date2.getDay()) return 1;
+
+        return 0;
+    }
 
     $('#login_register_btn').click(function () {
         modalAnimate($formLogin, $formRegister)

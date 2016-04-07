@@ -4,6 +4,16 @@
     font-family: 'Roboto', sans-serif;
 }
 
+body {
+    padding-top: 60px;
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0px;
+    }
+}
+
 #login-modal .modal-dialog {
     /*width: 400px;*/
 }
@@ -104,6 +114,17 @@
 }
 
 .btn-link:hover, .btn-link:focus {
-     color: #2c3e50;
-     text-decoration: none;
- }
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
+    max-height: 400px;
+    min-height: 400px;
+}
+
+a, a:hover, a:link, a:visited, a:active {
+    color: #ff443c;
+    text-decoration: none;
+}

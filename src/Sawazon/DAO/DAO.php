@@ -4,9 +4,10 @@ namespace Sawazon\DAO;
 
 interface DAO
 {
+
     /**
-     * @param int $user_id
-     * @return array array of renderable objects
+     * @param int $n number of products
+     * @return array
      */
-    public function getIndexForUser($user_id = null);
+    public function getMostViewedProducts($n = 5);
 }

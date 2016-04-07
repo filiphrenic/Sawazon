@@ -3,14 +3,16 @@
 namespace Controller;
 
 use Sawazon\Controller;
-use View\DefaultTemplate;
+use View\IndexTemplate;
+use View\NavbarTemplate;
 
 class Index implements Controller
 {
     public function display()
     {
 //        unset($_SESSION['user_id']);
-        $t = new DefaultTemplate();
+        $t = new NavbarTemplate();
+        $t->addParam('content', new IndexTemplate());
         $t->render();
     }
 }

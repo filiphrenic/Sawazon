@@ -4,6 +4,7 @@ namespace Model;
 
 
 use DB\DBModel;
+use Routing\Route;
 use Sawazon\RSSable;
 
 class Category extends DBModel implements RSSable
@@ -29,7 +30,6 @@ class Category extends DBModel implements RSSable
         $rss .= "</channel>";
 
         return $rss;
-
     }
 
 }

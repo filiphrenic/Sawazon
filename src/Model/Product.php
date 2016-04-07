@@ -3,6 +3,7 @@
 namespace Model;
 
 use DB\DBModel;
+use Routing\Route;
 use Sawazon\RSSable;
 
 class Product extends DBModel implements RSSable
@@ -36,6 +37,4 @@ class Product extends DBModel implements RSSable
 
         return $rss;
     }
-
-
 }

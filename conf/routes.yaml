@@ -1,24 +1,42 @@
+################
+#    pages     #
+################
+
 index:
   url:
   controller: index
   action: display
+  remember: true
 
-captcha:
-  url: generate/captcha
-  controller: generate/captcha
-  action: display
-
-image:
-  url: image/<content>/<id>
-  controller: generate/image
+category_show:
+  url: category/<id>
+  controller: categoryControl
   action: display
   regexs:
-    content: "[[:alpha:]]+"
+    id: "\\d+"
+
+product_show:
+  url: product/<id>
+  controller: productControl
+  action: display
+  regexs:
     id: "\\d+"
 
 content:
   url: content/<content>/<id>
   controller: content
+  action: display
+  regexs:
+    content: "[[:alpha:]]+"
+    id: "\\d+"
+
+#################
+#    generate   #
+#################
+
+image:
+  url: image/<content>/<id>
+  controller: generate/image
   action: display
   regexs:
     content: "[[:alpha:]]+"
@@ -32,12 +50,42 @@ rss:
     content: "[[:alpha:]]+"
     id: "\\d+"
 
+captcha:
+  url: generate/captcha
+  controller: generate/captcha
+  action: display
+
+################
+# user control #
+################
+
 user_login:
   url: user/login
-  controller: userControll
+  controller: userControl
   action: login
 
 user_register:
   url: user/register
-  controller: userControll
+  controller: userControl
   action: register
+
+username_check:
+  url: user/check/username
+  controller: userControl
+  action: checkUsername
+
+email_check:
+  url: user/check/email
+  controller: userControl
+  action: checkEmail
+
+#################
+#    content    #
+#################
+
+category:
+  url: category/<id>
+  controller: categoryControl
+  action: display
+  regexs:
+    id: "\\d+"
