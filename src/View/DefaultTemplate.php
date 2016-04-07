@@ -17,10 +17,6 @@ class DefaultTemplate extends Template
         if (null == user_id(null)) $navbar = $this->getNormalNavbar();
         else $navbar = $this->getLoggedInNavbar();
 
-        $ses = '';
-        print_r($_SESSION, $ses);
-        $navbar->addParam('session', $ses);
-
         $this->addParam('navbar', $navbar);
     }
 

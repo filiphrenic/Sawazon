@@ -9,6 +9,7 @@ class Index implements Controller
 {
     public function display()
     {
+//        unset($_SESSION['user_id']);
         $t = new DefaultTemplate();
         $t->render();
     }

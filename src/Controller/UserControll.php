@@ -9,7 +9,6 @@
 namespace Controller;
 
 use Model\User;
-use Routing\Route;
 use Sawazon\Controller;
 
 class UserControll implements Controller
@@ -18,14 +17,13 @@ class UserControll implements Controller
     public function login()
     {
         $params = cleanAll(['username', 'password'], $_POST);
-        $user_matches = (new User())->loadAll("WHERE username = ? AND password = ?", array_values($params));
-        if (empty($user_matches)) {
-            var_dump('nema ga', $params);
-        } else {
-            $user = $user_matches[0];
-            $_SESSION['user_id'] = $user->user_id;
-            redirect(Route::get('index')->generate());
+        $users = (new User())->loadAll("WHERE username = ? AND password = ?", array_values($params));
+        if (empty($users)) echo 0;
+        else {
+            $_SESSION['user_id'] = $users[0]->user_id;
+            echo 1;
         }
+
     }
 
     public function register()

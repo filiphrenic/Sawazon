@@ -18,9 +18,32 @@ $(function () {
             if (!$l_username) $error = "Username is empty";
             else if (!$l_password) $error = "Password is empty";
 
-            if (!$error) return true;
-            msgShow($error, false, true);
-            return false;
+            if ($error) {
+                msgShow($error, false, true);
+                return false;
+            }
+
+            var $login_link = $('#login_link').val();
+            var $login_response = 0;
+
+            $.ajax({
+                type: "POST",
+                url: $login_link,
+                async: false,
+                data: {
+                    username: $l_username,
+                    password: $l_password
+                },
+                success: function ($data) {
+                    $login_response = $data;
+                }
+            });
+
+            if ($login_response == 0) {
+                msgShow("User doesn't exist", false, true);
+                return false;
+            }
+            else return true;
 
         } else if (this.id == 'register-form') {
             var $error = "";
