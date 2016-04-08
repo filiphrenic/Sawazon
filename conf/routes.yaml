@@ -12,6 +12,7 @@ category_show:
   url: category/<id>
   controller: categoryControl
   action: display
+  remember: true
   regexs:
     id: "\\d+"
 
@@ -19,6 +20,7 @@ product_show:
   url: product/<id>
   controller: productControl
   action: display
+  remember: true
   regexs:
     id: "\\d+"
 
@@ -29,6 +31,13 @@ content:
   regexs:
     content: "[[:alpha:]]+"
     id: "\\d+"
+
+error:
+  url: error/<code>
+  controller: generate/error
+  action: display
+  regexs:
+    code: "\\d+"
 
 #################
 #    generate   #

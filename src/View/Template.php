@@ -65,7 +65,8 @@ class Template
             $type = $matches[2];
             $func_or_prop = $matches[3];
 
-            if (null == ($var = $this->getParam($var_name))) return "missing param: $var_name";
+            if (null == ($var = $this->getParam($var_name)))
+                return "missing param: $var_name";
 
             return $eval_func($var, $type, $func_or_prop);
         };

@@ -32,18 +32,18 @@ class ProductThumbnail extends Template
 
 
         $reviews = $product->review_all;
-        $review_number = count($reviews);
+        $review_cnt = count($reviews);
 
         $rating = intval(array_sum(array_map(function ($r) {
                 return $r->rating;
-            }, $reviews)) / $review_number);
+            }, $reviews)) / $review_cnt);
 
         $this->addParam('img-link', $imgsrc);
         $this->addParam('link', $link);
-        $this->addParam('price', $converted_price);
+        $this->addParam('price', "$converted_price $currency");
         $this->addParam('heading', $heading);
         $this->addParam('description', $description);
-        $this->addParam('review_number', $review_number);
+        $this->addParam('reviews', nounsp('review', $review_cnt));
         $this->addParam('rating', new RatingTemplate($rating));
     }
 }

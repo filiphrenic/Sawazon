@@ -4,9 +4,10 @@ require_once "src/Util/init.php";
 
 try {
     \Dispatch\Dispatcher::getInstance()->dispatch();
-} catch (Exception $e) {
-    // TODO redirect to 404
-    var_dump($e);
+} catch (\Routing\RoutingException $e) {
+    redirect(\Routing\Route::get('error')->generate(['code' => '404']));
+} catch (Exception $e){
+    redirect(\Routing\Route::get('error')->generate(['code' => '500']));
 }
 
 

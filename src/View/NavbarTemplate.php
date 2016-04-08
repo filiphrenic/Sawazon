@@ -18,7 +18,7 @@ class NavbarTemplate extends Template
             $navbar = $this->getNormalNavbar();
         else $navbar = $this->getLoggedInNavbar();
 
-        $bg_color = Session::get(Session::$BG_COLOR, '#ffffff');
+        $bg_color = Session::get(Session::$BG_COLOR, '#f5f5f5');
 
         $this->addParam('bg_color', $bg_color);
         $this->addParam('navbar', $navbar);
@@ -39,6 +39,7 @@ class NavbarTemplate extends Template
         $logreg->addParam('email_check_link', Route::get('email_check')->generate());
 
         $logreg->addParam('countries', (new Country())->loadAll());
+        $logreg->addParam('home_link', Route::get('index')->generate());
 
         $navbar->addParam('logreg', $logreg);
         return $navbar;

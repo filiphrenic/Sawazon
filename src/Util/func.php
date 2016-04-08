@@ -143,3 +143,10 @@ function shorten($text, $len)
     if (mb_strlen($text) <= $len) return $text;
     else return mb_substr($text, 0, $len) . "...";
 }
+
+function nounsp($noun, $count)
+{
+    $ret = $count . ' ' . $noun;
+    if ($count == 1) return $ret;
+    else return $ret . 's';
+}

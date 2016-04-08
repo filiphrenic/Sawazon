@@ -156,26 +156,6 @@ $(function () {
             msgShow("Must be 18 or older to register", false, false);
     });
 
-    /**
-     *
-     * @param $date1
-     * @param $date2
-     * @returns {number} 0 same, 1 first is bigger, -1 first is smaller
-     */
-    function compareDates($date1, $date2) {
-
-        if ($date1.getYear() < $date2.getYear()) return -1;
-        if ($date1.getYear() > $date2.getYear()) return 1;
-
-        if ($date1.getMonth() < $date2.getMonth()) return -1;
-        if ($date1.getMonth() > $date2.getMonth()) return 1;
-
-        if ($date1.getDay() < $date2.getDay()) return -1;
-        if ($date1.getDay() > $date2.getDay()) return 1;
-
-        return 0;
-    }
-
     $('#login_register_btn').click(function () {
         modalAnimate($formLogin, $formRegister)
     });
