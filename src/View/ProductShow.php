@@ -59,5 +59,23 @@ class ProductShow extends Template
         $this->addParam('stars', nounsp('star', $rating));
         $this->addParam('reviews', $review_items);
 
+        $this->addParam('reviews_footer', $this->getFooter($product_id));
+    }
+
+    private function getFooter($product_id)
+    {
+        if (($user_id = Session::get(Session::$USER_ID, null)) != null) {
+            $imgsrc = Route::get('image')->generate(['content' => 'user', 'id' => $user_id]);
+            $link = Route::get('review_add')->generate();
+
+            $t = new Template('review/user_form');
+            $t->addParam('user-img', $imgsrc);
+            $t->addParam('review_submit', $link);
+            $t->addParam('user_id', $user_id);
+            $t->addParam('product_id', $product_id);
+            return $t;
+        } else {
+            return new Template('visitor_button');
+        }
     }
 }

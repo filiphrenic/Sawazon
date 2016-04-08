@@ -62,6 +62,12 @@ function redirect($url = "/")
     die();
 }
 
+function redirectToLast()
+{
+    $url = \Util\Session::get(\Util\Session::$LAST_URL);
+    redirect($url);
+}
+
 /**
  * Function is called when something strange happens,
  * but I don't want to throw an exception.
@@ -133,9 +139,9 @@ function cleanHTML($text = "")
     return htmlentities($text, ENT_QUOTES, "utf-8");
 }
 
-function cleanAll($keys = [], $arr = [])
+function cleanAll($keys = [], $arr = [], $default = '')
 {
-    return array_map('cleanHTML', elements($keys, $arr, ''));
+    return array_map('cleanHTML', elements($keys, $arr, $default));
 }
 
 function shorten($text, $len)
@@ -150,3 +156,4 @@ function nounsp($noun, $count)
     if ($count == 1) return $ret;
     else return $ret . 's';
 }
+

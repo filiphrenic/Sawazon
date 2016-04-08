@@ -1,0 +1,33 @@
+<hr>
+
+<div class="media">
+    <div class="media-left">
+        <a href="#">
+            <img class="media-object img-rounded" src="((user-img))" width="64px" height="72px">
+        </a>
+    </div>
+    <div class="media-body">
+        <form action="((review_submit))" method="post">
+            <input type="hidden" name="user_id" value="((user_id))">
+            <input type="hidden" name="product_id" value="((product_id))">
+            <div class="form-group col-sm-12">
+                <label for="review_content">Give a rating:
+                    <input type="hidden" name="rating" class="rating"
+                           data-filled="glyphicon glyphicon-star"
+                           data-empty="glyphicon glyphicon-star-empty"
+                           value="5"/>
+                </label>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <textarea class="form-control" name="content" placeholder="Write your review..."
+                                  rows="2"></textarea>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-danger">Post</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

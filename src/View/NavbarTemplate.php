@@ -50,8 +50,9 @@ class NavbarTemplate extends Template
      */
     private function getLoggedInNavbar()
     {
-        $navbar = new Template('navbar/logged_in');
-        return $navbar;
+        return $this->getNormalNavbar();
+//        $navbar = new Template('navbar/logged_in');
+//        return $navbar;
     }
 
 }

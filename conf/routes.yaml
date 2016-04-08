@@ -3,26 +3,10 @@
 ################
 
 index:
-  url:
+  url: ""
   controller: index
   action: display
   remember: true
-
-category_show:
-  url: category/<id>
-  controller: categoryControl
-  action: display
-  remember: true
-  regexs:
-    id: "\\d+"
-
-product_show:
-  url: product/<id>
-  controller: productControl
-  action: display
-  remember: true
-  regexs:
-    id: "\\d+"
 
 content:
   url: content/<content>/<id>
@@ -64,9 +48,7 @@ captcha:
   controller: generate/captcha
   action: display
 
-################
-# user control #
-################
+########## CONTROL ###############
 
 user_login:
   url: user/login
@@ -88,13 +70,27 @@ email_check:
   controller: userControl
   action: checkEmail
 
+review_add:
+  url: review/add
+  controller: reviewControl
+  action: addReview
+
 #################
 #    content    #
 #################
 
-category:
+category_show:
   url: category/<id>
   controller: categoryControl
   action: display
+  remember: true
+  regexs:
+    id: "\\d+"
+
+product_show:
+  url: product/<id>
+  controller: productControl
+  action: display
+  remember: true
   regexs:
     id: "\\d+"

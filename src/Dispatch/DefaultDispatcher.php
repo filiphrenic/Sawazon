@@ -14,6 +14,8 @@ class DefaultDispatcher extends Dispatcher
 
     public function dispatch()
     {
+
+        unset($_SESSION['user_id']);
         $uri = $_SERVER["REQUEST_URI"];
         if ($pos = strpos($uri, "?") !== false) $uri = substr($uri, 0, $pos);
 
