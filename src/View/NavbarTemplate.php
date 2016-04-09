@@ -37,11 +37,11 @@ class NavbarTemplate extends Template
         $logreg->addParam('captcha_link', Route::get('captcha')->generate());
         $logreg->addParam('username_check_link', Route::get('username_check')->generate());
         $logreg->addParam('email_check_link', Route::get('email_check')->generate());
-
         $logreg->addParam('countries', (new Country())->loadAll());
-        $logreg->addParam('home_link', Route::get('index')->generate());
 
+        $navbar->addParam('home', Route::get('index')->generate());
         $navbar->addParam('logreg', $logreg);
+
         return $navbar;
     }
 

@@ -96,8 +96,8 @@ class Template
         };
 
         $tmp = file_get_contents($this->template);
-        $tmp = preg_replace_callback('@' . self::$PAR_PAT . '@', $par_replace, $tmp);
         $tmp = preg_replace_callback('@' . self::$IF_PAT . '@', $if_replace, $tmp);
+        $tmp = preg_replace_callback('@' . self::$PAR_PAT . '@', $par_replace, $tmp);
         $tmp = preg_replace_callback('@' . self::$VAR_PAT . '@', $var_replace, $tmp);
         return preg_replace_callback('@' . self::$FOR_PAT . '@', $for_replace, $tmp);
     }

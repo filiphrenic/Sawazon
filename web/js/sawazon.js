@@ -40,7 +40,7 @@ $(function () {
             });
 
             if ($login_response == 0) {
-                msgShow("User doesn't exist", false, true);
+                msgShow("Wrong username or password", false, true);
                 return false;
             }
             else return true;
