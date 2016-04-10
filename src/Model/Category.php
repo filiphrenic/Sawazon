@@ -4,7 +4,6 @@ namespace Model;
 
 
 use DB\DBModel;
-use Routing\Route;
 use Sawazon\RSSable;
 
 class Category extends DBModel implements RSSable
@@ -30,6 +29,13 @@ class Category extends DBModel implements RSSable
         $rss .= "</channel>";
 
         return $rss;
+    }
+
+    public function toOption()
+    {
+        $id = $this->category_id;
+        $name = $this->name;
+        return "<div class=\"col-sm-3 categ-option\"><input type=\"checkbox\" name=\"categories\" value=\"$id\"/> $name</div>";
     }
 
 }

@@ -18,7 +18,7 @@ class ImageUpload
      * @param array $uploaded_file one item from $_FILES array
      * @param string $destination destination where you want to upload the file
      *
-     * @return true | string error
+     * @return false | string error
      */
     static function upload(array $uploaded_file, $destination)
     {
@@ -57,6 +57,6 @@ class ImageUpload
         imagepng($im, $destination);
         imagedestroy($im);
 
-        return true;
+        return false;
     }
 }

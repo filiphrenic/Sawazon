@@ -5,7 +5,7 @@ namespace Generate;
 class CaptchaMaker
 {
     /** @var string */
-    private static $LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" . "abcdefghijklmnopqrstuvwxyz" . "0123456789";
+    private static $LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" . "abcdefghijklmnopqrstuvwxyz";# . "0123456789";
 
     /** @var  string */
     private $text;

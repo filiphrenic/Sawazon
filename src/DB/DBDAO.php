@@ -21,7 +21,32 @@ class DBDAO implements DAO
         $statement = DB::getPDO()->prepare($sql);
         $statement->execute([$product_id]);
 
-        if(1>$statement->rowCount()) return [];
+        if (1 > $statement->rowCount()) return [];
         else return $statement->fetch();
     }
+
+    public function getCategoriesFor($user_id)
+    {
+        $sql = "SELECT category_id FROM UserCategory WHERE user_id = ?";
+
+        $statement = DB::getPDO()->prepare($sql);
+        $statement->execute([$user_id]);
+
+        if (1 > $statement->rowCount()) return [];
+        else return $statement->fetch();
+    }
+
+    public function saveCategoriesFor($user_id, $categories)
+    {
+        $sql = "INSERT IGNORE INTO UserCategory (user_id, category_id) VALUES "
+            . implode(
+                ", ",
+                array_map(
+                    function ($c) use ($user_id) {
+                        return "($user_id, ?)";
+                    }, $categories)
+            );
+        DB::getPDO()->prepare($sql)->execute($categories);
+    }
+
 }

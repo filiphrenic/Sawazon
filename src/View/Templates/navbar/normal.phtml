@@ -22,6 +22,25 @@
                             class="glyphicon glyphicon-user"></span> Login</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#login-modal" onclick="logregShowHide(false)"><span
                             class="glyphicon glyphicon-share"></span> Register</a></li>
+
+                <script>
+                    function logregShowHide($isLogin) {
+                        var $login = $('#login-form');
+                        var $register = $('#register-form');
+                        var $active, $disabled;
+
+                        if ($isLogin) {
+                            $active = $login;
+                            $disabled = $register;
+                        } else {
+                            $active = $register;
+                            $disabled = $login;
+                        }
+
+                        $active.css("display", "block");
+                        $disabled.css("display", "none");
+                    }
+                </script>
             </ul>
         </div>
     </div>

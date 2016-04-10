@@ -45,7 +45,7 @@ class User extends DBModel implements RSSable
 
         return $rss;
     }
-
+    
     /**
      * @param $role user role
      * @return string

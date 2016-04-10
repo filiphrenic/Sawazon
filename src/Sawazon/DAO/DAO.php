@@ -17,4 +17,8 @@ interface DAO
      * @return array [ (price, date) ]
      */
     public function getPricesFor($product_id, $numOfPrices);
+
+    public function getCategoriesFor($user_id);
+
+    public function saveCategoriesFor($user_id, $categories);
 }

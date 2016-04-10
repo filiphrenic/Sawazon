@@ -157,3 +157,7 @@ function nounsp($noun, $count)
     else return $ret . 's';
 }
 
+function hashPass($password){
+    return sha1($password);
+}
+

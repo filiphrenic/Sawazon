@@ -18,10 +18,17 @@ content:
 
 error:
   url: error/<code>
-  controller: generate/error
-  action: display
+  controller: info
+  action: error
   regexs:
     code: "\\d+"
+
+info:
+  url: info/<about>
+  controller: info
+  action: about
+  regexs:
+    about: "[[:alpha:]]+"
 
 #################
 #    generate   #

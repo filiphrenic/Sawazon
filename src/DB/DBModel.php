@@ -21,11 +21,32 @@ abstract class DBModel extends Model
      */
     public abstract function getColumnNames();
 
-    public function __construct()
+    /**
+     * DBModel constructor.
+     * @param array $properties key => value array to set properties
+     */
+    public function __construct($properties = [])
     {
         $class_name = short_name($this);
         $this->tableName = $class_name;
         $this->primaryKeyColumn = strtolower($class_name) . '_id';
+
+        foreach ($properties as $property => $value)
+            $this->$property = $value;
+    }
+
+    /**
+     * @param string $property checks if an object with given property set to value exists
+     * @param string $value value
+     * @return bool if exists
+     */
+    public static function exists($property, $value)
+    {
+        $class = get_called_class();
+        /** @var DBModel $obj */
+        $obj = new $class();
+        $objects = $obj->loadAll("WHERE $property = ?", [$value]);
+        return !empty($objects);
     }
 
     public function load($primary_key)
@@ -102,6 +123,7 @@ abstract class DBModel extends Model
 
             DB::getPDO()->prepare($sql)->execute($values);
             $this->primary_key = DB::getPDO()->lastInsertId();
+            $this->model[$this->primaryKeyColumn] = $this->primary_key;
 
         } else { // update
 

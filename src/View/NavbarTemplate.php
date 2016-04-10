@@ -3,6 +3,7 @@
 namespace View;
 
 
+use Model\Category;
 use Model\Country;
 use Routing\Route;
 use Util\Session;
@@ -38,6 +39,7 @@ class NavbarTemplate extends Template
         $logreg->addParam('username_check_link', Route::get('username_check')->generate());
         $logreg->addParam('email_check_link', Route::get('email_check')->generate());
         $logreg->addParam('countries', (new Country())->loadAll());
+        $logreg->addParam('categories', (new Category())->loadAll());
 
         $navbar->addParam('home', Route::get('index')->generate());
         $navbar->addParam('logreg', $logreg);
