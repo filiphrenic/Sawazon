@@ -157,7 +157,14 @@ function nounsp($noun, $count)
     else return $ret . 's';
 }
 
-function hashPass($password){
+function hashPass($password)
+{
     return sha1($password);
+}
+
+function echoJson($data)
+{
+    header('Content-Type: application/json');
+    echo json_encode($data);
 }
 

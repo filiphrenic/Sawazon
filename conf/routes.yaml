@@ -30,6 +30,11 @@ info:
   regexs:
     about: "[[:alpha:]]+"
 
+category_report:
+  url: generate/json/category
+  controller: generate/graph
+  action: category_json
+
 #################
 #    generate   #
 #################

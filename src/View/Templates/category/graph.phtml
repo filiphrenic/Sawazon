@@ -1,0 +1,40 @@
+<div class="row">
+    <div id="products-cheap" class="col-lg-6" style="height: 250px"></div>
+    <div id="products-expensive" class="col-lg-6" style="height: 250px"></div>
+</div>
+
+<script>
+
+    $.ajax({
+        url: "/generate/json/category",
+        method: "POST",
+        data: {
+            category_id: 1
+        },
+//        dataType: json,
+// don't know why it doesn't work with this because I set heading to application/json
+
+        success: function ($data) {
+
+            // expensive
+            new Morris.Bar({
+                element: 'products-expensive',
+                data: $data['expensive'],
+                xkey: 'name',
+                ykeys: ['price'],
+                labels: ['Price']
+            });
+
+            // cheap
+            new Morris.Bar({
+                element: 'products-cheap',
+                data: $data['cheap'],
+                xkey: 'name',
+                ykeys: ['price'],
+                labels: ['Price']
+            });
+
+        }
+    });
+
+</script>

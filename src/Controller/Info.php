@@ -26,5 +26,5 @@ class Info implements Controller
         $t->addParam('content', new InfoTemplate($code, $description));
         $t->render();
     }
-
+    
 }

@@ -22,7 +22,7 @@ class DBDAO implements DAO
         $statement->execute([$product_id]);
 
         if (1 > $statement->rowCount()) return [];
-        else return $statement->fetch();
+        else return $statement->fetchAll();
     }
 
     public function getCategoriesFor($user_id)
@@ -33,7 +33,7 @@ class DBDAO implements DAO
         $statement->execute([$user_id]);
 
         if (1 > $statement->rowCount()) return [];
-        else return $statement->fetch();
+        else return $statement->fetchAll();
     }
 
     public function saveCategoriesFor($user_id, $categories)
@@ -47,6 +47,26 @@ class DBDAO implements DAO
                     }, $categories)
             );
         DB::getPDO()->prepare($sql)->execute($categories);
+    }
+
+    public function getProductNamesAndPrices($category_id, $numOfProducts, $expensive)
+    {
+
+        $last_date_sql = "SELECT date_changed FROM ProductPrice WHERE product_id = P.product_id"
+            . " ORDER BY date_changed DESC LIMIT 1";
+
+        $sql = "SELECT P.name AS name, PP.price AS price FROM Product AS P "
+            . "JOIN ProductPrice AS PP ON P.product_id = PP.product_id "
+            . "WHERE P.category_id = ? AND PP.date_changed = ($last_date_sql)"
+            . "ORDER by price " . ($expensive ? "DESC" : "ASC")
+            . " LIMIT $numOfProducts";
+
+        $statement = DB::getPDO()->prepare($sql);
+        $statement->execute([$category_id]);
+
+        if (1 > $statement->rowCount()) return [];
+        else return $statement->fetchAll();
+
     }
 
 }
