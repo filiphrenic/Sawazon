@@ -2,18 +2,69 @@
 
 namespace View;
 
+use Model\Post;
+use Model\Product;
+use Routing\Route;
 use Sawazon\DAO\DAOProvider;
+use Util\Session;
 
 class IndexTemplate extends Template
 {
 
     public function __construct()
     {
+
         parent::__construct('index');
         $carousel = $this->createCarousel(5);
-        $category_grid = new CategoryGrid();
         $this->addParam('product_carousel', $carousel);
-        $this->addParam('category_grid', $category_grid);
+        if (($user_id = Session::get(Session::$USER_ID)) != null)
+            $content = $this->contentFor($user_id);
+        else
+            $content = $this->contentForVisitor();
+        $this->addParam('content', $content); // array
+    }
+
+    private function contentFor($user_id)
+    {
+        $content = DAOProvider::get()->getRecentContentForUser($user_id, 10, 10);
+
+        return array_map(
+            function ($c) {
+
+                if ($c['type'] == 'post') {
+                    $post = (new Post())->load($c['id']);
+                    $author = $post->user;
+                    $img = Route::get('image')->generate(['content' => 'user', 'id' => $author->user_id]);
+
+                    $t = new Template('post/for_index');
+                    $t->addParam('username', $author->first_name);
+                    $t->addParam('user-img', $img);
+                    $t->addParam('date', $post->published_on);
+                    $t->addParam('heading', $post->heading);
+                    $t->addParam('content', $post->content);
+
+                } else { // product
+                    $product = (new Product())->load($c['id']);
+                    $author = $product->user;
+                    $img = Route::get('image')->generate(['content' => 'product', 'id' => $product->product_id]);
+
+                    $t = new Template('product/for_index');
+                    $t->addParam('username', $author->first_name);
+                    $t->addParam('user-img', $img);
+                    $t->addParam('date', $product->published_on);
+                    $t->addParam('heading', $product->name);
+                    $t->addParam('content', $product->description);
+                }
+
+                return $t;
+            },
+            $content
+        );
+    }
+
+    private function contentForVisitor()
+    {
+        return [new CategoryGrid()];
     }
 
     private function createCarousel($n)

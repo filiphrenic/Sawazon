@@ -18,9 +18,7 @@ interface DAO
      */
     public function getPricesFor($product_id, $numOfPrices);
 
-    public function getCategoriesFor($user_id);
-
-    public function saveCategoriesFor($user_id, $categories);
-
     public function getProductNamesAndPrices($category_id, $numOfProducts, $expensive);
+
+    public function getRecentContentForUser($user_id, $post_limit, $user_limit);
 }

@@ -31,11 +31,4 @@ class Category extends DBModel implements RSSable
         return $rss;
     }
 
-    public function toOption()
-    {
-        $id = $this->category_id;
-        $name = $this->name;
-        return "<div class=\"col-sm-3 categ-option\"><input type=\"checkbox\" name=\"categories\" value=\"$id\"/> $name</div>";
-    }
-
 }

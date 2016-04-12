@@ -36,8 +36,8 @@ class ProductShow extends Template
 
         $imgsrc = Route::get('image')->generate(['content' => 'product', 'id' => $product->product_id]);
 
-        $price = DAOProvider::get()->getPricesFor($product->product_id, 1);
-        $price = element('price', $price, 0);
+        $prices = DAOProvider::get()->getPricesFor($product->product_id, 1);
+        $price = element('price', $prices[0], 0);
         $currency = Session::get(Session::$CURRENCY, 'HRK');
         $cc = CurrencyConverterProvider::get();
         $converted_price = $cc->convert($price, 'HRK', $currency);
@@ -58,6 +58,8 @@ class ProductShow extends Template
         $this->addParam('rating', new RatingTemplate($rating));
         $this->addParam('stars', nounsp('star', $rating));
         $this->addParam('reviews', $review_items);
+
+        $this->addParam('graph', new ProductGraph($product_id));
 
         $footer = $this->getFooter($product_id);
         $this->addParam('reviews_footer', $footer);

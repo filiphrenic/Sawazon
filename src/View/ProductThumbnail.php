@@ -21,8 +21,8 @@ class ProductThumbnail extends Template
         $imgsrc = Route::get('image')->generate(['content' => 'product', 'id' => $product->product_id]);
         $link = Route::get('product_show')->generate(['id' => $product->product_id]);
 
-        $price = DAOProvider::get()->getPricesFor($product->product_id, 1);
-        $price = element('price', $price, 0);
+        $prices = DAOProvider::get()->getPricesFor($product->product_id, 1);
+        $price = element('price', $prices[0], 0);
         $currency = Session::get(Session::$CURRENCY, 'HRK');
         $cc = CurrencyConverterProvider::get();
         $converted_price = $cc->convert($price, 'HRK', $currency);

@@ -3,7 +3,7 @@
 namespace Controller;
 
 use Sawazon\Controller;
-use View\CategoryGraph;
+use View\IndexTemplate;
 use View\NavbarTemplate;
 
 class Index implements Controller
@@ -11,11 +11,9 @@ class Index implements Controller
     public function display()
     {
         $t = new NavbarTemplate();
-//        $t->addParam('content', new IndexTemplate());
-        $t->addParam('content', new CategoryGraph());
+        $t->addParam('content', new IndexTemplate());
         $t->render();
-
-//        var_dump(DAOProvider::get()->getProductNamesAndPrices(1, 5, true));
-
+//        $data = DAOProvider::get()->getContentForUser(1, 5, 5);
+//        echoJson($data);
     }
 }

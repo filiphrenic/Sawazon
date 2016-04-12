@@ -22,6 +22,9 @@ class ImageUpload
      */
     static function upload(array $uploaded_file, $destination)
     {
+        if (!is_array($uploaded_file) || empty($uploaded_file))
+            return false;
+
         $current_path = $uploaded_file['tmp_name'];
         $destination = self::$ROOT_DIR . '/' . $destination . '.png';
 
@@ -49,7 +52,6 @@ class ImageUpload
         $mime_supported = [IMAGETYPE_PNG, IMAGETYPE_JPEG2000, IMAGETYPE_JPEG];
         if (!in_array($mime_type, $mime_supported))
             return "File mime type not supported";
-
 
         // actual upload
         $im = imagecreatefromstring(file_get_contents($current_path));

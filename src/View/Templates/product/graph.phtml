@@ -1,0 +1,24 @@
+<label for="product-graph">Price changes for this product</label>
+<div id="product-graph"></div>
+
+<script>
+    $.ajax({
+        url: "((graph-link))",
+        method: "POST",
+        data: {
+            product_id: ((product_id))
+        },
+        success: function ($data) {
+
+            // cheap
+            new Morris.Line({
+                element: 'product-graph',
+                data: $data,
+                xkey: 'date_changed',
+                ykeys: ['price'],
+                labels: ['Price']
+            });
+
+        }
+    });
+</script>

@@ -19,7 +19,9 @@ class NavbarTemplate extends Template
             $navbar = $this->getNormalNavbar();
         else $navbar = $this->getLoggedInNavbar();
 
-        $bg_color = Session::get(Session::$BG_COLOR, '#f5f5f5');
+        $navbar->addParam('home', Route::get('index')->generate());
+
+        $bg_color = Session::get(Session::$BG_COLOR, '#ffffff');
 
         $this->addParam('bg_color', $bg_color);
         $this->addParam('navbar', $navbar);
@@ -39,9 +41,7 @@ class NavbarTemplate extends Template
         $logreg->addParam('username_check_link', Route::get('username_check')->generate());
         $logreg->addParam('email_check_link', Route::get('email_check')->generate());
         $logreg->addParam('countries', (new Country())->loadAll());
-        $logreg->addParam('categories', (new Category())->loadAll());
 
-        $navbar->addParam('home', Route::get('index')->generate());
         $navbar->addParam('logreg', $logreg);
 
         return $navbar;
@@ -52,9 +52,10 @@ class NavbarTemplate extends Template
      */
     private function getLoggedInNavbar()
     {
-        return $this->getNormalNavbar();
-//        $navbar = new Template('navbar/logged_in');
-//        return $navbar;
+        $navbar = new Template('navbar/logged_in');
+        $link = Route::get('user_logout')->generate();
+        $navbar->addParam('logout-link', $link);
+        return $navbar;
     }
 
 }

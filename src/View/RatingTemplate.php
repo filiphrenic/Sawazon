@@ -12,7 +12,7 @@ class RatingTemplate
 
     public function __construct($n)
     {
-        if ($n < 1 || $n > self::$N) throw new \Exception("Rating must be 1-" . self::$N);
+        if ($n < 1 || $n > self::$N) $n = 0;
         $this->n = $n;
     }
 

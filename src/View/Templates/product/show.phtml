@@ -1,6 +1,13 @@
 <div class="container">
     <div class="thumbnail">
-        <img class="img-responsive" src="((img-link))" width="800px" height="300px">
+        <div class="row">
+            <img class="col-xs-6 img-responsive" src="((img-link))"
+                 style="height: auto; width: 50%; padding-top: 30px">
+            <div class="col-xs-6" style="height: auto; width: 50%">
+                {graph->toHtml}
+            </div>
+        </div>
+
         <div class="caption-full">
             <h4 class="pull-right">((price))</h4>
             <h2><strong>((name))</strong></h2>
@@ -28,7 +35,7 @@
         <hr>
 
         {reviews_footer->toHtml}
-        
+
     </div>
 </div>
 

@@ -1,0 +1,54 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand"><img src="/web/img/sawazon-logo.png" width="24" height="24"/></span>
+            <a class="navbar-brand" href="((home))"><span class="label label-danger">Sawazon</span></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <form class="nav navbar-left navbar-form" role="search">
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    <input type="text" class="form-control" placeholder="Enter #tag" size="35">
+                </div>
+                <button type="submit" class="btn btn-danger">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" data-toggle="modal" data-target="#logout-modal"><span
+                            class="glyphicon glyphicon-user"></span> Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Log Out Modal -->
+<div class="modal fade" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="logout()">Log Out</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function logout() {
+        $.ajax({
+            url: "((logout-link))",
+            success: function ($data) {
+                window.location.reload(); // reload page
+            }
+        });
+    }
+</script>

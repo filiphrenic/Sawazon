@@ -10,6 +10,19 @@ class Session
     public static $CAPTCHA = 'captcha';
     public static $LAST_URL = 'last_url';
 
+    public static function addUser($user)
+    {
+        self::set(self::$USER_ID, $user->user_id);
+        self::set(self::$BG_COLOR, $user->bg_color);
+        self::set(self::$CURRENCY, $user->currency);
+    }
+
+    public static function removeUser()
+    {
+        self::del(self::$USER_ID);
+        self::del(self::$BG_COLOR);
+        self::del(self::$CURRENCY);
+    }
 
     public static function get($key, $default = null)
     {
@@ -19,5 +32,10 @@ class Session
     public static function set($key, $value)
     {
         $_SESSION[$key] = $value;
+    }
+
+    public static function del($key)
+    {
+        unset($_SESSION[$key]);
     }
 }

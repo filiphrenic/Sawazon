@@ -30,11 +30,6 @@ info:
   regexs:
     about: "[[:alpha:]]+"
 
-category_report:
-  url: generate/json/category
-  controller: generate/graph
-  action: category_json
-
 #################
 #    generate   #
 #################
@@ -60,12 +55,27 @@ captcha:
   controller: generate/captcha
   action: display
 
+category_report:
+  url: generate/json/category
+  controller: generate/graph
+  action: category_json
+
+product_report:
+  url: generate/json/product
+  controller: generate/graph
+  action: product_json
+
 ########## CONTROL ###############
 
 user_login:
   url: user/login
   controller: userControl
   action: login
+
+user_logout:
+  url: user/logout
+  controller: userControl
+  action: logout
 
 user_register:
   url: user/register

@@ -12,7 +12,7 @@ class CategoryShow extends Template
     public function __construct()
     {
         parent::__construct('category/show');
-        
+
         $categories = (new Category())->loadAll("ORDER BY name DESC");
 
         $category_items = array_map(function ($c) {
@@ -36,6 +36,7 @@ class CategoryShow extends Template
 
         $this->addParam('category_items', $category_items);
         $this->addParam('items', $items);
+        $this->addParam('graph', new CategoryGraph($category_id));
 
     }
 }

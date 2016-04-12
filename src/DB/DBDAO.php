@@ -16,37 +16,14 @@ class DBDAO implements DAO
     public function getPricesFor($product_id, $numOfPrices)
     {
         $sql = "SELECT price, date_changed FROM ProductPrice WHERE product_id = ?"
-            . " ORDER BY date_changed DESC LIMIT $numOfPrices";
+            . " ORDER BY date_changed DESC";
+        if ($numOfPrices != null)
+            $sql .= " LIMIT $numOfPrices";
 
         $statement = DB::getPDO()->prepare($sql);
         $statement->execute([$product_id]);
 
-        if (1 > $statement->rowCount()) return [];
-        else return $statement->fetchAll();
-    }
-
-    public function getCategoriesFor($user_id)
-    {
-        $sql = "SELECT category_id FROM UserCategory WHERE user_id = ?";
-
-        $statement = DB::getPDO()->prepare($sql);
-        $statement->execute([$user_id]);
-
-        if (1 > $statement->rowCount()) return [];
-        else return $statement->fetchAll();
-    }
-
-    public function saveCategoriesFor($user_id, $categories)
-    {
-        $sql = "INSERT IGNORE INTO UserCategory (user_id, category_id) VALUES "
-            . implode(
-                ", ",
-                array_map(
-                    function ($c) use ($user_id) {
-                        return "($user_id, ?)";
-                    }, $categories)
-            );
-        DB::getPDO()->prepare($sql)->execute($categories);
+        return $statement->fetchAll();
     }
 
     public function getProductNamesAndPrices($category_id, $numOfProducts, $expensive)
@@ -64,9 +41,26 @@ class DBDAO implements DAO
         $statement = DB::getPDO()->prepare($sql);
         $statement->execute([$category_id]);
 
-        if (1 > $statement->rowCount()) return [];
-        else return $statement->fetchAll();
+        return $statement->fetchAll();
+    }
 
+    public function getRecentContentForUser($user_id, $post_limit, $product_limit)
+    {
+        // get all posts from my followers or from me
+        $posts = "SELECT 'post' AS type, post_id AS id, published_on AS date FROM Post "
+            . "LEFT JOIN Follower ON (followee = user_id AND follower = $user_id OR user_id = $user_id) "
+            . "LIMIT $post_limit";
+
+        // get all products from my followers or from me
+        $products = "SELECT 'product' AS type, product_id AS id, published_on AS date FROM Product "
+            . "LEFT JOIN Follower ON (followee = user_id AND follower = $user_id OR user_id = $user_id) "
+            . "LIMIT $product_limit";
+
+        $sql = "SELECT type, id FROM ($posts UNION ALL $products) T ORDER BY date";
+
+        $statement = DB::getPDO()->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll();
     }
 
 }

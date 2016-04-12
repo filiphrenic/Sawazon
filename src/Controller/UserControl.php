@@ -3,12 +3,10 @@
 namespace Controller;
 
 use Model\Address;
-use Model\Category;
 use Model\Country;
 use Model\User;
 use Processing\Image\ImageUpload;
 use Sawazon\Controller;
-use Sawazon\DAO\DAOProvider;
 use Util\Session;
 use View\InfoTemplate;
 use View\NavbarTemplate;
@@ -21,13 +19,11 @@ class UserControl implements Controller
         $params = cleanAll(['username', 'password'], $_POST);
         $params['password'] = hashPass($params['password']);
         $users = (new User())->loadAll("WHERE username = ? AND password = ?", array_values($params));
-        if (empty($users)) echo 0;
+
+        if (empty($users))
+            echo 0;
         else {
-            /** @var User $user */
-            $user = $users[0];
-            Session::set(Session::$USER_ID, $user->user_id);
-            Session::set(Session::$BG_COLOR, $user->background_color);
-            Session::set(Session::$CURRENCY, $user->currency);
+            Session::addUser($users[0]);
             echo 1;
         }
     }
@@ -52,7 +48,7 @@ class UserControl implements Controller
                 'first_name', 'last_name', 'date_of_birth',
                 'email', 'telephone',
                 'street', 'city', 'country_id',
-                'categories', 'captcha'],
+                'captcha'],
             $_POST
         );
 
@@ -76,15 +72,6 @@ class UserControl implements Controller
             $registerError("Undefined country");
         else {
 
-            $categories = explode(',', $params['categories']);
-
-            foreach ($categories as $category_id) {
-                if (!Category::exists('category_id', $category_id)) {
-                    $registerError("Undefined category");
-                    return;
-                }
-            }
-
             $user = new User();
             $user->username = $params['username'];
             $user->password = hashPass($params['password']);
@@ -93,6 +80,7 @@ class UserControl implements Controller
             $user->email = $params['email'];
             $user->telephone = $params['telephone'];
             $user->date_of_birth = $params['date_of_birth'];
+
             $user->user_role = User::$REGISTERED;
             $user->background_color = '#ffffff';
             $user->currency = 'HRK';
@@ -100,14 +88,14 @@ class UserControl implements Controller
             // this maybe stupid, but i'm saving images under id.png so i need an id
             $user->save();
 
-            $error = ImageUpload::upload($_FILES['profile_picture'], "user/$user->user_id");
-            if ($error) {
-                $user->delete();
-                $registerError($error . " -> profile picture");
-                return;
+            if (!empty($_FILES)) {
+                $error = ImageUpload::upload($_FILES['profile_picture'], "user/$user->user_id");
+                if ($error) {
+                    $user->delete();
+                    $registerError($error . " -> profile picture");
+                    return;
+                }
             }
-
-            DAOProvider::get()->saveCategoriesFor($user->user_id, $categories);
 
             $address = new Address();
             $address->user_id = $user->user_id;
@@ -119,6 +107,11 @@ class UserControl implements Controller
             // not an error
             $registerError("Registration was successful! Start exploring :)");
         }
+    }
+
+    public function logout()
+    {
+        Session::removeUser();
     }
 
 }
