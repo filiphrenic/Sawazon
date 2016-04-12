@@ -50,10 +50,11 @@ EOF
 
 a2enmod rewrite
 service apache2 restart
-cat << EOF >> /etc/apache2/sites-availible/000-default.conf
+cat << EOF >> /etc/apache2/sites-available/000-default.conf
 <Directory "/var/www/html">
     AllowOverride All
 </Directory>
+EOF
 
 exit
 

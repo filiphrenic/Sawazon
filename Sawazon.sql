@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 31, 2016 at 08:03 PM
+-- Generation Time: Apr 12, 2016 at 09:07 AM
 -- Server version: 5.6.28-0ubuntu0.14.04.1
 -- PHP Version: 5.6.19-1+deb.sury.org~trusty+1
 
@@ -396,7 +396,8 @@ CREATE TABLE `Product` (
 --
 
 INSERT INTO `Product` (`product_id`, `user_id`, `category_id`, `name`, `description`, `allow_review`, `published_on`, `view_count`) VALUES
-(1, 1, 1, 'Porše', 'Brm Brm Brm 1000km/s', 1, '2016-03-31 00:00:00', 1);
+(1, 1, 1, 'Porše', 'Brm Brm Brm 1000km/s', 1, '2016-03-31 00:00:00', 1),
+(2, 1, 1, 'Mercedes', 'Najbrza makina na cesti, 10000 konja, 0-100 za 3 mikro sekunde', 1, '2016-04-11 21:38:13', 4);
 
 -- --------------------------------------------------------
 
@@ -415,7 +416,9 @@ CREATE TABLE `ProductPrice` (
 --
 
 INSERT INTO `ProductPrice` (`product_id`, `date_changed`, `price`) VALUES
-(1, '2016-03-31 15:54:31', 1000000.00);
+(1, '2016-03-31 15:54:31', 1000000.00),
+(1, '2016-04-11 21:20:16', 12301.00),
+(2, '2016-04-11 21:38:37', 49999.00);
 
 -- --------------------------------------------------------
 
@@ -437,7 +440,13 @@ CREATE TABLE `Review` (
 --
 
 INSERT INTO `Review` (`review_id`, `product_id`, `user_id`, `content`, `rating`, `published_on`) VALUES
-(1, 1, 1, 'Predobar auto, kupujem cim dignem hipoteku', '5', '2016-03-31 16:00:04');
+(1, 1, 1, 'Predobar auto, kupujem cim dignem hipoteku', '5', '2016-03-31 16:00:04'),
+(2, 1, 1, 'Je, slazem se. Ja sam ga kupil, luti je totalno', '5', '2016-04-08 21:26:02'),
+(3, 1, 1, 'Auspuh se prejako cuje', '5', '2016-04-08 21:26:24'),
+(4, 1, 1, 'Jeste', '5', '2016-04-08 21:26:54'),
+(5, 1, 1, 'rating 3, solidarka', '3', '2016-04-08 21:27:44'),
+(6, 1, 1, '&lt;b&gt; yolo &lt;/b&gt;', '5', '2016-04-09 11:45:31'),
+(7, 1, 1, '); DROP TABLE ProductCategory;', '5', '2016-04-09 11:46:30');
 
 -- --------------------------------------------------------
 
@@ -483,7 +492,18 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `background_color`, `currency`) VALUES
-(1, 'nichre', 'fićo', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 0, '#FFFFFF', 'HRK');
+(1, 'nichre', 'sifra', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 0, '#FFFFFF', 'HRK');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `UserCategory`
+--
+
+CREATE TABLE `UserCategory` (
+  `user_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -566,6 +586,13 @@ ALTER TABLE `User`
   ADD UNIQUE KEY `User_username_uindex` (`username`);
 
 --
+-- Indexes for table `UserCategory`
+--
+ALTER TABLE `UserCategory`
+  ADD PRIMARY KEY (`user_id`,`category_id`),
+  ADD KEY `UserCategory_Category_category_id_fk` (`category_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -593,12 +620,12 @@ ALTER TABLE `Post`
 -- AUTO_INCREMENT for table `Product`
 --
 ALTER TABLE `Product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `Review`
 --
 ALTER TABLE `Review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `User`
 --
@@ -647,6 +674,13 @@ ALTER TABLE `ProductPrice`
 ALTER TABLE `Review`
   ADD CONSTRAINT `Review_Product_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `Product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Review_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `UserCategory`
+--
+ALTER TABLE `UserCategory`
+  ADD CONSTRAINT `UserCategory_Category_category_id_fk` FOREIGN KEY (`category_id`) REFERENCES `Category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `UserCategory_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
