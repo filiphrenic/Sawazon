@@ -23,6 +23,9 @@ class ProductControl extends Controller
         $product_id = $r->getParam('id');
         $product = (new Product())->load($product_id);
 
+        $product->view_count++;
+        $product->save();
+
         $t = new NavbarTemplate();
         $t->addParam('content', new ProductShow($product));
         $t->render();
@@ -75,7 +78,7 @@ class ProductControl extends Controller
                 return;
             }
         }
-        
+
         DAOProvider::get()->addPriceFor($product->product_id, $params['price']);
 
         redirect(Route::get('product_show')->generate(['id' => $product->product_id]));

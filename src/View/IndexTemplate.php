@@ -22,14 +22,20 @@ class IndexTemplate extends Template
             $content = $this->contentFor($user_id);
         else
             $content = $this->contentForVisitor();
-        $this->addParam('content', $content); // array
+        $this->addParam('content', $content);
     }
 
     private function contentFor($user_id)
     {
         $content = DAOProvider::get()->getRecentContentForUser($user_id, 10, 10);
 
-        $ret = []; // TODO
+        $t = new Template('post/form');
+        $img = Route::get('image')->generate(['content'=>'user', 'id'=>$user_id]);
+        $t->addParam('user_id', $user_id);
+        $t->addParam('form-link', Route::get('post_save')->generate());
+        $t->addParam('usr-img', $img);
+
+        $ret = [$t];
 
         foreach ($content as $c){
             if ($c['type'] == 'post') {

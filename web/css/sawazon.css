@@ -205,3 +205,10 @@ footer {
 .categ-option {
     font-size: larger;
 }
+
+div.new_post_form input,
+div.new_post_form textarea {
+    /*padding: 10px 10px 10px 10px;*/
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

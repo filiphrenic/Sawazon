@@ -130,3 +130,9 @@ product_save:
   controller: productControl
   action: newProduct
   access: 1
+
+post_save:
+  url: post/save
+  controller: postControl
+  action: newPost
+  access: 1
