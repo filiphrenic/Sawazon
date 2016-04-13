@@ -6,8 +6,10 @@ namespace View;
  * Class Templater
  * Used for creating html pages out of templates
  * Supports:
+ *      {object}                    =>      $object
  *      {object:property}           =>      $object->property
  *      {object->function}          =>      $object->function()
+ *      [array]                     =>      foreach($object as $o) $o
  *      [array:property]            =>      foreach($object as $o) $o->property
  *      [array->function]           =>      foreach($object as $o) $o->function()
  *      ??test :: then || else??    =>      if (test) { then; } else { else; }
@@ -19,9 +21,8 @@ namespace View;
 class Template
 {
 
-    private static $PAR_PAT = "\\(\\(([\\w-]+)\\)\\)";
-    private static $VAR_PAT = "\\{(\\w+)([:>-]{1,2})(\\w+)\\}";
-    private static $FOR_PAT = "\\[(\\w+)([:>-]{1,2})(\\w+)\\]";
+    private static $VAR_PAT = "\\{([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\}";
+    private static $FOR_PAT = "\\[([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\]";
     private static $IF_PAT = '\\?\\?' . '(?P<test>[^?]+)' . '::' . '(?P<then>[^!]+)'
     . '\\|\\|' . '(?P<else>[^?]*)' . '\\?\\?';
 
@@ -68,7 +69,10 @@ class Template
             if (null == ($var = $this->getParam($var_name)))
                 return "missing param: $var_name";
 
-            return $eval_func($var, $type, $func_or_prop);
+            if (count($matches) < 3)
+                return $var;
+            else
+                return $eval_func($var, $type, $func_or_prop);
         };
 
         $for_replace = function ($matches) use ($eval_func) {
@@ -80,7 +84,10 @@ class Template
 
             $ret = "";
             if (is_array($var)) {
-                foreach ($var as $v) $ret .= $eval_func($v, $type, $func_or_prop) . "\n";
+                if (count($matches) < 3)
+                    foreach ($var as $v) $ret .= $v . "\n";
+                else
+                    foreach ($var as $v) $ret .= $eval_func($v, $type, $func_or_prop) . "\n";
             }
             return $ret;
         };
@@ -91,13 +98,8 @@ class Template
             return $if['test'] ? $if['then'] : $if['else'];
         };
 
-        $par_replace = function ($matches) {
-            return element($matches[1], $this->params, '');
-        };
-
         $tmp = file_get_contents($this->template);
         $tmp = preg_replace_callback('@' . self::$IF_PAT . '@', $if_replace, $tmp);
-        $tmp = preg_replace_callback('@' . self::$PAR_PAT . '@', $par_replace, $tmp);
         $tmp = preg_replace_callback('@' . self::$VAR_PAT . '@', $var_replace, $tmp);
         return preg_replace_callback('@' . self::$FOR_PAT . '@', $for_replace, $tmp);
     }

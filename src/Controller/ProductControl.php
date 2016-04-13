@@ -6,6 +6,7 @@ use Dispatch\Dispatcher;
 use Model\Product;
 use Sawazon\Controller;
 use View\NavbarTemplate;
+use View\Product\ProductForm;
 use View\Product\ProductShow;
 
 class ProductControl implements Controller
@@ -18,6 +19,13 @@ class ProductControl implements Controller
 
         $t = new NavbarTemplate();
         $t->addParam('content', new ProductShow($product));
+        $t->render();
+    }
+
+    public function showForm()
+    {
+        $t = new NavbarTemplate();
+        $t->addParam('content', new ProductForm());
         $t->render();
     }
 }

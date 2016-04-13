@@ -116,3 +116,10 @@ product_show:
   remember: true
   regexs:
     id: "\\d+"
+
+# adding
+
+product_add:
+  url: product/add
+  controller: productControl
+  action: showForm

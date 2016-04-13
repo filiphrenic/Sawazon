@@ -12,10 +12,10 @@
 
 <script>
     $.ajax({
-        url: "((graph-link))",
+        url: "{graph-link}",
         method: "POST",
         data: {
-            category_id: ((category_id))
+            category_id: {category_id}
         },
 //        dataType: json,
 // don't know why it doesn't work with this because I set heading to application/json
