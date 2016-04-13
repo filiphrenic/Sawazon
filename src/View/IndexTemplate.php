@@ -2,13 +2,12 @@
 
 namespace View;
 
-use Model\Post;
-use Model\Product;
 use Routing\Route;
 use Sawazon\DAO\DAOProvider;
 use Util\Session;
 use View\Category\CategoryGrid;
 use View\Product\ProductCarouselItem;
+use View\Product\ProductSmall;
 
 class IndexTemplate extends Template
 {
@@ -30,45 +29,18 @@ class IndexTemplate extends Template
         $content = DAOProvider::get()->getRecentContentForUser($user_id, 10, 10);
 
         $t = new Template('post/form');
-        $img = Route::get('image')->generate(['content'=>'user', 'id'=>$user_id]);
+        $img = Route::get('image')->generate(['content' => 'user', 'id' => $user_id]);
         $t->addParam('user_id', $user_id);
         $t->addParam('form-link', Route::get('post_save')->generate());
         $t->addParam('usr-img', $img);
 
         $ret = [$t];
 
-        foreach ($content as $c){
-            if ($c['type'] == 'post') {
-                $post = (new Post())->load($c['id']);
-                $author = $post->user;
-                $img = Route::get('image')->generate(['content' => 'user', 'id' => $author->user_id]);
-
-                $t = new Template('post/for_index');
-                $t->addParam('username', $author->first_name);
-                $t->addParam('user-img', $img);
-                $t->addParam('date', $post->published_on);
-                $t->addParam('heading', $post->heading);
-                $t->addParam('content', $post->content);
-
-            } else { // product
-                $product = (new Product())->load($c['id']);
-                $author = $product->user;
-                $img = Route::get('image')->generate(['content' => 'product', 'id' => $product->product_id]);
-
-                $t = new Template('product/for_index');
-                $t->addParam('username', $author->first_name);
-                $t->addParam('user-img', $img);
-                $t->addParam('date', $product->published_on);
-                $t->addParam('heading', $product->name);
-                $t->addParam('content', $product->description);
-                $t->addParam('price', getPrice($product->getLastPrice()));
-
-                $plink = Route::get('product_show')->generate(['id' => $product->product_id]);
-
-                $t->addParam('pname', $product->name);
-                $t->addParam('plink', $plink);
-            }
-
+        foreach ($content as $c) {
+            if ($c['type'] == 'post')
+                $t = new PostSmall($c['id']);
+            else if ($c['type'] == 'product')
+                $t = new ProductSmall($c['id']);
             $ret[] = $t;
         }
 

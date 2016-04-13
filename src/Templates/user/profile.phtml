@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">@{user:username}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 " align="center">
+                        <img src="/image/user/1" class="img-circle img-responsive">
+                    </div>
+
+                    <div class=" col-md-8 col-lg-8 ">
+                        <table class="table table-user-information">
+                            <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td>{user:first_name} {user:last_name}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of Birth</td>
+                                <td>{user:date_of_birth}</td>
+                            </tr>
+                            <tr>
+                                <td>Home Address</td>
+                                <td>{user:city}, {country}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td><a href="mailto:{user:email}">{user:email}</a></td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number</td>
+                                <td>{user:telephone}</td>
+                            </tr>
+                            <tr>
+                                <td>Sawazoninan since</td>
+                                <td>{user:joined_date}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Follow
+                                    </button>
+                                    <button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Unfollow
+                                    </button>
+                                </td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <h3>{user:username}'s posts</h3>
+                <hr>
+                {posts->toHtml}
+                <hr>
+                <h3>{user:username}'s products</h3>
+                <hr>
+                {products->toHtml}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

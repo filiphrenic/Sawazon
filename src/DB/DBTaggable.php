@@ -7,7 +7,7 @@ use Sawazon\DAO\DAOProvider;
 abstract class DBTaggable extends DBModel
 {
 
-    public static $TAG_PATTERN = "%#(?P<tag>[\\w\\d]+)%u"; // # followed by letters and digits
+    public static $TAG_PATTERN = "(?P<tag>[\\w\\d]+)"; // letters and digits
 
     /**
      * @return string
@@ -21,7 +21,7 @@ abstract class DBTaggable extends DBModel
         $id = $this->getPrimaryKey();
 
         $content = $this->{$tcol};
-        preg_match_all($content, self::$TAG_PATTERN, $tags);
+        preg_match_all($content, '%#' . self::$TAG_PATTERN . '%u', $tags);
 
         DAOProvider::get()->updateTags($id, $type, $tags['tag']);
     }

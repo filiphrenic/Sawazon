@@ -14,8 +14,9 @@ class Captcha extends Controller
         $captcha = new CaptchaMaker();
         Session::set(Session::$CAPTCHA, $captcha->getText());
         header("Content-Type: image/png");
-        imagepng($captcha->getImage());
-        imagedestroy($captcha->getImage());
+        $im = $captcha->getImage();
+        imagepng($im);
+        imagedestroy($im);
     }
 
 }

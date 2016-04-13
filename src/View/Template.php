@@ -19,7 +19,7 @@ namespace View;
 class Template
 {
 
-    private static $PATTERN = "\\{([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\}";
+    private static $PATTERN = "\\{([\\w_-]+)(?:((?:\\->)|(?:\\:))([\\w_]+))?\\}";
     private static $IF_PAT = '\\?\\?' . '(?P<test>[^\\:]+)' . '::' . '(?P<then>[^\\|]+)'
     . '\\|\\|' . '(?P<else>[^?]*)' . '\\?\\?';
 
@@ -47,15 +47,9 @@ class Template
     public function toHtml()
     {
         $eval_func = function ($var, $type, $func_or_prop) {
-            $error = "ERROR FIXME"; // TODO remove when production
-
-            if (':' === $type) {
-                if (!property_exists($var, $func_or_prop)) return $error;
-                else return $var->$func_or_prop;
-            } else if ('->' == $type) {
-                if (!method_exists($var, $func_or_prop)) return $error;
-                else return $var->$func_or_prop();
-            } else return $error;
+            if (':' === $type) return $var->$func_or_prop;
+            else if ('->' == $type) return $var->$func_or_prop();
+            else return $var;
         };
 
         $replace = function ($matches) use ($eval_func) {

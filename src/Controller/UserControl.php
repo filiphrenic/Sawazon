@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-use Model\Address;
+use Dispatch\Dispatcher;
 use Model\Country;
 use Model\User;
 use Processing\Image\ImageUpload;
@@ -10,9 +10,23 @@ use Sawazon\Controller;
 use Util\Session;
 use View\InfoTemplate;
 use View\NavbarTemplate;
+use View\User\UserProfile;
 
 class UserControl extends Controller
 {
+
+    public function show()
+    {
+        $r = Dispatcher::getInstance()->getRoute();
+        $user_id = $r->getParam('id');
+
+        // TODO check exists
+
+        $user = (new User())->load($user_id);
+        $t = new NavbarTemplate();
+        $t->addParam('content', new UserProfile($user));
+        $t->render();
+    }
 
     public function login()
     {
@@ -81,6 +95,10 @@ class UserControl extends Controller
             $user->telephone = $params['telephone'];
             $user->date_of_birth = $params['date_of_birth'];
 
+            $user->street = $params['street'];
+            $user->city = $params['city'];
+            $user->country_id = $params['country_id'];
+
             $user->user_role = User::$REGISTERED;
             $user->background_color = '#ffffff';
             $user->currency = 'HRK';
@@ -96,13 +114,6 @@ class UserControl extends Controller
                     return;
                 }
             }
-
-            $address = new Address();
-            $address->user_id = $user->user_id;
-            $address->street = $params['street'];
-            $address->city = $params['city'];
-            $address->country_id = $params['country_id'];
-            $address->save();
 
             // not an error
             $registerError("Registration was successful! Start exploring :)");

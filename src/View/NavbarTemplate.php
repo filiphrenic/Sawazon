@@ -4,6 +4,7 @@ namespace View;
 
 
 use Model\Country;
+use Model\User;
 use Routing\Route;
 use Util\Session;
 
@@ -14,9 +15,9 @@ class NavbarTemplate extends Template
     {
         parent::__construct('main');
 
-        if (null == Session::get(Session::$USER_ID))
+        if (null == ($user_id = Session::get(Session::$USER_ID)))
             $navbar = $this->getNormalNavbar();
-        else $navbar = $this->getLoggedInNavbar();
+        else $navbar = $this->getLoggedInNavbar($user_id);
 
         $search = new Template('navbar/search');
         $search->addParam('search_link', Route::get('search')->generate());
@@ -62,13 +63,17 @@ class NavbarTemplate extends Template
     /**
      * @return Template for logged in user
      */
-    private function getLoggedInNavbar()
+    private function getLoggedInNavbar($user_id)
     {
         $navbar = new Template('navbar/logged_in');
         $link = Route::get('user_logout')->generate();
         $plink = Route::get('product_add')->generate();
+        $user = (new User())->load($user_id);
+
         $navbar->addParam('logout-link', $link);
         $navbar->addParam('product_add_link', $plink);
+        $navbar->addParam('username', $user->username);
+        $navbar->addParam('user-link', Route::get('user_show')->generate(['id' => $user_id]));
         return $navbar;
     }
 

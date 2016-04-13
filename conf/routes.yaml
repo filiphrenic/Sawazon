@@ -97,6 +97,13 @@ email_check:
   controller: userControl
   action: checkEmail
 
+user_show:
+  url: user/<id>
+  controller: userControl
+  action: show
+  regexs:
+    id: "\\d+"
+
 review_add:
   url: review/add
   controller: reviewControl
