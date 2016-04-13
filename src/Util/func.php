@@ -168,3 +168,11 @@ function echoJson($data)
     echo json_encode($data);
 }
 
+function getPrice($amount)
+{
+    $currency = \Util\Session::get(\Util\Session::$CURRENCY, 'HRK');
+    $cc = \Processing\Currency\CurrencyConverterProvider::get();
+    $price = $cc->convert($amount, 'HRK', $currency);
+    return "$price $currency";
+}
+

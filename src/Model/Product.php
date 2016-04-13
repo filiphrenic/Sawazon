@@ -3,7 +3,7 @@
 namespace Model;
 
 use DB\DBModel;
-use Routing\Route;
+use Sawazon\DAO\DAOProvider;
 use Sawazon\RSSable;
 
 class Product extends DBModel implements RSSable
@@ -36,5 +36,10 @@ class Product extends DBModel implements RSSable
         $rss .= "</channel>";
 
         return $rss;
+    }
+
+    public function getLastPrice()
+    {
+        return DAOProvider::get()->getPricesFor($this->product_id, 1)[0]['price'];
     }
 }

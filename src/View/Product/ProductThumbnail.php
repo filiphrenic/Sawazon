@@ -3,10 +3,8 @@
 namespace View\Product;
 
 use Model\Product;
-use Processing\Currency\CurrencyConverterProvider;
 use Routing\Route;
 use Sawazon\DAO\DAOProvider;
-use Util\Session;
 use View\RatingTemplate;
 use View\Template;
 
@@ -24,10 +22,7 @@ class ProductThumbnail extends Template
         $link = Route::get('product_show')->generate(['id' => $product->product_id]);
 
         $prices = DAOProvider::get()->getPricesFor($product->product_id, 1);
-        $price = element('price', $prices[0], 0);
-        $currency = Session::get(Session::$CURRENCY, 'HRK');
-        $cc = CurrencyConverterProvider::get();
-        $converted_price = $cc->convert($price, 'HRK', $currency);
+        $price = getPrice(element('price', $prices[0], 0));
 
         $heading = $product->name;
         $description = shorten($product->description, 100);
@@ -42,7 +37,7 @@ class ProductThumbnail extends Template
 
         $this->addParam('img-link', $imgsrc);
         $this->addParam('link', $link);
-        $this->addParam('price', "$converted_price $currency");
+        $this->addParam('price', $price);
         $this->addParam('heading', $heading);
         $this->addParam('description', $description);
         $this->addParam('reviews', nounsp('review', $review_cnt));

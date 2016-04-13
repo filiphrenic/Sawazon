@@ -55,6 +55,7 @@ class IndexTemplate extends Template
                     $t->addParam('date', $product->published_on);
                     $t->addParam('heading', $product->name);
                     $t->addParam('content', $product->description);
+                    $t->addParam('price', getPrice($product->getLastPrice()));
 
                     $plink = Route::get('product_show')->generate(['id' => $product->product_id]);
 
