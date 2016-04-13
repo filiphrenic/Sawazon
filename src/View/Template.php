@@ -9,11 +9,9 @@ namespace View;
  *      {object}                    =>      $object
  *      {object:property}           =>      $object->property
  *      {object->function}          =>      $object->function()
- *      [array]                     =>      foreach($object as $o) $o
- *      [array:property]            =>      foreach($object as $o) $o->property
- *      [array->function]           =>      foreach($object as $o) $o->function()
  *      ??test :: then || else??    =>      if (test) { then; } else { else; }
  *
+ * if object is an array, then the function is applied to the array elements, one by one
  * All of these need to return a string.
  *
  * @package View
@@ -21,8 +19,7 @@ namespace View;
 class Template
 {
 
-    private static $VAR_PAT = "\\{([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\}";
-    private static $FOR_PAT = "\\[([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\]";
+    private static $PATTERN = "\\{([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\}";
     private static $IF_PAT = '\\?\\?' . '(?P<test>[^\\:]+)' . '::' . '(?P<then>[^\\|]+)'
     . '\\|\\|' . '(?P<else>[^?]*)' . '\\?\\?';
 
@@ -61,21 +58,7 @@ class Template
             } else return $error;
         };
 
-        $var_replace = function ($matches) use ($eval_func) {
-            $var_name = $matches[1];
-            $type = $matches[2];
-            $func_or_prop = $matches[3];
-
-            if (null == ($var = $this->getParam($var_name)))
-                return "missing param: $var_name";
-
-            if (count($matches) < 3)
-                return $var;
-            else
-                return $eval_func($var, $type, $func_or_prop);
-        };
-
-        $for_replace = function ($matches) use ($eval_func) {
+        $replace = function ($matches) use ($eval_func) {
             $var_name = $matches[1];
             $type = $matches[2];
             $func_or_prop = $matches[3];
@@ -84,18 +67,21 @@ class Template
                 return "missing param: $var_name";
 
             $var = $this->getParam($var_name);
-            $ret = "";
 
             if (is_array($var)) {
+                $ret = "";
                 if (count($matches) < 3)
                     foreach ($var as $v) $ret .= $v . "\n";
                 else
                     foreach ($var as $v) $ret .= $eval_func($v, $type, $func_or_prop) . "\n";
+                return $ret;
             } else {
-
+                if (count($matches) < 3)
+                    return $var;
+                else
+                    return $eval_func($var, $type, $func_or_prop);
             }
-            
-            return $ret;
+
         };
 
         $if_replace = function ($matches) {
@@ -106,8 +92,7 @@ class Template
 
         $tmp = file_get_contents($this->template);
         $tmp = preg_replace_callback('@' . self::$IF_PAT . '@', $if_replace, $tmp);
-        $tmp = preg_replace_callback('@' . self::$VAR_PAT . '@', $var_replace, $tmp);
-        return preg_replace_callback('@' . self::$FOR_PAT . '@', $for_replace, $tmp);
+        return preg_replace_callback('@' . self::$PATTERN . '@', $replace, $tmp);
     }
 
     /**
