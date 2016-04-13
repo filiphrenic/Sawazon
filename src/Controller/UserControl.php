@@ -11,7 +11,7 @@ use Util\Session;
 use View\InfoTemplate;
 use View\NavbarTemplate;
 
-class UserControl implements Controller
+class UserControl extends Controller
 {
 
     public function login()

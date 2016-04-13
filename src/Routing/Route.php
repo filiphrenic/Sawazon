@@ -42,6 +42,9 @@ abstract class Route
     /** @return bool */
     public abstract function getRemember();
 
+    /** @return bool */
+    public abstract function getAccess();
+
     /**
      * @param string $name
      * @param Route $route

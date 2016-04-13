@@ -30,6 +30,9 @@ class DefaultRoute extends Route
     /** @var  bool */
     private $remember;
 
+    /** @var  string */
+    private $access;
+
     /**
      * @param array $route
      * @return DefaultRoute
@@ -41,6 +44,7 @@ class DefaultRoute extends Route
             element('controller', $route, ''),
             element('action', $route, ''),
             element('remember', $route, false),
+            intval(element('access', $route, 0)),
             element('defaults', $route, []),
             element('regexs', $route, [])
         );
@@ -63,11 +67,12 @@ class DefaultRoute extends Route
      * @param string $url
      * @param string $controller
      * @param string $action
-     * @param bool remember
+     * @param bool $remember
+     * @param string $access
      * @param array $defaults
      * @param array $regexs
      */
-    private function __construct($url, $controller, $action, $remember, $defaults = [], $regexs = [])
+    private function __construct($url, $controller, $action, $remember, $access, $defaults = [], $regexs = [])
     {
         $f = function ($match) use ($regexs) {
             $name = substr($match[0], 1, -1); // take the name
@@ -79,6 +84,7 @@ class DefaultRoute extends Route
         $this->match_regex = "@^" . preg_replace_callback(self::$PATTERN, $f, $this->regex) . "$@uD";
 
         $this->remember = $remember;
+        $this->access = $access;
 
         $this->controller = $controller;
         $this->action = $action;
@@ -123,6 +129,11 @@ class DefaultRoute extends Route
     public function getRemember()
     {
         return $this->remember;
+    }
+
+    public function getAccess()
+    {
+        return $this->access;
     }
 
 }

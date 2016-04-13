@@ -24,7 +24,7 @@ class Session
         self::del(self::$CURRENCY);
     }
 
-    public static function get($key, $default = null)
+    public static function get($key, $default = '')
     {
         return element($key, $_SESSION, $default);
     }

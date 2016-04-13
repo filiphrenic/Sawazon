@@ -4,6 +4,7 @@ namespace Dispatch;
 
 use Routing\Route;
 use Routing\RoutingException;
+use Sawazon\Controller;
 use Util\Session;
 
 class DefaultDispatcher extends Dispatcher
@@ -34,11 +35,17 @@ class DefaultDispatcher extends Dispatcher
         $ctlCls = "\\Controller\\" . implode('\\', array_map('ucfirst', explode('/', $ctl)));
         if (!class_exists($ctlCls)) throw new RoutingException("Controller $ctl not found");
 
+        /** @var Controller $controler */
+        $controler = new $ctlCls();
+
+        if (!$controler->checkAccess($this->route->getAccess()))
+            throw new RoutingException("You don't have privileges to access this page");
+
         $action = $this->route->getAction();
         if (!is_callable([$ctlCls, $action]))
             throw new RoutingException("Action $action not found in controller $ctl");
 
-        call_user_func([$ctlCls, $action]);
+        $controler->$action();
     }
 
     public function getRoute()

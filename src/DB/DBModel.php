@@ -45,7 +45,7 @@ abstract class DBModel extends Model
         $class = get_called_class();
         /** @var DBModel $obj */
         $obj = new $class();
-        $objects = $obj->loadAll("WHERE $property = ?", [$value]);
+        $objects = $obj->loadAll("WHERE $property = ? LIMIT 1", [$value]);
         return !empty($objects);
     }
 

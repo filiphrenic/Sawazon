@@ -123,3 +123,10 @@ product_add:
   url: product/add
   controller: productControl
   action: showForm
+  access: 1
+
+product_save:
+  url: product/save
+  controller: productControl
+  action: newProduct
+  access: 1

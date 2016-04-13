@@ -4,7 +4,7 @@ namespace Controller;
 
 use Sawazon\Controller;
 
-class Content implements Controller
+class Content extends Controller
 {
 
     public function display()

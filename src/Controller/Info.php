@@ -7,7 +7,7 @@ use Sawazon\Controller;
 use View\InfoTemplate;
 use View\NavbarTemplate;
 
-class Info implements Controller
+class Info extends Controller
 {
     public function error()
     {

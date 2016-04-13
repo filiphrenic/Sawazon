@@ -5,7 +5,7 @@ namespace Controller\Generate;
 use Sawazon\Controller;
 use Sawazon\DAO\DAOProvider;
 
-class Graph implements Controller
+class Graph extends Controller
 {
 
     public function category_json()

@@ -8,7 +8,7 @@ use Sawazon\Controller;
 use Sawazon\Model;
 use Sawazon\RSSable;
 
-class RSS implements Controller
+class RSS extends Controller
 {
 
     public function get()

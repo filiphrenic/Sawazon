@@ -5,7 +5,7 @@ namespace Controller;
 use Model\Review;
 use Sawazon\Controller;
 
-class ReviewControl implements Controller
+class ReviewControl extends Controller
 {
     public function addReview()
     {

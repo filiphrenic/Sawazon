@@ -6,7 +6,7 @@ use Sawazon\Controller;
 use View\IndexTemplate;
 use View\NavbarTemplate;
 
-class Index implements Controller
+class Index extends Controller
 {
     public function display()
     {

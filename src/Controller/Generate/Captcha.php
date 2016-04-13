@@ -6,7 +6,7 @@ use Generate\CaptchaMaker;
 use Sawazon\Controller;
 use Util\Session;
 
-class Captcha implements Controller
+class Captcha extends Controller
 {
     
     public function display()

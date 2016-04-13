@@ -23,7 +23,7 @@ class Template
 
     private static $VAR_PAT = "\\{([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\}";
     private static $FOR_PAT = "\\[([\\w_-]+)(?:((?:\\->)|(?:\\:))(\\w+))?\\]";
-    private static $IF_PAT = '\\?\\?' . '(?P<test>[^?]+)' . '::' . '(?P<then>[^!]+)'
+    private static $IF_PAT = '\\?\\?' . '(?P<test>[^\\:]+)' . '::' . '(?P<then>[^\\|]+)'
     . '\\|\\|' . '(?P<else>[^?]*)' . '\\?\\?';
 
     /** @var  string */

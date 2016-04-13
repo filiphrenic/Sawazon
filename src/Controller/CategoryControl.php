@@ -8,7 +8,7 @@ use Sawazon\Controller;
 use View\Category\CategoryShow;
 use View\NavbarTemplate;
 
-class CategoryControl implements Controller
+class CategoryControl extends Controller
 {
     public function display()
     {

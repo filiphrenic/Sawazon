@@ -3,7 +3,6 @@
 namespace View;
 
 
-use Model\Category;
 use Model\Country;
 use Routing\Route;
 use Util\Session;
@@ -40,7 +39,15 @@ class NavbarTemplate extends Template
         $logreg->addParam('captcha_link', Route::get('captcha')->generate());
         $logreg->addParam('username_check_link', Route::get('username_check')->generate());
         $logreg->addParam('email_check_link', Route::get('email_check')->generate());
-        $logreg->addParam('countries', (new Country())->loadAll());
+
+
+        $country_opts = array_map(
+            function ($c) {
+                return "<option value='$c->country_id'>$c->name</option>";
+            },
+            (new Country())->loadAll()
+        );
+        $logreg->addParam('country_opts', $country_opts);
 
         $navbar->addParam('logreg', $logreg);
 
