@@ -29,49 +29,49 @@ class IndexTemplate extends Template
     {
         $content = DAOProvider::get()->getRecentContentForUser($user_id, 10, 10);
 
-        return array_map(
-            function ($c) {
+        $ret = []; // TODO
 
-                if ($c['type'] == 'post') {
-                    $post = (new Post())->load($c['id']);
-                    $author = $post->user;
-                    $img = Route::get('image')->generate(['content' => 'user', 'id' => $author->user_id]);
+        foreach ($content as $c){
+            if ($c['type'] == 'post') {
+                $post = (new Post())->load($c['id']);
+                $author = $post->user;
+                $img = Route::get('image')->generate(['content' => 'user', 'id' => $author->user_id]);
 
-                    $t = new Template('post/for_index');
-                    $t->addParam('username', $author->first_name);
-                    $t->addParam('user-img', $img);
-                    $t->addParam('date', $post->published_on);
-                    $t->addParam('heading', $post->heading);
-                    $t->addParam('content', $post->content);
+                $t = new Template('post/for_index');
+                $t->addParam('username', $author->first_name);
+                $t->addParam('user-img', $img);
+                $t->addParam('date', $post->published_on);
+                $t->addParam('heading', $post->heading);
+                $t->addParam('content', $post->content);
 
-                } else { // product
-                    $product = (new Product())->load($c['id']);
-                    $author = $product->user;
-                    $img = Route::get('image')->generate(['content' => 'product', 'id' => $product->product_id]);
+            } else { // product
+                $product = (new Product())->load($c['id']);
+                $author = $product->user;
+                $img = Route::get('image')->generate(['content' => 'product', 'id' => $product->product_id]);
 
-                    $t = new Template('product/for_index');
-                    $t->addParam('username', $author->first_name);
-                    $t->addParam('user-img', $img);
-                    $t->addParam('date', $product->published_on);
-                    $t->addParam('heading', $product->name);
-                    $t->addParam('content', $product->description);
-                    $t->addParam('price', getPrice($product->getLastPrice()));
+                $t = new Template('product/for_index');
+                $t->addParam('username', $author->first_name);
+                $t->addParam('user-img', $img);
+                $t->addParam('date', $product->published_on);
+                $t->addParam('heading', $product->name);
+                $t->addParam('content', $product->description);
+                $t->addParam('price', getPrice($product->getLastPrice()));
 
-                    $plink = Route::get('product_show')->generate(['id' => $product->product_id]);
+                $plink = Route::get('product_show')->generate(['id' => $product->product_id]);
 
-                    $t->addParam('pname', $product->name);
-                    $t->addParam('plink', $plink);
-                }
+                $t->addParam('pname', $product->name);
+                $t->addParam('plink', $plink);
+            }
 
-                return $t;
-            },
-            $content
-        );
+            $ret[] = $t;
+        }
+
+        return $ret;
     }
 
     private function contentForVisitor()
     {
-        return [new CategoryGrid()];
+        return new CategoryGrid();
     }
 
     private function createCarousel($n)

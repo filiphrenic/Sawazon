@@ -91,6 +91,8 @@ class Template
                     foreach ($var as $v) $ret .= $v . "\n";
                 else
                     foreach ($var as $v) $ret .= $eval_func($v, $type, $func_or_prop) . "\n";
+            } else {
+
             }
             
             return $ret;
