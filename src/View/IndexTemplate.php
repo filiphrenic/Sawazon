@@ -7,13 +7,14 @@ use Model\Product;
 use Routing\Route;
 use Sawazon\DAO\DAOProvider;
 use Util\Session;
+use View\Category\CategoryGrid;
+use View\Product\ProductCarouselItem;
 
 class IndexTemplate extends Template
 {
 
     public function __construct()
     {
-
         parent::__construct('index');
         $carousel = $this->createCarousel(5);
         $this->addParam('product_carousel', $carousel);
@@ -54,6 +55,11 @@ class IndexTemplate extends Template
                     $t->addParam('date', $product->published_on);
                     $t->addParam('heading', $product->name);
                     $t->addParam('content', $product->description);
+
+                    $plink = Route::get('product_show')->generate(['id' => $product->product_id]);
+
+                    $t->addParam('pname', $product->name);
+                    $t->addParam('plink', $plink);
                 }
 
                 return $t;

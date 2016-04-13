@@ -1,9 +1,10 @@
 <?php
 
-namespace View;
+namespace View\Product;
 
 use Model\Product;
 use Routing\Route;
+use View\Template;
 
 class ProductCarouselItem extends Template
 {

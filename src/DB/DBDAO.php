@@ -56,7 +56,7 @@ class DBDAO implements DAO
             . "LEFT JOIN Follower ON (followee = user_id AND follower = $user_id OR user_id = $user_id) "
             . "LIMIT $product_limit";
 
-        $sql = "SELECT type, id FROM ($posts UNION ALL $products) T ORDER BY date";
+        $sql = "SELECT type, id FROM ($posts UNION ALL $products) T ORDER BY date DESC";
 
         $statement = DB::getPDO()->prepare($sql);
         $statement->execute();

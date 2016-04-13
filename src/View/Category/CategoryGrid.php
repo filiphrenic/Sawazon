@@ -1,8 +1,9 @@
 <?php
 
-namespace View;
+namespace View\Category;
 
 use Model\Category;
+use View\Template;
 
 class CategoryGrid extends Template
 {

@@ -33,7 +33,7 @@ class Template
 
     public function __construct($template_name)
     {
-        $this->template = __DIR__ . "/Templates/" . $template_name . ".phtml";
+        $this->template = __DIR__ . "/../Templates/" . $template_name . ".phtml";
         if (!file_exists($this->template)) throw  new \Exception('No file ' . $template_name);
         $this->params = [];
     }

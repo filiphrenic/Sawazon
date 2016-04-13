@@ -1,9 +1,10 @@
 <?php
 
-namespace View;
+namespace View\Category;
 
 use Model\Category;
 use Routing\Route;
+use View\Template;
 
 class CategoryThumbnail extends Template
 {

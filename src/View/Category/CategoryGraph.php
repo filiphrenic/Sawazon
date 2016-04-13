@@ -1,8 +1,9 @@
 <?php
 
-namespace View;
+namespace View\Category;
 
 use Routing\Route;
+use View\Template;
 
 class CategoryGraph extends Template
 {

@@ -1,26 +1,21 @@
 <?php
 
-namespace View;
+namespace View\Product;
 
-use Dispatch\Dispatcher;
-use Model\Product;
 use Processing\Currency\CurrencyConverterProvider;
 use Routing\Route;
 use Sawazon\DAO\DAOProvider;
 use Util\Session;
+use View\RatingTemplate;
+use View\Template;
 
 
 class ProductShow extends Template
 {
 
-    public function __construct()
+    public function __construct($product)
     {
         parent::__construct('product/show');
-
-        $r = Dispatcher::getInstance()->getRoute();
-        $product_id = $r->getParam('id');
-
-        $product = (new Product())->load($product_id);
         $reviews = $product->review_all;
 
         $review_items = array_map(function ($r) {
@@ -56,13 +51,15 @@ class ProductShow extends Template
         $this->addParam('description', $description);
         $this->addParam('number-reviews', nounsp('review', $review_cnt));
         $this->addParam('rating', new RatingTemplate($rating));
-        $this->addParam('stars', nounsp('star', $rating));
         $this->addParam('reviews', $review_items);
+        $this->addParam('views', nounsp('view', $product->view_count));
 
-        $this->addParam('graph', new ProductGraph($product_id));
+        $this->addParam('graph', new ProductGraph($product->product_id));
 
-        $footer = $this->getFooter($product_id);
-        $this->addParam('reviews_footer', $footer);
+        if ($product->allow_review) {
+            $footer = $this->getFooter($product->product_id);
+            $this->addParam('reviews_footer', $footer);
+        }
     }
 
     private function getFooter($product_id)

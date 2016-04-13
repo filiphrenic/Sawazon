@@ -1,12 +1,14 @@
 <?php
 
-namespace View;
+namespace View\Product;
 
 use Model\Product;
 use Processing\Currency\CurrencyConverterProvider;
 use Routing\Route;
 use Sawazon\DAO\DAOProvider;
 use Util\Session;
+use View\RatingTemplate;
+use View\Template;
 
 class ProductThumbnail extends Template
 {

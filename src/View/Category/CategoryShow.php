@@ -1,15 +1,16 @@
 <?php
 
-namespace View;
+namespace View\Category;
 
-use Dispatch\Dispatcher;
 use Model\Category;
 use Routing\Route;
+use View\Product\ProductThumbnail;
+use View\Template;
 
 class CategoryShow extends Template
 {
 
-    public function __construct()
+    public function __construct($category)
     {
         parent::__construct('category/show');
 
@@ -23,11 +24,6 @@ class CategoryShow extends Template
             return $t;
         }, $categories);
 
-
-        $r = Dispatcher::getInstance()->getRoute();
-        $category_id = $r->getParam('id');
-
-        $category = (new Category())->load($category_id);
         $products = $category->product_all;
 
         $items = array_map(function ($p) {
@@ -36,7 +32,7 @@ class CategoryShow extends Template
 
         $this->addParam('category_items', $category_items);
         $this->addParam('items', $items);
-        $this->addParam('graph', new CategoryGraph($category_id));
+        $this->addParam('graph', new CategoryGraph($category->category_id));
 
     }
 }

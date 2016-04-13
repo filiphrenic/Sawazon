@@ -1,8 +1,9 @@
 <?php
 
-namespace View;
+namespace View\Product;
 
 use Routing\Route;
+use View\Template;
 
 class ProductGraph extends Template
 {
