@@ -2,17 +2,22 @@
 
 namespace Model;
 
-use DB\DBModel;
+use DB\DBTaggable;
 use Sawazon\DAO\DAOProvider;
 use Sawazon\RSSable;
 
-class Product extends DBModel implements RSSable
+class Product extends DBTaggable implements RSSable
 {
 
     public function getColumnNames()
     {
         return ['product_id', 'user_id', 'category_id', 'name', 'description',
             'allow_review', 'published_on', 'view_count'];
+    }
+
+    public function getTagsColumn()
+    {
+        return 'description';
     }
 
     public function getRSS()

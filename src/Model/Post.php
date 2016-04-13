@@ -2,15 +2,20 @@
 
 namespace Model;
 
-use DB\DBModel;
+use DB\DBTaggable;
 use Sawazon\RSSable;
 
-class Post extends DBModel implements RSSable
+class Post extends DBTaggable implements RSSable
 {
 
     public function getColumnNames()
     {
         return ['post_id', 'user_id', 'heading', 'content', 'published_on'];
+    }
+
+    public function getTagsColumn()
+    {
+        return 'content';
     }
 
     public function getRSS()

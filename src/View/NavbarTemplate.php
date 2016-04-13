@@ -18,10 +18,15 @@ class NavbarTemplate extends Template
             $navbar = $this->getNormalNavbar();
         else $navbar = $this->getLoggedInNavbar();
 
-        $navbar->addParam('home', Route::get('index')->generate());
+        $search = new Template('navbar/search');
+        $search->addParam('search_link', Route::get('search')->generate());
+        $navbar->addParam('search', $search);
+
+        $left = new Template('navbar/left');
+        $left->addParam('home', Route::get('index')->generate());
+        $navbar->addParam('left', $left);
 
         $bg_color = Session::get(Session::$BG_COLOR, '#ffffff');
-
         $this->addParam('bg_color', $bg_color);
         $this->addParam('navbar', $navbar);
     }

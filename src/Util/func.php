@@ -64,7 +64,7 @@ function redirect($url = "/")
 
 function redirectToLast()
 {
-    $url = \Util\Session::get(\Util\Session::$LAST_URL);
+    $url = \Util\Session::get(\Util\Session::$LAST_URL, "/");
     redirect($url);
 }
 
@@ -134,7 +134,7 @@ function user()
     return (new \Model\User())->load($user_id);
 }
 
-function cleanHTML($text = "")
+function cleanHTML($text)
 {
     return htmlentities($text, ENT_QUOTES, "utf-8");
 }

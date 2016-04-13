@@ -152,6 +152,14 @@ abstract class DBModel extends Model
 
             DB::getPDO()->prepare($sql)->execute($values);
         }
+        
+        $this->afterSave();
+    }
+
+
+    protected function afterSave()
+    {
+        // called after save, override this if needed
     }
 
     public function serialize()

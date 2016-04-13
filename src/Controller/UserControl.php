@@ -30,13 +30,13 @@ class UserControl extends Controller
 
     public function checkUsername()
     {
-        $username = cleanHTML(element('username', $_POST));
+        $username = cleanHTML(element('username', $_POST, ''));
         echo User::exists('username', $username) ? 0 : 1;
     }
 
     public function checkEmail()
     {
-        $email = cleanHTML(element('email', $_POST));
+        $email = cleanHTML(element('email', $_POST, ''));
         echo User::exists('email', $email) ? 0 : 1;
     }
 

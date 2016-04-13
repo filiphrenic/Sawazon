@@ -1,3 +1,8 @@
+test:
+  url: test
+  controller: test
+  action: test
+
 ################
 #    pages     #
 ################
@@ -116,6 +121,12 @@ product_show:
   remember: true
   regexs:
     id: "\\d+"
+
+search:
+  url: search
+  controller: search
+  action: show
+  remember: true
 
 # adding
 

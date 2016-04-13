@@ -69,4 +69,49 @@ class DBDAO implements DAO
         return $statement->fetchAll();
     }
 
+    public function getTaggedWith($tags)
+    {
+        if (empty($tags)) return [];
+
+        $sql = "SELECT DISTINCT content_id AS id, content_type AS type FROM Tag ";
+        if (is_array($tags)) {
+            $q = [];
+            foreach ($tags as $t) $q[] = '?';
+            $sql .= "WHERE tag IN (" . implode(',', $q) . ")";
+        } else {
+            $sql .= "WHERE tag = ?";
+            $tags = [$tags];
+        }
+
+        $statement = DB::getPDO()->prepare($sql);
+        $statement->execute($tags);
+        return $statement->fetchAll();
+    }
+
+    public function updateTags($id, $type, $tags)
+    {
+        // delete old ones
+        DB::getPDO()->prepare(
+            "DELETE FROM Tag WHERE content_id = ? AND content_type = ?"
+        )->execute([$id, $type]);
+
+        if (empty($tags)) return;
+
+        $sql = "INSERT INTO Tag (content_id, content_type, tag) VALUES ";
+
+        $sql .= implode(
+            ", ",
+            array_map(
+                function ($tag) use ($id, $type) {
+                    return "($id, '$type', ?)";
+                },
+                $tags
+            )
+        );
+
+        $sql .= " ON DUPLICATE KEY UPDATE tag = tag"; // if someone writes #a #b #a
+
+        DB::getPDO()->prepare($sql)->execute($tags);
+    }
+
 }

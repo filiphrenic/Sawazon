@@ -1,0 +1,17 @@
+<div>
+    <form class="nav navbar-left navbar-form" role="search"
+          action="{search_link}" method="post" id="tag-search-form">
+        <div class="form-group has-feedback">
+            <span class="glyphicon glyphicon-search "></span>
+            <input name="search" type="text" class="form-control"
+                   placeholder="Enter #tag" size="50" required id="search-tag-box">
+        </div>
+        <button type="submit" class="btn btn-danger">Search</button>
+    </form>
+</div>
+
+<script>
+    $("#tag-search-form").submit(function () {
+        return $("#search-tag-box").val().length != 0;
+    });
+</script>

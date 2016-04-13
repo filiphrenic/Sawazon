@@ -23,4 +23,8 @@ interface DAO
     public function getProductNamesAndPrices($category_id, $numOfProducts, $expensive);
 
     public function getRecentContentForUser($user_id, $post_limit, $user_limit);
+
+    public function getTaggedWith($tag);
+
+    public function updateTags($id, $type, $tags);
 }
