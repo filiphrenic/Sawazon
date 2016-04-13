@@ -16,7 +16,8 @@ class DefaultDispatcher extends Dispatcher
     public function dispatch()
     {
         $uri = $_SERVER["REQUEST_URI"];
-        if ($pos = strpos($uri, "?") !== false) $uri = substr($uri, 0, $pos);
+        if (($pos = strpos($uri, '?')) !== false)
+            $uri = substr($uri, 0, $pos);
 
         /** @var Route $r */
         foreach (Route::get() as $r) {

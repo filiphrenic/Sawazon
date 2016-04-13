@@ -1,3 +1,6 @@
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
 <div class="container">
     <div class="row">
         <div class="panel panel-info">
@@ -7,7 +10,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4 col-lg-4 " align="center">
-                        <img src="/image/user/1" class="img-circle img-responsive">
+                        <img src="{user_image}" class="img-circle img-responsive">
                     </div>
 
                     <div class=" col-md-8 col-lg-8 ">
@@ -37,15 +40,21 @@
                                 <td>Sawazoninan since</td>
                                 <td>{user:joined_date}</td>
                             </tr>
+                            ?? can_follow
+                            ::
                             <tr>
                                 <td>
-                                    <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Follow
+                                    <button class="btn btn-success" onclick="follow()">
+                                        <i class="glyphicon glyphicon-ok"></i> Follow
                                     </button>
-                                    <button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Unfollow
+                                    <button class="btn btn-danger" onclick="unfollow()">
+                                        <i class="glyphicon glyphicon-remove"></i> Unfollow
                                     </button>
                                 </td>
                                 <td></td>
                             </tr>
+                            ||
+                            ??
                             </tbody>
                         </table>
                     </div>
@@ -65,6 +74,58 @@
     </div>
 </div>
 
+?? can_follow ::
 <script>
+    function follow() {
+        follow_helper(
+            '1',
+            "You are already following {user:username}",
+            "You are now following {user:username}",
+            'add'
+        );
+    }
 
+    function unfollow() {
+        follow_helper(
+            '0',
+            "You are not following {user:username}",
+            "You have unfollowed {user:username}",
+            'delete'
+        );
+    }
+
+    function follow_helper($wrong_data, $wrong_msg, $ok_msg, $action) {
+        var $follower = "{user_id}";
+        var $followee = "{user:user_id}";
+
+        $.ajax({
+            url: "{follow_check}",
+            type: "POST",
+            data: {
+                follower: $follower,
+                followee: $followee
+            },
+            success: function ($data) {
+                if ($data == $wrong_data) {
+                    alert($wrong_msg);
+                } else {
+
+                    $.ajax({
+                        url: "{follow_modify}",
+                        type: "POST",
+                        data: {
+                            follower: $follower,
+                            followee: $followee,
+                            action: $action
+                        },
+                        success: function ($data) {
+                            alert($ok_msg);
+                        }
+                    });
+
+                }
+            }
+        });
+    }
 </script>
+|| ??

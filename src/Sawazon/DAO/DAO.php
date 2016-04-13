@@ -27,4 +27,8 @@ interface DAO
     public function getTaggedWith($tag);
 
     public function updateTags($id, $type, $tags);
+
+    public function checkFollows($follower, $followee);
+
+    public function modifyFollow($follower, $followee, $action);
 }

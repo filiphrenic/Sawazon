@@ -17,10 +17,11 @@ class ImageUpload
      *
      * @param array $uploaded_file one item from $_FILES array
      * @param string $destination destination where you want to upload the file
+     * @param int $max_width
      *
      * @return false | string error
      */
-    static function upload(array $uploaded_file, $destination)
+    static function upload(array $uploaded_file, $destination, $max_width = 500)
     {
         if (!is_array($uploaded_file) || empty($uploaded_file))
             return false;
@@ -56,6 +57,10 @@ class ImageUpload
         // actual upload
         $im = imagecreatefromstring(file_get_contents($current_path));
         if (!$im) return "Can't read image";
+
+        // TODO create smaller image
+
+
         imagepng($im, $destination);
         imagedestroy($im);
 

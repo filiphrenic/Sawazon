@@ -7,6 +7,7 @@ use Model\Country;
 use Model\User;
 use Processing\Image\ImageUpload;
 use Sawazon\Controller;
+use Sawazon\DAO\DAOProvider;
 use Util\Session;
 use View\InfoTemplate;
 use View\NavbarTemplate;
@@ -14,6 +15,24 @@ use View\User\UserProfile;
 
 class UserControl extends Controller
 {
+
+    public function checkFollows()
+    {
+        $params = cleanAll(['follower', 'followee'], $_POST);
+        $b = DAOProvider::get()->checkFollows($params['follower'], $params['followee']);
+        echo $b ? 1 : 0;
+    }
+
+    public function modifyFollow()
+    {
+        $params = cleanAll(['follower', 'followee', 'action'], $_POST);
+        DAOProvider::get()->modifyFollow(
+            $params['follower'],
+            $params['followee'],
+            $params['action']
+        );
+    }
+
 
     public function show()
     {

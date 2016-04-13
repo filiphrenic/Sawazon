@@ -97,6 +97,16 @@ email_check:
   controller: userControl
   action: checkEmail
 
+follow_check:
+  url: user/check/follows
+  controller: userControl
+  action: checkFollows
+
+follow_modify:
+  url: user/follow
+  controller: userControl
+  action: modifyFollow
+
 user_show:
   url: user/<id>
   controller: userControl

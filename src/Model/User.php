@@ -16,7 +16,8 @@ class User extends DBModel implements RSSable
     public function getColumnNames()
     {
         return ['user_id', 'username', 'password', 'first_name', 'last_name', 'email',
-            'telephone', 'date_of_birth', 'user_role', 'background_color', 'currency'];
+            'telephone', 'date_of_birth', 'user_role', 'background_color', 'currency',
+            'street', 'city', 'country_id'];
     }
 
     public function getRSS()
@@ -45,7 +46,7 @@ class User extends DBModel implements RSSable
 
         return $rss;
     }
-    
+
     /**
      * @param $role user role
      * @return string

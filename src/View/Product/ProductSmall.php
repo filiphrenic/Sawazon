@@ -15,6 +15,9 @@ class ProductSmall extends Template
         $author = $product->user;
         $img = Route::get('image')->generate(['content' => 'product', 'id' => $product->product_id]);
 
+        $user_link = Route::get('user_show')->generate(['id'=>$author->user_id]);
+        $this->addParam('user_link', $user_link);
+
         $this->addParam('username', $author->first_name);
         $this->addParam('user-img', $img);
         $this->addParam('date', $product->published_on);

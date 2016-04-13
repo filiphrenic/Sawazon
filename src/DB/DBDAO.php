@@ -114,4 +114,23 @@ class DBDAO implements DAO
         DB::getPDO()->prepare($sql)->execute($tags);
     }
 
+    public function checkFollows($follower, $followee)
+    {
+        $sql = "SELECT 1 FROM Follower WHERE follower=? AND followee=?";
+        $statement = DB::getPDO()->prepare($sql);
+        $statement->execute([$follower, $followee]);
+        return $statement->rowCount() != 0;
+    }
+
+    public function modifyFollow($follower, $followee, $action)
+    {
+        if ($action == 'delete')
+            $sql = "DELETE FROM Follower WHERE follower=? AND followee=?";
+        else
+            $sql = "INSERT IGNORE INTO Follower (follower, followee) VALUES (?, ?) "
+                . "ON DUPLICATE KEY UPDATE followee = followee";
+
+        DB::getPDO()->prepare($sql)->execute([$follower, $followee]);
+    }
+
 }
