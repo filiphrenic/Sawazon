@@ -80,15 +80,19 @@ class Template
             $type = $matches[2];
             $func_or_prop = $matches[3];
 
-            if (null == ($var = $this->getParam($var_name))) return "missing param: $var_name";
+            if (!isset($this->params[$var_name]))
+                return "missing param: $var_name";
 
+            $var = $this->getParam($var_name);
             $ret = "";
+
             if (is_array($var)) {
                 if (count($matches) < 3)
                     foreach ($var as $v) $ret .= $v . "\n";
                 else
                     foreach ($var as $v) $ret .= $eval_func($v, $type, $func_or_prop) . "\n";
             }
+            
             return $ret;
         };
 

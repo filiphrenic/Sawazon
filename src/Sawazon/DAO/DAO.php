@@ -18,6 +18,8 @@ interface DAO
      */
     public function getPricesFor($product_id, $numOfPrices);
 
+    public function addPriceFor($product_id, $price);
+
     public function getProductNamesAndPrices($category_id, $numOfProducts, $expensive);
 
     public function getRecentContentForUser($user_id, $post_limit, $user_limit);

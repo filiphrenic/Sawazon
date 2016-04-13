@@ -20,9 +20,10 @@ class ProductForm extends Template
             },
             $categories
         );
-        
+
         $this->addParam('categ_opts', $categ_opts);
         $this->addParam('form_link', Route::get('product_save')->generate());
         $this->addParam('user_id', Session::get(Session::$USER_ID, ''));
+        $this->addParam('currency', Session::get(Session::$CURRENCY, 'HRK'));
     }
 }

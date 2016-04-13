@@ -113,12 +113,18 @@ abstract class DBModel extends Model
             $values = array();
             $placeHolders = array();
 
+            $insert_columns = [];
             foreach ($columns as $column) {
-                $values[] = $this->model[$column];
+                $val = $this->model[$column];
+                if ($val == null) continue;
+                $insert_columns[] = $column;
+                $values[] = $val;
                 $placeHolders[] = "?";
             }
 
-            $sql = "INSERT INTO " . $this->tableName . " (" . implode(", ", $columns)
+            if (empty($insert_columns)) return; // nothing to insert
+
+            $sql = "INSERT INTO " . $this->tableName . " (" . implode(", ", $insert_columns)
                 . ") VALUES (" . implode(", ", $placeHolders) . ")";
 
             DB::getPDO()->prepare($sql)->execute($values);
@@ -131,9 +137,13 @@ abstract class DBModel extends Model
             $placeHolders = array();
 
             foreach ($columns as $column) {
-                $values[] = $this->model[$column];
+                $val = $this->model[$column];
+                if ($val == null) continue;
+                $values[] = $val;
                 $placeHolders[] = $column . " = ?";
             }
+
+            if (empty($values)) return; // nothing to save
 
             $values[] = $this->primary_key;
 

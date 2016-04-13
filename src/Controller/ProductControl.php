@@ -9,6 +9,7 @@ use Model\User;
 use Processing\Image\ImageUpload;
 use Routing\Route;
 use Sawazon\Controller;
+use Sawazon\DAO\DAOProvider;
 use View\InfoTemplate;
 use View\NavbarTemplate;
 use View\Product\ProductForm;
@@ -37,7 +38,7 @@ class ProductControl extends Controller
     public function newProduct()
     {
         $params = cleanAll(
-            ['category_id', 'user_id', 'name', 'description', 'allow_review'],
+            ['category_id', 'user_id', 'name', 'description', 'price', 'allow_review'],
             $_POST
         );
 
@@ -74,6 +75,8 @@ class ProductControl extends Controller
                 return;
             }
         }
+        
+        DAOProvider::get()->addPriceFor($product->product_id, $params['price']);
 
         redirect(Route::get('product_show')->generate(['id' => $product->product_id]));
     }

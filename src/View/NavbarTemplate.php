@@ -61,7 +61,9 @@ class NavbarTemplate extends Template
     {
         $navbar = new Template('navbar/logged_in');
         $link = Route::get('user_logout')->generate();
+        $plink = Route::get('product_add')->generate();
         $navbar->addParam('logout-link', $link);
+        $navbar->addParam('product_add_link', $plink);
         return $navbar;
     }
 
