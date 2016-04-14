@@ -142,6 +142,7 @@ class UserControl extends Controller
     public function logout()
     {
         Session::removeUser();
+        redirectHome();
     }
 
 }

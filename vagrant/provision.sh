@@ -27,6 +27,4 @@ EOF
 
 a2enmod rewrite
 service apache2 restart
-exit
-
 cd /var/www/html && composer install

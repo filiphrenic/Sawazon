@@ -40,10 +40,7 @@
 <script>
     function logout() {
         $.ajax({
-            url: "{logout-link}",
-            success: function ($data) {
-                window.location.reload(); // reload page
-            }
+            url: "{logout-link}"
         });
     }
 </script>

@@ -56,10 +56,15 @@ function url_base()
  * Redirects to given url
  * @param string $url
  */
-function redirect($url = "/")
+function redirect($url)
 {
     header("Location: $url");
     die();
+}
+
+function redirectHome(){
+    $home = \Routing\Route::get('index')->generate();
+    redirect($home);
 }
 
 function redirectToLast()
