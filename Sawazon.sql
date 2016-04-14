@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2016 at 09:07 AM
+-- Generation Time: Apr 14, 2016 at 12:01 PM
 -- Server version: 5.6.28-0ubuntu0.14.04.1
 -- PHP Version: 5.6.19-1+deb.sury.org~trusty+1
 
@@ -19,27 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `Sawazon`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Address`
---
-
-CREATE TABLE `Address` (
-  `address_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `street` varchar(100) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `country_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `Address`
---
-
-INSERT INTO `Address` (`address_id`, `user_id`, `street`, `city`, `country_id`) VALUES
-(1, 1, 'Folnegovićeva 6f', 'Zagreb', 1);
+CREATE DATABASE IF NOT EXISTS `Sawazon` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `Sawazon`;
 
 -- --------------------------------------------------------
 
@@ -353,6 +334,13 @@ CREATE TABLE `Follower` (
   `followee` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `Follower`
+--
+
+INSERT INTO `Follower` (`follower`, `followee`) VALUES
+(3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -372,7 +360,10 @@ CREATE TABLE `Post` (
 --
 
 INSERT INTO `Post` (`post_id`, `user_id`, `heading`, `content`, `published_on`) VALUES
-(1, 1, 'Pozz ljudi', 'Ovo je moj prvi post', '2016-03-31 00:00:00');
+(1, 1, 'Pozz ljudi', 'Ovo je moj prvi post', '2016-03-31 00:00:00'),
+(2, 1, 'NOVO!!!', 'Objavio sam nove aute, pogledajte!\r\nJeftino DAM samo da proDAM !!!', '2016-04-13 14:25:40'),
+(3, 1, 'NOVO!!!', 'Objavio sam nove aute, pogledajte!\r\nJeftino DAM samo da proDAM !!!', '2016-04-13 14:25:58'),
+(4, 1, 'Vravo', 'Bravo ja #aa', '2016-04-13 14:27:37');
 
 -- --------------------------------------------------------
 
@@ -397,7 +388,8 @@ CREATE TABLE `Product` (
 
 INSERT INTO `Product` (`product_id`, `user_id`, `category_id`, `name`, `description`, `allow_review`, `published_on`, `view_count`) VALUES
 (1, 1, 1, 'Porše', 'Brm Brm Brm 1000km/s', 1, '2016-03-31 00:00:00', 1),
-(2, 1, 1, 'Mercedes', 'Najbrza makina na cesti, 10000 konja, 0-100 za 3 mikro sekunde', 1, '2016-04-11 21:38:13', 4);
+(2, 1, 1, 'Mercedes', 'Najbrza makina na cesti, 10000 konja, 0-100 za 3 mikro sekunde', 1, '2016-04-11 21:38:13', 6),
+(8, 1, 1, 'kia', 'Stara kia od babe, ne zgleda nekaj al ide solidno.\r\nMoguća zamjena za tačke ili čevapčiće.', 0, '2016-04-13 13:01:26', 0);
 
 -- --------------------------------------------------------
 
@@ -418,7 +410,8 @@ CREATE TABLE `ProductPrice` (
 INSERT INTO `ProductPrice` (`product_id`, `date_changed`, `price`) VALUES
 (1, '2016-03-31 15:54:31', 1000000.00),
 (1, '2016-04-11 21:20:16', 12301.00),
-(2, '2016-04-11 21:38:37', 49999.00);
+(2, '2016-04-11 21:38:37', 49999.00),
+(8, '2016-04-13 13:01:26', 10101.00);
 
 -- --------------------------------------------------------
 
@@ -446,7 +439,9 @@ INSERT INTO `Review` (`review_id`, `product_id`, `user_id`, `content`, `rating`,
 (4, 1, 1, 'Jeste', '5', '2016-04-08 21:26:54'),
 (5, 1, 1, 'rating 3, solidarka', '3', '2016-04-08 21:27:44'),
 (6, 1, 1, '&lt;b&gt; yolo &lt;/b&gt;', '5', '2016-04-09 11:45:31'),
-(7, 1, 1, '); DROP TABLE ProductCategory;', '5', '2016-04-09 11:46:30');
+(7, 1, 1, '); DROP TABLE ProductCategory;', '5', '2016-04-09 11:46:30'),
+(8, 2, 1, 'Makina, prava', '5', '2016-04-13 13:51:32'),
+(9, 2, 1, 'Isprobao i motor prejako bruji', '2', '2016-04-13 13:51:52');
 
 -- --------------------------------------------------------
 
@@ -465,7 +460,8 @@ CREATE TABLE `Tag` (
 --
 
 INSERT INTO `Tag` (`content_id`, `content_type`, `tag`) VALUES
-(1, 'PRODUCT', 'makina');
+(1, 'PRODUCT', 'a'),
+(1, 'PRODUCT', 'b');
 
 -- --------------------------------------------------------
 
@@ -484,38 +480,24 @@ CREATE TABLE `User` (
   `date_of_birth` date NOT NULL,
   `user_role` int(11) NOT NULL DEFAULT '0',
   `background_color` varchar(10) DEFAULT '#FFFFFF',
-  `currency` varchar(3) DEFAULT 'HRK'
+  `currency` varchar(3) DEFAULT 'HRK',
+  `street` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `joined_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `background_color`, `currency`) VALUES
-(1, 'nichre', 'sifra', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 0, '#FFFFFF', 'HRK');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `UserCategory`
---
-
-CREATE TABLE `UserCategory` (
-  `user_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `background_color`, `currency`, `street`, `city`, `country_id`, `joined_date`) VALUES
+(1, 'nichre', '4259031dc85f451a2b7731e8f5ea93193dad63ad', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 3, '#FFFFFF', 'HRK', 'Kralja Tomislava 16', 'Novi Marof', 56, '2016-03-31 21:13:39'),
+(3, 'stef', 'e5e9339c416c269d9ba9ee27bd442358849fd884', 'Stjepan', 'Stjepko', 'stef@stefko.com', '101010101', '1990-04-13', 1, '#ffffff', 'HRK', 'Aleja Stefana Bogomoljke 16', 'Stefenszburg', 57, '2016-04-13 22:22:18');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `Address`
---
-ALTER TABLE `Address`
-  ADD PRIMARY KEY (`address_id`,`user_id`),
-  ADD KEY `Address__user_index` (`user_id`),
-  ADD KEY `Address_Country_country_id_fk` (`country_id`);
 
 --
 -- Indexes for table `Category`
@@ -530,7 +512,7 @@ ALTER TABLE `Category`
 --
 ALTER TABLE `Country`
   ADD PRIMARY KEY (`country_id`),
-  ADD UNIQUE KEY `Country_country_id_uindex` (`country_id`);
+  ADD KEY `country_id` (`country_id`);
 
 --
 -- Indexes for table `Follower`
@@ -575,7 +557,7 @@ ALTER TABLE `Review`
 -- Indexes for table `Tag`
 --
 ALTER TABLE `Tag`
-  ADD PRIMARY KEY (`content_id`,`content_type`);
+  ADD PRIMARY KEY (`content_id`,`content_type`,`tag`);
 
 --
 -- Indexes for table `User`
@@ -583,24 +565,13 @@ ALTER TABLE `Tag`
 ALTER TABLE `User`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `User_user_id_uindex` (`user_id`),
-  ADD UNIQUE KEY `User_username_uindex` (`username`);
-
---
--- Indexes for table `UserCategory`
---
-ALTER TABLE `UserCategory`
-  ADD PRIMARY KEY (`user_id`,`category_id`),
-  ADD KEY `UserCategory_Category_category_id_fk` (`category_id`);
+  ADD UNIQUE KEY `User_username_uindex` (`username`),
+  ADD KEY `User_Country_country_id_fk` (`country_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `Address`
---
-ALTER TABLE `Address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `Category`
 --
@@ -615,39 +586,32 @@ ALTER TABLE `Country`
 -- AUTO_INCREMENT for table `Post`
 --
 ALTER TABLE `Post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `Product`
 --
 ALTER TABLE `Product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `Review`
 --
 ALTER TABLE `Review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `Address`
---
-ALTER TABLE `Address`
-  ADD CONSTRAINT `Address_Country_country_id_fk` FOREIGN KEY (`country_id`) REFERENCES `Country` (`country_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Address_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON UPDATE CASCADE;
-
---
 -- Constraints for table `Follower`
 --
 ALTER TABLE `Follower`
-  ADD CONSTRAINT `Follower_User_user_id_fk` FOREIGN KEY (`follower`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Follower_User_user_id_fk2` FOREIGN KEY (`followee`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Follower_User_user_id_fk` FOREIGN KEY (`follower`) REFERENCES `User` (`user_id`),
+  ADD CONSTRAINT `Follower_User_user_id_fk2` FOREIGN KEY (`followee`) REFERENCES `User` (`user_id`);
 
 --
 -- Constraints for table `Post`
@@ -674,13 +638,6 @@ ALTER TABLE `ProductPrice`
 ALTER TABLE `Review`
   ADD CONSTRAINT `Review_Product_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `Product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Review_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `UserCategory`
---
-ALTER TABLE `UserCategory`
-  ADD CONSTRAINT `UserCategory_Category_category_id_fk` FOREIGN KEY (`category_id`) REFERENCES `Category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `UserCategory_User_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
