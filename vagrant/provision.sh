@@ -58,6 +58,8 @@ EOF
 
 exit
 
+cd /var/www/html ; composer require symfony/yaml
+
 sudo apt-get install -y debconf-utils
 export DEBIAN_FRONTEND="noninteractive"
 
