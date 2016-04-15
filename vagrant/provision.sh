@@ -26,7 +26,7 @@ then
 fi
 
 # .htaccess
-sudo tee -a /etc/apache2/apache2.conf << EOF
+sudo tee -a /etc/apache2/apache2.conf > /dev/null << EOF
 <Directory "/var/www/html">
     AllowOverride All
 </Directory>
