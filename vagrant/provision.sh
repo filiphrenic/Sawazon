@@ -14,17 +14,23 @@ echo "mysql-server mysql-server/root_password_again password root" | sudo debcon
 sudo apt-get install -y mysql-server-5.6
 sudo service mysql restart
 
-
 #composer
-sudo su
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+cd /var/www/html && composer install
 
-cat << EOF >> /etc/apache2/apache2.conf
+# Fill database
+if [ ! -f /var/log/databasesetup ]
+then
+    mysql -uroot -proot < /var/www/html/Sawazon.sql
+    touch /var/log/databasesetup
+fi
+
+# .htaccess
+sudo tee -a /etc/apache2/apache2.conf << EOF
 <Directory "/var/www/html">
     AllowOverride All
 </Directory>
 EOF
 
-a2enmod rewrite
-service apache2 restart
-cd /var/www/html && composer install
+sudo a2enmod rewrite
+sudo service apache2 restart
