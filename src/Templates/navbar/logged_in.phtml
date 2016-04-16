@@ -40,7 +40,10 @@
 <script>
     function logout() {
         $.ajax({
-            url: "{logout-link}"
+            url: "{logout-link}",
+            success: function ($data) {
+                window.location.href = $data;
+            }
         });
     }
 </script>

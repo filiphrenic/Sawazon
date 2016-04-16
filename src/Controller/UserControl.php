@@ -6,6 +6,7 @@ use Dispatch\Dispatcher;
 use Model\Country;
 use Model\User;
 use Processing\Image\ImageUpload;
+use Routing\Route;
 use Sawazon\Controller;
 use Sawazon\DAO\DAOProvider;
 use Util\Session;
@@ -142,7 +143,8 @@ class UserControl extends Controller
     public function logout()
     {
         Session::removeUser();
-        redirectHome();
+        echo Route::get('index')->generate();
+        //redirectHome();
     }
 
 }
