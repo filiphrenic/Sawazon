@@ -147,4 +147,24 @@ class UserControl extends Controller
         //redirectHome();
     }
 
+    public function changeCurrency()
+    {
+        $new_currency = cleanHTML(element('currency', $_POST, 'HRK'));
+        $user = user();
+        if ($user == null) return;
+        $user->currency = $new_currency;
+        $user->save();
+        Session::set(Session::$CURRENCY, $new_currency);
+    }
+
+    public function changeBGColor()
+    {
+        $new_bgcolor = cleanHTML(element('bgcolor', $_POST, '#ffffff'));
+        $user = user();
+        if ($user == null) return;
+        $user->bgcolor = $new_bgcolor;
+        $user->save();
+        Session::set(Session::$BG_COLOR, $new_bgcolor);
+    }
+
 }

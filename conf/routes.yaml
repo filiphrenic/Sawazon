@@ -114,6 +114,16 @@ user_show:
   regexs:
     id: "\\d+"
 
+change_currency:
+  url: user/change/currency
+  controller: userControl
+  action: changeCurrency
+
+change_bgcolor:
+  url: user/change/bgcolor
+  controller: userControl
+  action: changeBGColor
+
 review_add:
   url: review/add
   controller: reviewControl

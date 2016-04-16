@@ -5,6 +5,7 @@ namespace View;
 
 use Model\Country;
 use Model\User;
+use Processing\Currency\CurrencyConverterProvider;
 use Routing\Route;
 use Util\Session;
 
@@ -74,6 +75,13 @@ class NavbarTemplate extends Template
         $navbar->addParam('product_add_link', $plink);
         $navbar->addParam('username', $user->username);
         $navbar->addParam('user-link', Route::get('user_show')->generate(['id' => $user_id]));
+
+        $currencies = [];
+        foreach (CurrencyConverterProvider::get()->getValidCurrencies() as $c) {
+            $currencies[] = "<li><a href='' onclick=\"changeCurrency('$c');\">$c</a></li>";
+        }
+        $navbar->addParam('currencies', $currencies);
+        $navbar->addParam('currency_change_link', Route::get('change_currency')->generate());
         return $navbar;
     }
 

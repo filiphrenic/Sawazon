@@ -491,7 +491,7 @@ CREATE TABLE `User` (
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `background_color`, `currency`, `street`, `city`, `country_id`, `joined_date`) VALUES
+INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, bgcolor, `currency`, `street`, `city`, `country_id`, `joined_date`) VALUES
 (1, 'nichre', '4259031dc85f451a2b7731e8f5ea93193dad63ad', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 3, '#FFFFFF', 'HRK', 'Kralja Tomislava 16', 'Novi Marof', 56, '2016-03-31 21:13:39'),
 (3, 'stef', 'e5e9339c416c269d9ba9ee27bd442358849fd884', 'Stjepan', 'Stjepko', 'stef@stefko.com', '101010101', '1990-04-13', 1, '#ffffff', 'HRK', 'Aleja Stefana Bogomoljke 16', 'Stefenszburg', 57, '2016-04-13 22:22:18');
 

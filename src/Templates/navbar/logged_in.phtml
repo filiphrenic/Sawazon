@@ -12,6 +12,13 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             {search->toHtml}
             <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Currency <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        {currencies}
+                    </ul>
+                </li>
                 <li><a href="{product_add_link}"><span class="glyphicon glyphicon-plus"></span> Add product</a></li>
                 <li><a href="{user-link}"><span class="glyphicon glyphicon-user"></span> {username}</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#logout-modal"><span
@@ -43,6 +50,19 @@
             url: "{logout-link}",
             success: function ($data) {
                 window.location.href = $data;
+            }
+        });
+    }
+
+    function changeCurrency($c) {
+        $.ajax({
+            type: "POST",
+            url: "{currency_change_link}",
+            data: {
+                currency: $c
+            },
+            success: function ($data) {
+                location.reload();
             }
         });
     }
