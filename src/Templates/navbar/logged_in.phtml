@@ -19,6 +19,7 @@
                         {currencies}
                     </ul>
                 </li>
+                <li><a href="" id="cp">Background color</a></li>
                 <li><a href="{product_add_link}"><span class="glyphicon glyphicon-plus"></span> Add product</a></li>
                 <li><a href="{user-link}"><span class="glyphicon glyphicon-user"></span> {username}</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#logout-modal"><span
@@ -44,6 +45,8 @@
         </div>
     </div>
 </div>
+
+
 <script>
     function logout() {
         $.ajax({
@@ -66,4 +69,18 @@
             }
         });
     }
+    $(function () {
+        $('#cp').colorpicker().on('changeColor', function (e) {
+            var $bgcolor = e.color.toHex();
+            $('body')[0].style.backgroundColor = $bgcolor;
+
+            $.ajax({
+                type: "POST",
+                url: "{bgcolor_change_link}",
+                data: {
+                    bgcolor: $bgcolor
+                }
+            });
+        });
+    });
 </script>

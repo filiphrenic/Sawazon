@@ -82,6 +82,7 @@ class NavbarTemplate extends Template
         }
         $navbar->addParam('currencies', $currencies);
         $navbar->addParam('currency_change_link', Route::get('change_currency')->generate());
+        $navbar->addParam('bgcolor_change_link', Route::get('change_bgcolor')->generate());
         return $navbar;
     }
 
