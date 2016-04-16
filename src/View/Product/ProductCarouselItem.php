@@ -3,6 +3,8 @@
 namespace View\Product;
 
 use Model\Product;
+use Processing\Text\DefaultTextFilter;
+use Processing\Text\TagsEmphasis;
 use Routing\Route;
 use View\Template;
 
@@ -28,6 +30,9 @@ class ProductCarouselItem extends Template
         $link = Route::get('product_show')->generate(['id' => $product->product_id]);
         $heading = $product->name;
         $description = $product->description;
+
+        $description = DefaultTextFilter::getInstance()->apply($description);
+        $description = (new TagsEmphasis())->apply($description);
 
         $this->addParam('class', $class);
         $this->addParam('img-link', $imgsrc);

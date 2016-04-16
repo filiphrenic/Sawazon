@@ -2,6 +2,8 @@
 
 namespace View\Product;
 
+use Processing\Text\DefaultTextFilter;
+use Processing\Text\TagsEmphasis;
 use Routing\Route;
 use Sawazon\DAO\DAOProvider;
 use Util\Session;
@@ -35,6 +37,11 @@ class ProductShow extends Template
 
         $name = $product->name;
         $description = $product->description;
+
+
+        $description = DefaultTextFilter::getInstance()->apply($description);
+        $description = (new TagsEmphasis())->apply($description);
+
 
         $review_cnt = count($reviews);
         $rating = intval(array_sum(array_map(function ($r) {

@@ -4,6 +4,7 @@ namespace Controller;
 
 use Model\Post;
 use Model\User;
+use Processing\Text\DefaultTextFilter;
 use Routing\Route;
 use Sawazon\Controller;
 use View\InfoTemplate;

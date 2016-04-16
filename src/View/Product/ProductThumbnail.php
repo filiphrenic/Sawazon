@@ -3,6 +3,8 @@
 namespace View\Product;
 
 use Model\Product;
+use Processing\Text\DefaultTextFilter;
+use Processing\Text\TagsEmphasis;
 use Routing\Route;
 use Sawazon\DAO\DAOProvider;
 use View\RatingTemplate;
@@ -27,6 +29,8 @@ class ProductThumbnail extends Template
         $heading = $product->name;
         $description = shorten($product->description, 100);
 
+        $description = DefaultTextFilter::getInstance()->apply($description);
+        $description = (new TagsEmphasis())->apply($description);
 
         $reviews = $product->review_all;
         $review_cnt = count($reviews);

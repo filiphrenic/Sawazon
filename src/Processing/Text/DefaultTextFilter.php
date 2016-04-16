@@ -44,6 +44,8 @@ class DefaultTextFilter implements TextFilter
 
     public function apply($text = "")
     {
+        $patterns = [];
+        $replacements = [];
         foreach ($this->filters['single'] as $p => $r) {
             $patterns[] = "!" . $this->prepareRegex($p) . "!";
             $replacements[] = $r;

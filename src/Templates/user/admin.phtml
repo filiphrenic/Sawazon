@@ -1,0 +1,56 @@
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Administration</p>
+        </div>
+        <div class="col-md-9">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="#newCategory" class="list-group-item" role="tab" data-toggle="tab">
+                    <icon class="fa fa-plus"></icon>
+                    New Category
+                </a>
+                <a href="#profile" class="list-group-item" role="tab" data-toggle="tab">
+                    <i class="fa fa-user"></i> Profile
+                </a>
+                <a href="#messages" class="list-group-item" role="tab" data-toggle="tab">
+                    <i class="fa fa-envelope"></i> Messages
+                </a>
+                <a href="#settings" class="list-group-item" role="tab" data-toggle="tab">
+                    <i class="fa fa-cog"></i> Settings
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="newCategory">
+                    {category_form->toHtml}
+                </div>
+                <div class="tab-pane fade" id="profile">
+                    <h2>Profile Content Goes Here</h2>
+                    <img src="http://lorempixel.com/400/400/cats/2" alt="Cats"/>
+                </div>
+                <div class="tab-pane fade" id="messages">
+                    <h2>Messages Content Goes Here</h2>
+                    <img src="http://lorempixel.com/400/400/cats/3" alt="Cats"/>
+                </div>
+                <div class="tab-pane fade" id="settings">
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->

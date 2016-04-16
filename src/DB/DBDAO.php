@@ -53,12 +53,12 @@ class DBDAO implements DAO
     public function getRecentContentForUser($user_id, $post_limit, $product_limit)
     {
         // get all posts from from users i follow and me
-        $posts = "SELECT 'post' AS type, post_id AS id, published_on AS date FROM Post "
+        $posts = "SELECT DISTINCT 'post' AS type, post_id AS id, published_on AS date FROM Post "
             . "LEFT JOIN Follower ON(followee = user_id AND follower = $user_id OR user_id = $user_id) "
             . "LIMIT $post_limit";
 
         // get all products from users i follow and me
-        $products = "SELECT 'product' AS type, product_id AS id, published_on AS date FROM Product "
+        $products = "SELECT DISTINCT 'product' AS type, product_id AS id, published_on AS date FROM Product "
             . "LEFT JOIN Follower ON(followee = user_id AND follower = $user_id OR user_id = $user_id) "
             . "LIMIT $product_limit";
 

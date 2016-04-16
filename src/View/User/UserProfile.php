@@ -2,6 +2,8 @@
 
 namespace View\User;
 
+use Model\Post;
+use Model\Product;
 use Routing\Route;
 use Util\Session;
 use View\PostSmall;
@@ -19,12 +21,14 @@ class UserProfile extends Template
             Route::get('image')->generate(['content' => 'user', 'id' => $user->user_id])
         );
 
+        $where = "WHERE user_id=$user->user_id ORDER BY published_on DESC";
+
         $products = [];
-        foreach ($user->product_all as $p)
+        foreach ((new Product())->loadAll($where) as $p)
             $products[] = new ProductSmall($p->product_id);
 
         $posts = [];
-        foreach ($user->post_all as $p)
+        foreach ((new Post())->loadAll($where) as $p)
             $posts[] = new PostSmall($p->post_id);
 
         $this->addParam('posts', $posts);

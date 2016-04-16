@@ -3,6 +3,8 @@
 namespace View\Product;
 
 use Model\Product;
+use Processing\Text\DefaultTextFilter;
+use Processing\Text\TagsEmphasis;
 use Routing\Route;
 use View\Template;
 
@@ -18,11 +20,17 @@ class ProductSmall extends Template
         $user_link = Route::get('user_show')->generate(['id'=>$author->user_id]);
         $this->addParam('user_link', $user_link);
 
+
+        $description = $product->description;
+        $description = DefaultTextFilter::getInstance()->apply($description);
+        $content = (new TagsEmphasis())->apply($description);
+
+
         $this->addParam('username', $author->first_name);
         $this->addParam('user-img', $img);
         $this->addParam('date', $product->published_on);
         $this->addParam('heading', $product->name);
-        $this->addParam('content', $product->description);
+        $this->addParam('content', $content);
         $this->addParam('price', getPrice($product->getLastPrice()));
 
         $plink = Route::get('product_show')->generate(['id' => $product->product_id]);

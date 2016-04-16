@@ -129,6 +129,16 @@ review_add:
   controller: reviewControl
   action: addReview
 
+category_add:
+  url: category/add
+  controller: categoryControl
+  action: addCategory
+
+admin:
+  url: admin
+  controller: admin
+  action: display
+
 #################
 #    content    #
 #################

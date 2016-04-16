@@ -18,7 +18,14 @@ class NavbarTemplate extends Template
 
         if (null == ($user_id = Session::get(Session::$USER_ID)))
             $navbar = $this->getNormalNavbar();
-        else $navbar = $this->getLoggedInNavbar($user_id);
+        else {
+            $navbar = $this->getLoggedInNavbar($user_id);
+            $u = (new User())->load($user_id);
+            if ($u->user_role >= User::$ADMINISTRATOR) {
+                $this->addParam('is_admin', true);
+                $this->addParam('admin_link', Route::get('admin')->generate());
+            }
+        }
 
         $search = new Template('navbar/search');
         $search->addParam('search_link', Route::get('search')->generate());
@@ -31,6 +38,8 @@ class NavbarTemplate extends Template
         $bg_color = Session::get(Session::$BG_COLOR, '#ffffff');
         $this->addParam('bg_color', $bg_color);
         $this->addParam('navbar', $navbar);
+
+
     }
 
     /**
