@@ -29,6 +29,7 @@ class NavbarTemplate extends Template
 
         $search = new Template('navbar/search');
         $search->addParam('search_link', Route::get('search')->generate());
+        $search->addParam('tags_link', Route::get('all_tags')->generate());
         $navbar->addParam('search', $search);
 
         $left = new Template('navbar/left');

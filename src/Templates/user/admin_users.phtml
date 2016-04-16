@@ -1,8 +1,35 @@
-<div id="autotag" contenteditable="true">Start typing here. Use the @ sign to mention people.<br/></div>
+<div class="row">
+    <div class="col-lg-5">
+        <input type="text" class="form-control" id="tokenfield" placeholder="Enter username"/>
+    </div>
+    <div class="col-lg-2">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Dropdown
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="">Delete</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="">Set admin</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
 
 <script>
-    $('#autotag').tagautocomplete({
-        source: ['@ann', '@bill', '@casey']
+    $.ajax({
+        url: "{usernames_link}",
+        success: function ($usernames) {
+            $('#tokenfield').tokenfield({
+                autocomplete: {
+                    source: $usernames,
+                    delay: 100
+                },
+                showAutocompleteOnFocus: true
+            });
+        }
     });
 </script>
-          

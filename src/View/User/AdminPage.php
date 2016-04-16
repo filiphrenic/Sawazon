@@ -17,6 +17,7 @@ class AdminPage extends Template
         $this->addParam('category_form', $t);
 
         $t = new Template('user/admin_users');
+        $t->addParam('usernames_link', Route::get('all_usernames')->generate());
         $this->addParam('users', $t);
     }
 

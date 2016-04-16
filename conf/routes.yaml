@@ -72,10 +72,15 @@ product_report:
 
 ########## CONTROL ###############
 
-user_all_usernames:
+all_usernames:
   url: user/usernames
   controller: userControl
   action: allUsernames
+
+all_tags:
+  url: tag/all
+  controller: search
+  action: allTags
 
 user_login:
   url: user/login

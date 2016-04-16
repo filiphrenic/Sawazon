@@ -4,7 +4,7 @@
         <div class="form-group has-feedback">
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
             <input name="search" type="text" class="form-control"
-                   placeholder="Enter #tag" size="50" required id="search-tag-box">
+                   placeholder="#tag" required id="search-tag-box">
         </div>
         <button type="submit" class="btn btn-danger">Search</button>
     </form>
@@ -14,4 +14,17 @@
     $("#tag-search-form").submit(function () {
         return $("#search-tag-box").val().length != 0;
     });
+
+//    $.ajax({
+//        url: "{tags_link}",
+//        success: function ($tags) {
+//            $('#search-tag-box').tokenfield({
+//                autocomplete: {
+//                    source: $tags,
+//                    delay: 100
+//                },
+//                showAutocompleteOnFocus: true
+//            });
+//        }
+//    });
 </script>
