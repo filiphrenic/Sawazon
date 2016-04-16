@@ -14,7 +14,7 @@ class CategoryShow extends Template
     {
         parent::__construct('category/show');
 
-        $categories = (new Category())->loadAll("ORDER BY name DESC");
+        $categories = (new Category())->loadAll("ORDER BY name ASC");
 
         $category_items = array_map(function ($c) {
             $t = new Template('category/list_item');

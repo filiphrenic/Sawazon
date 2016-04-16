@@ -15,13 +15,11 @@ class IndexTemplate extends Template
     public function __construct()
     {
         parent::__construct('index');
-        $carousel = $this->createCarousel(5);
-        $this->addParam('product_carousel', $carousel);
         if (($user_id = Session::get(Session::$USER_ID)) != null)
-            $content = $this->contentFor($user_id);
-        else
-            $content = $this->contentForVisitor();
-        $this->addParam('content', $content);
+            $this->addParam('content', $this->contentFor($user_id));
+        $this->addParam('product_carousel', $this->createCarousel(5));
+        $this->addParam('category_grid', new CategoryGrid());
+
     }
 
     private function contentFor($user_id)
@@ -45,11 +43,6 @@ class IndexTemplate extends Template
         }
 
         return $ret;
-    }
-
-    private function contentForVisitor()
-    {
-        return new CategoryGrid();
     }
 
     private function createCarousel($n)

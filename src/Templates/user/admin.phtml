@@ -16,14 +16,11 @@
                     <icon class="fa fa-plus"></icon>
                     New Category
                 </a>
-                <a href="#profile" class="list-group-item" role="tab" data-toggle="tab">
-                    <i class="fa fa-user"></i> Profile
+                <a href="#users" class="list-group-item" role="tab" data-toggle="tab">
+                    <i class="fa fa-user"></i> Users
                 </a>
-                <a href="#messages" class="list-group-item" role="tab" data-toggle="tab">
-                    <i class="fa fa-envelope"></i> Messages
-                </a>
-                <a href="#settings" class="list-group-item" role="tab" data-toggle="tab">
-                    <i class="fa fa-cog"></i> Settings
+                <a href="#something" class="list-group-item" role="tab" data-toggle="tab">
+                    <i class="fa fa-question"></i> Add more functionalities...
                 </a>
             </div>
         </div>
@@ -34,22 +31,15 @@
                 <div class="tab-pane fade active in" id="newCategory">
                     {category_form->toHtml}
                 </div>
-                <div class="tab-pane fade" id="profile">
-                    <h2>Profile Content Goes Here</h2>
-                    <img src="http://lorempixel.com/400/400/cats/2" alt="Cats"/>
+                <div class="tab-pane fade" id="users">
+                    {users->toHtml}
                 </div>
-                <div class="tab-pane fade" id="messages">
-                    <h2>Messages Content Goes Here</h2>
-                    <img src="http://lorempixel.com/400/400/cats/3" alt="Cats"/>
-                </div>
-                <div class="tab-pane fade" id="settings">
-
+                <div class="tab-pane fade" id="something">
+                    <h2>The end</h2>
+                    <img src="http://www.weepop.net/wp-content/uploads/2015/02/thatsall.jpg"/>
                 </div>
             </div>
-
-
         </div>
-
     </div>
 
 </div>

@@ -5,6 +5,8 @@ namespace Processing\Image;
 class ImageUpload
 {
 
+    private static $MAX_WIDTH = 640;
+
     private static $ROOT_DIR = __DIR__ . "/../../../images";
 
     /**
@@ -58,12 +60,31 @@ class ImageUpload
         $im = imagecreatefromstring(file_get_contents($current_path));
         if (!$im) return "Can't read image";
 
-        // TODO create smaller image
-
+        $im = self::truncateImage($im); // truncate if necessary
 
         imagepng($im, $destination);
         imagedestroy($im);
 
         return false;
+    }
+
+    private static function truncateImage($im)
+    {
+        $width = imagesx($im);
+        $height = imagesy($im);
+
+        if ($width <= self::$MAX_WIDTH) return $im;
+
+        $new_width = self::$MAX_WIDTH;
+        $new_height = $new_width * $height / $width;
+
+        $smaller = imagecreatetruecolor($new_width, $new_height);
+
+        imagecopyresampled(
+            $smaller, $im, 0, 0, 0, 0,
+            $new_width, $new_height, $width, $height
+        );
+
+        return $smaller;
     }
 }

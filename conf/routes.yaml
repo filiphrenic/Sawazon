@@ -72,6 +72,11 @@ product_report:
 
 ########## CONTROL ###############
 
+user_all_usernames:
+  url: user/usernames
+  controller: userControl
+  action: allUsernames
+
 user_login:
   url: user/login
   controller: userControl

@@ -34,6 +34,14 @@ class UserControl extends Controller
         );
     }
 
+    public function allUsernames(){
+        $data = [];
+        foreach((new User())->loadAll() as $u){
+            $data[] = $u->username;
+        }
+        echoJson($data);
+    }
+
 
     public function show()
     {
