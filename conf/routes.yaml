@@ -3,9 +3,9 @@ test:
   controller: test
   action: test
 
-################
-#    pages     #
-################
+###########
+# visitor #
+###########
 
 index:
   url: ""
@@ -13,13 +13,14 @@ index:
   action: display
   remember: true
 
-content:
+content: # not used acctualy
   url: content/<content>/<id>
   controller: content
   action: display
   regexs:
     content: "[[:alpha:]]+"
     id: "\\d+"
+  remember: true
 
 error:
   url: error/<code>
@@ -34,10 +35,6 @@ info:
   action: about
   regexs:
     about: "[[:alpha:]]+"
-
-#################
-#    generate   #
-#################
 
 image:
   url: image/<content>/<id>
@@ -70,96 +67,6 @@ product_report:
   controller: generate/graph
   action: product_json
 
-########## CONTROL ###############
-
-all_usernames:
-  url: user/usernames
-  controller: userControl
-  action: allUsernames
-  access: 3
-
-users_action:
-  url: user/action
-  controller: userControl
-  action: applyAction
-  access: 3
-
-all_tags:
-  url: tag/all
-  controller: search
-  action: allTags
-
-user_login:
-  url: user/login
-  controller: userControl
-  action: login
-
-user_logout:
-  url: user/logout
-  controller: userControl
-  action: logout
-
-user_register:
-  url: user/register
-  controller: userControl
-  action: register
-
-username_check:
-  url: user/check/username
-  controller: userControl
-  action: checkUsername
-
-email_check:
-  url: user/check/email
-  controller: userControl
-  action: checkEmail
-
-follow_check:
-  url: user/check/follows
-  controller: userControl
-  action: checkFollows
-
-follow_modify:
-  url: user/follow
-  controller: userControl
-  action: modifyFollow
-
-user_show:
-  url: user/<id>
-  controller: userControl
-  action: show
-  regexs:
-    id: "\\d+"
-
-change_currency:
-  url: user/change/currency
-  controller: userControl
-  action: changeCurrency
-
-change_bgcolor:
-  url: user/change/bgcolor
-  controller: userControl
-  action: changeBGColor
-
-review_add:
-  url: review/add
-  controller: reviewControl
-  action: addReview
-
-category_add:
-  url: category/add
-  controller: categoryControl
-  action: addCategory
-
-admin:
-  url: admin
-  controller: admin
-  action: display
-
-#################
-#    content    #
-#################
-
 category_show:
   url: category/<id>
   controller: categoryControl
@@ -182,12 +89,48 @@ search:
   action: show
   remember: true
 
-# adding
+user_login:
+  url: user/login
+  controller: userControl
+  action: login
+
+user_register:
+  url: user/register
+  controller: userControl
+  action: register
+
+username_check:
+  url: user/check/username
+  controller: userControl
+  action: checkUsername
+
+email_check:
+  url: user/check/email
+  controller: userControl
+  action: checkEmail
+
+user_show:
+  url: user/<id>
+  controller: userProfileControl
+  action: show
+  remember: true
+  regexs:
+    id: "\\d+"
+
+all_tags:
+  url: tag/all
+  controller: search
+  action: allTags
+
+##########
+#  user  #
+##########
 
 product_add:
   url: product/add
   controller: productControl
   action: showForm
+  remember: true
   access: 1
 
 product_save:
@@ -201,3 +144,83 @@ post_save:
   controller: postControl
   action: newPost
   access: 1
+
+change_currency:
+  url: user/change/currency
+  controller: userControl
+  action: changeCurrency
+  access: 1
+
+change_bgcolor:
+  url: user/change/bgcolor
+  controller: userControl
+  action: changeBGColor
+  access: 1
+
+review_add:
+  url: review/add
+  controller: reviewControl
+  action: addReview
+  access: 1
+
+user_logout:
+  url: user/logout
+  controller: userControl
+  action: logout
+  access: 1
+
+follow_check:
+  url: user/check/follows
+  controller: userProfileControl
+  action: checkFollows
+  access: 1
+
+follow_modify:
+  url: user/follow
+  controller: userProfileControl
+  action: modifyFollow
+  access: 1
+
+edit_profile_show:
+  url: user/edit/<id>
+  controller: userProfileControl
+  action: editShow
+  remember: true
+  regexs:
+    id: "\\d+"
+  access: 1
+
+edit_profile_save:
+  url: user/edit/save
+  controller: userProfileControl
+  action: editSave
+  access: 1
+
+###########
+#  admin  #
+###########
+
+category_add:
+  url: category/add
+  controller: categoryControl
+  action: addCategory
+  access: 3
+
+admin:
+  url: admin
+  controller: admin
+  action: display
+  remember: true
+  access: 3
+
+all_usernames:
+  url: user/usernames
+  controller: userControl
+  action: allUsernames
+  access: 3
+
+users_action:
+  url: user/action
+  controller: userControl
+  action: applyAction
+  access: 3

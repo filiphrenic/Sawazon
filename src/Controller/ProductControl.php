@@ -21,6 +21,12 @@ class ProductControl extends Controller
     {
         $r = Dispatcher::getInstance()->getRoute();
         $product_id = $r->getParam('id');
+
+        if (!Product::exists('product_id', $product_id)) {
+            redirect(Route::get('error')->generate(['code' => '404']));
+            return;
+        }
+        
         $product = (new Product())->load($product_id);
 
         $product->view_count++;

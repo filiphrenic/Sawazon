@@ -38,6 +38,11 @@ class UserProfile extends Template
         $can_follow = $user_id != null && $user_id != $user->user_id;
         $this->addParam('can_follow', $can_follow);
 
+        if ($user_id == $user->user_id)
+            $this->addParam('edit_profile_link',
+                Route::get('edit_profile_show')->generate(['id' => $user_id])
+            );
+
         if (!$can_follow) $user_id = '';
         $this->addParam('user_id', $user_id);
         $this->addParam('follow_check', Route::get('follow_check')->generate());

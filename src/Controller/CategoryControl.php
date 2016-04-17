@@ -18,6 +18,11 @@ class CategoryControl extends Controller
         $r = Dispatcher::getInstance()->getRoute();
         $category_id = $r->getParam('id');
 
+        if (!Category::exists('category_id', $category_id)) {
+            redirect(Route::get('error')->generate(['code' => '404']));
+            return;
+        }
+
         $category = (new Category())->load($category_id);
 
         $t = new NavbarTemplate();

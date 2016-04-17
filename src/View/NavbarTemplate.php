@@ -21,10 +21,8 @@ class NavbarTemplate extends Template
         else {
             $navbar = $this->getLoggedInNavbar($user_id);
             $u = (new User())->load($user_id);
-            if ($u->user_role >= User::$ADMINISTRATOR) {
-                $this->addParam('is_admin', true);
+            if ($u->user_role >= User::$ADMINISTRATOR)
                 $this->addParam('admin_link', Route::get('admin')->generate());
-            }
         }
 
         $search = new Template('navbar/search');
