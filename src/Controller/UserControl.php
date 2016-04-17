@@ -34,14 +34,57 @@ class UserControl extends Controller
         );
     }
 
-    public function allUsernames(){
+    public function allUsernames()
+    {
         $data = [];
-        foreach((new User())->loadAll() as $u){
+        foreach ((new User())->loadAll() as $u) {
             $data[] = $u->username;
         }
         echoJson($data);
     }
 
+    public function applyAction()
+    {
+        $params = cleanAll(['users', 'action'], $_POST);
+
+        $usernames = [];
+        preg_match_all("%(?P<username>[\\w\\d_]+)%iu", $params['users'], $usernames);
+        $usernames = $usernames['username'];
+
+        $placeholders = [];
+        foreach ($usernames as $u) {
+            $placeholders[] = '?';
+        }
+
+        $users = (new User())->loadAll(
+            "WHERE username IN (" . implode(',', $placeholders) . ')',
+            $usernames
+        );
+
+        if (count($users) != count($placeholders)) {
+            echo '0';
+            return;
+        }
+
+        $action = $params['action'];
+        if ($action == 'delete') {
+            $f = function ($u) {
+                $u->delete();
+            };
+        } else if ($action == 'admin') {
+            $f = function ($u) {
+                $u->user_role = User::$ADMINISTRATOR;
+                $u->save();
+            };
+        } else {
+            echo 0;
+            return;
+        }
+
+        foreach ($users as $u)
+            $f($u);
+        echo 1;
+    }
 
     public function show()
     {

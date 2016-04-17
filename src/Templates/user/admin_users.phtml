@@ -1,23 +1,23 @@
 <div class="row">
     <div class="col-lg-5">
-        <input type="text" class="form-control" id="tokenfield" placeholder="Enter username"/>
+        <input type="text" class="form-control" id="tokenfield" placeholder="Enter usernames"/>
     </div>
     <div class="col-lg-2">
         <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Dropdown
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                Action
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="">Delete</a></li>
+                <li><a href="" onclick="applyUsers('delete')">Delete</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="">Set admin</a></li>
+                <li><a href="" onclick="applyUsers('admin')">Give admin</a></li>
             </ul>
         </div>
     </div>
 
 </div>
-
 
 <script>
     $.ajax({
@@ -32,4 +32,20 @@
             });
         }
     });
+
+    function applyUsers($action) {
+        var $users = $("#tokenfield").val();
+        $.ajax({
+            url: "{users_action_link}",
+            type: "POST",
+            data: {
+                users: $users,
+                action: $action
+            },
+            success: function ($ok) {
+                if ($ok == 1) alert('Action successfully completed');
+                else          alert('Oops, something went wrong');
+            }
+        });
+    }
 </script>

@@ -76,6 +76,13 @@ all_usernames:
   url: user/usernames
   controller: userControl
   action: allUsernames
+  access: 3
+
+users_action:
+  url: user/action
+  controller: userControl
+  action: applyAction
+  access: 3
 
 all_tags:
   url: tag/all
