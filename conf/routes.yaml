@@ -196,6 +196,12 @@ edit_profile_save:
   action: editSave
   access: 1
 
+edit_profile_pswd:
+  url: user/edit/pswd
+  controller: userProfileControl
+  action: password
+  access: 1
+
 ###########
 #  admin  #
 ###########
