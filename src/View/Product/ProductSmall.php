@@ -26,7 +26,7 @@ class ProductSmall extends Template
         $content = (new TagsEmphasis())->apply($description);
 
 
-        $this->addParam('username', $author->first_name);
+        $this->addParam('username', $author->username);
         $this->addParam('user-img', $img);
         $this->addParam('date', $product->published_on);
         $this->addParam('heading', $product->name);

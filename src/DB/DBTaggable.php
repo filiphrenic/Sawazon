@@ -16,12 +16,15 @@ abstract class DBTaggable extends DBModel
 
     protected function afterSave()
     {
+
+        var_dump(2);
         $tcol = $this->getTagsColumn();
         $type = short_name($this);
         $id = $this->getPrimaryKey();
 
         $content = $this->{$tcol};
-        preg_match_all($content, '%#' . self::$TAG_PATTERN . '%u', $tags);
+        $tags = [];
+        preg_match_all('%#' . self::$TAG_PATTERN . '%iu', $content, $tags);
 
         DAOProvider::get()->updateTags($id, $type, $tags['tag']);
     }

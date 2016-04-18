@@ -26,7 +26,7 @@ class PostSmall extends Template
         $content = (new TagsEmphasis())->apply($content);
 
 
-        $this->addParam('username', $author->first_name);
+        $this->addParam('username', $author->username);
         $this->addParam('user-img', $img);
         $this->addParam('date', $post->published_on);
         $this->addParam('heading', $post->heading);
