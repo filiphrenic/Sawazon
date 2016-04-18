@@ -54,12 +54,12 @@ class DBDAO implements DAO
     {
         // get all posts from from users i follow and me
         $posts = "SELECT DISTINCT 'post' AS type, post_id AS id, published_on AS date FROM Post "
-            . "LEFT JOIN Follower ON(followee = user_id AND follower = $user_id OR user_id = $user_id) "
+            . "JOIN Follower ON (followee = user_id AND follower = $user_id OR user_id = $user_id) "
             . "LIMIT $post_limit";
 
         // get all products from users i follow and me
         $products = "SELECT DISTINCT 'product' AS type, product_id AS id, published_on AS date FROM Product "
-            . "LEFT JOIN Follower ON(followee = user_id AND follower = $user_id OR user_id = $user_id) "
+            . "JOIN Follower ON (followee = user_id AND follower = $user_id OR user_id = $user_id) "
             . "LIMIT $product_limit";
 
         $sql = "SELECT type, id FROM($posts UNION ALL $products) T ORDER BY date DESC";

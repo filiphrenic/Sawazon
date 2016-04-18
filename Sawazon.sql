@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 14, 2016 at 12:01 PM
+-- Generation Time: Apr 18, 2016 at 12:48 AM
 -- Server version: 5.6.28-0ubuntu0.14.04.1
 -- PHP Version: 5.6.19-1+deb.sury.org~trusty+1
 
@@ -339,7 +339,7 @@ CREATE TABLE `Follower` (
 --
 
 INSERT INTO `Follower` (`follower`, `followee`) VALUES
-(3, 1);
+(4, 1);
 
 -- --------------------------------------------------------
 
@@ -362,8 +362,8 @@ CREATE TABLE `Post` (
 INSERT INTO `Post` (`post_id`, `user_id`, `heading`, `content`, `published_on`) VALUES
 (1, 1, 'Pozz ljudi', 'Ovo je moj prvi post', '2016-03-31 00:00:00'),
 (2, 1, 'NOVO!!!', 'Objavio sam nove aute, pogledajte!\r\nJeftino DAM samo da proDAM !!!', '2016-04-13 14:25:40'),
-(3, 1, 'NOVO!!!', 'Objavio sam nove aute, pogledajte!\r\nJeftino DAM samo da proDAM !!!', '2016-04-13 14:25:58'),
-(4, 1, 'Vravo', 'Bravo ja #aa', '2016-04-13 14:27:37');
+(5, 1, 'Bok', '#hesteg yolo [*]boldano[*]', '2016-04-16 16:10:10'),
+(6, 1, 'Proba', '#hesteg isprobavam tagove', '2016-04-18 00:26:00');
 
 -- --------------------------------------------------------
 
@@ -387,9 +387,8 @@ CREATE TABLE `Product` (
 --
 
 INSERT INTO `Product` (`product_id`, `user_id`, `category_id`, `name`, `description`, `allow_review`, `published_on`, `view_count`) VALUES
-(1, 1, 1, 'Porše', 'Brm Brm Brm 1000km/s', 1, '2016-03-31 00:00:00', 1),
-(2, 1, 1, 'Mercedes', 'Najbrza makina na cesti, 10000 konja, 0-100 za 3 mikro sekunde', 1, '2016-04-11 21:38:13', 6),
-(8, 1, 1, 'kia', 'Stara kia od babe, ne zgleda nekaj al ide solidno.\r\nMoguća zamjena za tačke ili čevapčiće.', 0, '2016-04-13 13:01:26', 0);
+(1, 1, 1, 'Porše', 'Brm Brm Brm 1000km/s', 1, '2016-03-31 00:00:00', 46),
+(2, 1, 1, 'Mercedes', 'Najbrza makina na cesti, 10000 konja, 0-100 za 3 mikro sekunde', 1, '2016-04-11 21:38:13', 7);
 
 -- --------------------------------------------------------
 
@@ -410,8 +409,7 @@ CREATE TABLE `ProductPrice` (
 INSERT INTO `ProductPrice` (`product_id`, `date_changed`, `price`) VALUES
 (1, '2016-03-31 15:54:31', 1000000.00),
 (1, '2016-04-11 21:20:16', 12301.00),
-(2, '2016-04-11 21:38:37', 49999.00),
-(8, '2016-04-13 13:01:26', 10101.00);
+(2, '2016-04-11 21:38:37', 49999.00);
 
 -- --------------------------------------------------------
 
@@ -460,8 +458,7 @@ CREATE TABLE `Tag` (
 --
 
 INSERT INTO `Tag` (`content_id`, `content_type`, `tag`) VALUES
-(1, 'PRODUCT', 'a'),
-(1, 'PRODUCT', 'b');
+(6, 'POST', 'hesteg');
 
 -- --------------------------------------------------------
 
@@ -479,7 +476,7 @@ CREATE TABLE `User` (
   `telephone` varchar(50) DEFAULT NULL,
   `date_of_birth` date NOT NULL,
   `user_role` int(11) NOT NULL DEFAULT '0',
-  `background_color` varchar(10) DEFAULT '#FFFFFF',
+  `bgcolor` varchar(10) DEFAULT '#FFFFFF',
   `currency` varchar(3) DEFAULT 'HRK',
   `street` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
@@ -491,9 +488,9 @@ CREATE TABLE `User` (
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, bgcolor, `currency`, `street`, `city`, `country_id`, `joined_date`) VALUES
-(1, 'nichre', '4259031dc85f451a2b7731e8f5ea93193dad63ad', 'Filip', 'Hrenić', 'hrenic.filip@gmail.com', '0917304227', '1994-10-10', 3, '#FFFFFF', 'HRK', 'Kralja Tomislava 16', 'Novi Marof', 56, '2016-03-31 21:13:39'),
-(3, 'stef', 'e5e9339c416c269d9ba9ee27bd442358849fd884', 'Stjepan', 'Stjepko', 'stef@stefko.com', '101010101', '1990-04-13', 1, '#ffffff', 'HRK', 'Aleja Stefana Bogomoljke 16', 'Stefenszburg', 57, '2016-04-13 22:22:18');
+INSERT INTO `User` (`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `telephone`, `date_of_birth`, `user_role`, `bgcolor`, `currency`, `street`, `city`, `country_id`, `joined_date`) VALUES
+(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Adminko', 'Adminović', 'admin@sawazon.hr', '091223344', '1994-10-10', 3, '#ffffff', 'EUR', 'Unska ulica 3', 'Zagreb', 56, '2016-03-31 21:13:39'),
+(4, 'korisnik', 'b26c4eb9e78bc0544b234c4720916ad062c7bb72', 'Običan', 'Korisnik', 'korisnik@sawazon.hr', '091000111', '2016-04-18', 1, '#FFFFFF', 'HRK', 'Unska ulica 4', 'Zagreb', 56, '2016-04-18 00:39:14');
 
 --
 -- Indexes for dumped tables
@@ -576,7 +573,7 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT for table `Category`
 --
 ALTER TABLE `Category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `Country`
 --
@@ -586,7 +583,7 @@ ALTER TABLE `Country`
 -- AUTO_INCREMENT for table `Post`
 --
 ALTER TABLE `Post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `Product`
 --
@@ -601,7 +598,7 @@ ALTER TABLE `Review`
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
@@ -610,8 +607,8 @@ ALTER TABLE `User`
 -- Constraints for table `Follower`
 --
 ALTER TABLE `Follower`
-  ADD CONSTRAINT `Follower_User_user_id_fk` FOREIGN KEY (`follower`) REFERENCES `User` (`user_id`),
-  ADD CONSTRAINT `Follower_User_user_id_fk2` FOREIGN KEY (`followee`) REFERENCES `User` (`user_id`);
+  ADD CONSTRAINT `Follower_User_user_id_fk` FOREIGN KEY (`follower`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Follower_User_user_id_fk2` FOREIGN KEY (`followee`) REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Post`

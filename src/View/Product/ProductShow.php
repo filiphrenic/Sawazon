@@ -27,6 +27,7 @@ class ProductShow extends Template
             $t->addParam('rating', new RatingTemplate($r->rating));
             $img = Route::get('image')->generate(['content' => 'user', 'id' => $r->user_id]);
             $t->addParam('user-img', $img);
+            $t->addParam('user_link', Route::get('user_show')->generate(['id' => $r->user_id]));
             return $t;
         }, $reviews);
 

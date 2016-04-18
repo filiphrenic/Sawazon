@@ -16,8 +16,6 @@ abstract class DBTaggable extends DBModel
 
     protected function afterSave()
     {
-
-        var_dump(2);
         $tcol = $this->getTagsColumn();
         $type = short_name($this);
         $id = $this->getPrimaryKey();
