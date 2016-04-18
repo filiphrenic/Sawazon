@@ -165,6 +165,11 @@
 
                                 </fieldset>
                             </form>
+                            <script>
+                                $('#new_password').submit(function () {
+                                    return $('#new_password').val() == $('#new_password2').val();
+                                });
+                            </script>
                         </div>
 
                     </div>
