@@ -3,28 +3,19 @@
 namespace Controller\Generate;
 
 use Dispatch\Dispatcher;
+use Processing\Image\ImageFunc;
 use Sawazon\Controller;
 
 class Image extends Controller
 {
-
-    private static $ROOT_DIR = __DIR__ . "/../../../images";
-
+    
     public function display()
     {
         $r = Dispatcher::getInstance()->getRoute();
         $content = $r->getParam("content");
         $id = $r->getParam("id");
 
-        $folder = self::$ROOT_DIR . "/$content";
-        if (!file_exists($folder))
-            strange_behaviour("no image folder for $content");
-
-        $image_path = "$folder/$id.png";
-        if (!file_exists($image_path)) {
-            $image_path = "$folder/image-not-found.png";
-        }
-        $im = imagecreatefrompng($image_path);
+        list($im, $image_path) = ImageFunc::get($content, $id);
 
         $type = exif_imagetype($image_path);
         $mime = image_type_to_mime_type($type);
@@ -48,6 +39,8 @@ class Image extends Controller
 
         imagedestroy($im);
         die();
+
+
     }
 
 }

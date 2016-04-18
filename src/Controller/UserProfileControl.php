@@ -5,9 +5,14 @@ namespace Controller;
 use Dispatch\Dispatcher;
 use Model\Country;
 use Model\User;
+use Processing\Image\CompositeIF;
+use Processing\Image\ImageFunc;
+use Processing\Image\ImageUpload;
+use Processing\Image\NamedImageFilter;
 use Routing\Route;
 use Sawazon\Controller;
 use Sawazon\DAO\DAOProvider;
+use Util\Session;
 use View\InfoTemplate;
 use View\NavbarTemplate;
 use View\User\UserProfile;
@@ -15,6 +20,7 @@ use View\User\UserProfileEdit;
 
 class UserProfileControl extends Controller
 {
+
     public function show()
     {
         $r = Dispatcher::getInstance()->getRoute();
@@ -147,12 +153,39 @@ class UserProfileControl extends Controller
 
         // ok
 
-        $u->password = hashPass($params['old_password']);
+        $u->password = hashPass($params['new_password']);
         $u->save();
 
         // not error
         $error("Password successfully changed!");
     }
 
+    public function applyFilter()
+    {
+        $filter_types = element('filters', $_POST, []);
+        $filters = [];
+        foreach ($filter_types as $ft) {
+            $filters[] = new NamedImageFilter(cleanHTML($ft));
+        }
+        $cf = new CompositeIF($filters);
+
+        var_dump($cf);
+
+        $user_id = Session::get(Session::$USER_ID);
+        list($im, $image_path) = ImageFunc::get('user', $user_id);
+
+        $cf->apply($im);
+
+        imagepng($im, ImageFunc::path('user', $user_id)[0]);
+        imagedestroy($im);
+        redirectToLast();
+    }
+
+    public function uploadPicture()
+    {
+        $user_id = Session::get(Session::$USER_ID);
+        ImageUpload::upload($_FILES['upload_picture'], "user/$user_id");
+        echoJson([]);
+    }
 
 }

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Edit profile</h3>
+                <h3 class="panel-title">@{user:username}: Edit profile</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -12,6 +12,43 @@
                         <div align="center">
                             <img src="{usr_img}" class="img-circle img-responsive">
                         </div>
+                        <div style="padding: 0px 10px 0px 10px">
+
+                            <form class="form-horizontal" action="{apply_filer_link}" method="post">
+                                <fieldset>
+                                    <legend>Apply filters</legend>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                {filters}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group has-feedback">
+                                                <button class="btn btn-danger" type="submit">Apply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+
+                        </div>
+
+                        <hr>
+
+                        <input name="upload_picture" type="file" accept="image/*"
+                               class="file" multiple
+                               data-show-upload="true"
+                               data-upload-url="{picture_upload_link}"
+                               data-drop-zone-enabled="true"
+                               data-drop-zone-title="Drag & drop photo here"
+                               data-allowed-file-extensions='["png", "jpg", "jpeg"]'
+                               data-show-caption="true" id="picture_change">
+                        <script>
+                            $('#picture_change').on('fileuploaded', function (event, data, previewId, index) {
+                                location.reload();
+                            });
+                        </script>
 
                     </div>
 

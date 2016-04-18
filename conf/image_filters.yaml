@@ -1,6 +1,5 @@
 negative:
   type: negate
-  title: Negative
 
 grayscale:
   type: grayscale

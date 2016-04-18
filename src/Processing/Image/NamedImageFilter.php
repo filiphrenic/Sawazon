@@ -8,9 +8,11 @@ class NamedImageFilter implements ImageFilter
     /** @var  int */
     private $filterType;
 
-    public function __construct($name = "")
+    public function __construct($type = "")
     {
-        $this->filterType = constant("IMG_FILTER_" . $name);
+        $constant_name = "IMG_FILTER_" . strtoupper($type);
+        if (!defined($constant_name)) throw new \Exception('Filter doesnt exist');
+        $this->filterType = constant($constant_name);
     }
 
     public function apply($image)

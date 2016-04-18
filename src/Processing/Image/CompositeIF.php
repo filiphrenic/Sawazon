@@ -2,8 +2,20 @@
 
 namespace Processing\Image;
 
+use Symfony\Component\Yaml\Yaml;
+
 class CompositeIF implements ImageFilter
 {
+
+    private static $FILTERS = null;
+    private static $FILENAME = __DIR__ . '/../../../conf/image_filters.yaml';
+
+    public static function getFilters()
+    {
+        if (self::$FILTERS == null)
+            self::$FILTERS = Yaml::parse(file_get_contents(self::$FILENAME));
+        return self::$FILTERS;
+    }
 
     /** @var array */
     private $filters;
