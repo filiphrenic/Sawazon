@@ -21,9 +21,9 @@ class PostSmall extends Template
         $this->addParam('user_link', $user_link);
 
 
-        $content = $post->content;
-        $content = DefaultTextFilter::getInstance()->apply($content);
+        $content = $post->content; // :)
         $content = (new TagsEmphasis())->apply($content);
+        $content = DefaultTextFilter::getInstance()->apply($content);
 
 
         $this->addParam('username', $author->username);

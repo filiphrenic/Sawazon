@@ -10,8 +10,8 @@ class CurrencyConverterProvider
     public static function get()
     {
         if (self::$instance == null) {
-            self::$instance = new HardcodedCurrencyConverter();
-            //self::$instance = new HNBCurrencyConverter();
+//            self::$instance = new HardcodedCurrencyConverter();
+            self::$instance = new HNBCurrencyConverter();
         }
         return self::$instance;
     }
